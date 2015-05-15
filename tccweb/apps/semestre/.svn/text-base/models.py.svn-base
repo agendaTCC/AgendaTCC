@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+from django.db import models
+
+
+#Model Data, modelo do aplicativo data, Aplicativo para informar prazos ao sistema
+#para cada disciplina:
+#Data maxima para inscrição, max_inscricao;
+#Data inicio da escolha dos horarios de banca pelos alunos, inic_banca_alunos;
+#Data maxima da escolha dos horarios de banca pelos alunos, max_baca_alunos;
+#Data maxima para mudanca de titulo e areas de concentracao, max_titulo_ares;
+#Data inicio para escolha de bancas pelos convidados, inci_banca_convidado;
+#Data maxima para escolha de bancas pelos convidados, max_banca_convidado;
+#Data maxima para entrega da monografia original, max_monografia;
+#Data maxima para para devolucao monografia impressa emprestada pela banca, max_monografia_emprestada;
+#Data maxima para entrega de monografia emprestada, max_monografia_emprestada;
+
+SEMESTRE = (
+            ('1','1o Semestre'),
+            ('2','2o Semestre')
+            )
+
+class Data(models.Model):
+    ano = models.IntegerField()
+    semestre = models.CharField(max_length = 1, default= 1, choices = SEMESTRE)
+    max_inscricao = models.DateField(verbose_name='Data final', null=True, blank=True)
+    inic_banca_alunos = models.DateField(verbose_name='Data inicio', null=True, blank=True)
+    max_banca_alunos = models.DateField(verbose_name='Data Final', null=True, blank=True)
+    max_titulo_areas = models.DateField(verbose_name='Data final', null=True, blank=True)
+    inic_banca_convidado = models.DateField(verbose_name='Data inicio', null=True, blank=True)
+    max_banca_convidado = models.DateField(verbose_name='Data final', null=True, blank=True)
+    
+    
+    
+        

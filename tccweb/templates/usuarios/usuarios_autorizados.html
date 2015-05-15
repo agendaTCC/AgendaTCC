@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Usuários Autorizados{% endblock %}
+
+{% block section %}Usuários Autorizados a Utilizar o Sistema{% endblock %}
+
+{% block content %}
+
+		<p>Usuários autorizados a utilizar o sistema</p>
+		<a href="{% url 'cadastro_usuario_autorizado' %}">Novo Usuário</a><br/>
+		<a href="{% url 'cadastro_usuarios_tidia' %}">Importar Arquivo .xsl do Tidia</a><br/>
+		<a href="{% url 'remover_usuarios_autorizados' %}">Remover Todos</a><br/>
+
+		{% for u in usuarios %}
+		<div>
+			<hr/>
+			<h3>{{ u.nome_completo }}</h3>
+			<p>{{ u.email }} - {{ u.numero_usp }}</p>
+			<a href="{% url 'remover_usuario_autorizado' u.numero_usp %}">Remover</a>
+			<br/>
+			<br/>
+		</div>
+		{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,11 @@
+
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style_novo.css" STATIC="all" />
+	
+	<table>
+	<tr><td>Aluno:</td><td>E-mail</td></tr>
+  {% for aluno in alunos %}
+    <tr><td>{{aluno.display_name}}</td><td>{{aluno.user.email}}</td></tr>
+  {% endfor %}
+</table>
+
+

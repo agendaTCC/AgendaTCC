@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url bancas_index %}">Bancas</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url bancas_banca_detalhe banca.id %}">{{ banca.sala }}</a>
+</nav>
+{% endblock %}
+{% block title %}{{projeto.titulo}}{% endblock %}
+
+{% block section %}{{projeto.titulo}}{% endblock %}
+
+{% block content %}
+
+<div id="disciplinas-container" class="grid_12 clearfix">
+  <h1> {{projeto.titulo}}</h1>
+	 <p>Banca do dia {{banca.data}}, das {{banca.hora_inicial}} ás {{banca.hora_final}}</p>
+	 <p>Aluno: {{banca.aluno.get_profile.display_name}}</p>
+	 <p>Banca1:{{banca.banca1}}</p>
+	 <p>Banca2:{{banca.banca2}}</p>
+	 <p>Orientador: {{banca.orientador}}</p>
+	 {% if perms.usuarios.aluno_de_graduacao %}
+	 <a href="{%url bancas_banca_deleta banca.id %}" >Liberar Banca</a>
+	 {%endif%}
+	 {% if perms.usuarios.docente  %}
+	 {% if banca.banca1.id == user.id or banca.banca2.id == user.id %}
+	 <a href="{%url bancas_banca_sair banca.id user.id %}" >Liberar Banca</a>
+	 {%endif%}
+	 {%endif%}
+	 
+	 <input type="button" value=" Voltar " onclick="history.go(-1)">
+</div>
+
+{% endblock %}

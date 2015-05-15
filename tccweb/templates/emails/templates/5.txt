@@ -1,0 +1,9 @@
+Prezado(a) aluno(a)
+ 
+Sua inscrição na disciplina {{disciplina}} foi efetivada com sucesso!!
+ 
+Acompanhe o andamento no site do sistema TCC Web, utilizando o usuário e senha recebidos em um e-mail anterior. A próxima etapa será a escolha da data de sua banca, cujos prazos encontram-se informados no sistema.
+ 
+Em caso de dúvida procure um dos docentes responsáveis pelas disciplinas.
+ 
+Não responda a este email, pois foi gerado automaticamente.

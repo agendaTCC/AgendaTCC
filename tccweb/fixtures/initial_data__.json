@@ -1,0 +1,936 @@
+[
+{
+    "pk" : 1,
+    "model" : "website.splash",
+    "fields" : {
+        "exibir_noticias" : true,
+        "exibir_texto" : true,
+	"data" : "2011-12-06 11:20:38",
+        "texto" : "<p style=\"text-align: center;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+        "exibir_imagens" : true
+    }
+},
+{
+    "pk" : 1,
+    "model" : "website.imagens",
+    "fields" : {
+        "splash" : 1,
+        "data" : "2011-12-06 11:20:38",
+        "texto" : "<p>Aqui</p>",
+        "entrada" : "img/slide/s1.jpg",
+        "exibir" : true
+    }
+},
+{
+    "pk" : 2,
+    "model" : "website.imagens",
+    "fields" : {
+        "splash" : 1,
+        "data" : "2011-12-06 11:20:38",
+        "texto" : "",
+        "entrada" : "img/slide/s2.jpg",
+        "exibir" : true
+    }
+},
+{
+    "pk" : 3,
+    "model" : "website.imagens",
+    "fields" : {
+        "splash" : 1,
+        "data" : "2011-12-06 11:20:38",
+        "texto" : "",
+        "entrada" : "img/slide/s3.jpg",
+        "exibir" : true
+    }
+},
+{
+    "pk" : 4,
+    "model" : "website.imagens",
+    "fields" : {
+        "splash" : 1,
+        "data" : "2011-12-06 11:47:12",
+        "texto" : "",
+        "entrada" : "img/slide/s4.jpg",
+        "exibir" : false
+    }
+},
+ {
+        "pk": 1,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Projeto Supervisionado ou de Gradua\u00e7\u00e3o I",
+            "codigo": "SSC 573",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 2,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Projeto de Formatura II",
+            "codigo": "SSC 674",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 3,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": " Estágio Supervisionado II",
+            "codigo": "SSC 673",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 4,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Estágio Supervisionado I",
+            "codigo": "SSC 672",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 5,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Projeto de Formatura I",
+            "codigo": "SSC 670",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 6,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Projeto Supervisionado ou de Gradua\u00e7\u00e3o II",
+            "codigo": "SCC 293",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 7,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": " Projeto Supervisionado ou de Gradua\u00e7\u00e3o I",
+            "codigo": "SCC 292",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 8,
+        "model": "disciplinas.nomedisciplina",
+        "fields": {
+            "link": "",
+            "titulo": "Projeto Supervisionado ou de Gradua\u00e7\u00e3o II",
+            "codigo": "SSC 574",
+            "ementa": ""
+        }
+    },
+    {
+        "pk": 2,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 01:16:33",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 1,
+            "professores": [
+                1
+            ]
+        }
+    },
+    {
+        "pk": 1,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 00:24:33",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 6,
+            "professores": []
+        }
+    },
+    {
+        "pk": 3,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 10:42:39",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 5,
+            "professores": []
+        }
+    },
+    {
+        "pk": 4,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 10:42:58",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 4,
+            "professores": []
+        }
+    },
+    {
+        "pk": 5,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 10:43:32",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 3,
+            "professores": []
+        }
+    },
+    {
+        "pk": 6,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-04-04 10:43:49",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 2,
+            "professores": []
+        }
+    },
+    {
+        "pk": 7,
+        "model": "disciplinas.disciplina",
+        "fields": {
+            "semestre": "1",
+            "esta_ativa": true,
+            "alunos": [],
+            "turma": "01",
+            "criada_em": "2011-12-06 14:59:49",
+            "ano": 2012,
+            "monitores": [],
+            "titulo": 8,
+            "professores": [
+                1
+            ]
+        }
+},
+{
+    "pk" : 3,
+    "model" : "noticias.noticia",
+    "fields" : {
+        "criada_em" : "2011-04-04 09:10:47",
+        "titulo" : "Regras para apresenta\u00e7\u00e3o",
+        "disciplina" : null,
+        "conteudo" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus sapien, sodales sed tempus at, convallis ac tellus. Proin venenatis auctor orci, porttitor aliquam tortor vehicula a. Praesent vestibulum massa tempus nisi accumsan rutrum eu vitae est. Cras vitae est vitae sem lobortis cursus eu quis purus. Integer commodo, tellus eget semper venenatis, tellus sapien feugiat orci, vel molestie justo felis ac nulla. Quisque sed elementum mauris. Fusce eu ante ac est imperdiet ultrices. Vestibulum sagittis, nulla sit amet gravida"
+    }
+},
+{
+    "pk" : 2,
+    "model" : "noticias.noticia",
+    "fields" : {
+        "criada_em" : "2011-04-04 09:10:41",
+        "titulo" : "Novas regras para matr\u00edcula",
+        "disciplina" : null,
+        "conteudo" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam risus sapien, sodales sed tempus at, convallis ac tellus. Proin venenatis auctor orci, porttitor aliquam tortor vehicula a. Praesent vestibulum massa tempus nisi accumsan rutrum eu vitae est. Cras vitae est vitae sem lobortis cursus eu quis purus. Integer commodo, tellus eget semper venenatis, tellus sapien feugiat orci, vel molestie justo felis ac nulla. Quisque sed elementum mauris. Fusce eu ante ac est imperdiet ultrices. Vestibulum sagittis, nulla sit amet gravida"
+    }
+},
+{
+    "pk" : 1,
+    "model" : "noticias.noticia",
+    "fields" : {
+        "criada_em" : "2011-04-04 09:02:50",
+        "titulo" : "Prazo de entrega dos documentos estendido",
+        "disciplina" : null,
+        "conteudo" : "Lorem ipsum dolor sit *amet*, consectetur adipiscing elit. Aliquam risus sapien, sodales sed tempus at, convallis ac tellus. Proin venenatis auctor orci, porttitor aliquam tortor vehicula a. Praesent vestibulum massa tempus nisi accumsan rutrum eu vitae est. Cras vitae est vitae sem lobortis cursus eu quis purus. Integer commodo, tellus eget semper venenatis, tellus sapien feugiat orci, vel molestie justo felis ac nulla. Quisque sed elementum mauris. Fusce eu ante ac est imperdiet ultrices. Vestibulum sagittis, nulla sit amet gravida"
+    }
+},
+{
+    "pk" : 1,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "LAQAWEGAYEZE",
+        "nome_fantasia" : "EHALA EDILADEFICAQUJ",
+        "comp" : "",
+        "cidade" : "ZU I AHEYIRAZIGI APE",
+        "nro_inscricao" : "44.313.134/0001-98",
+        "num" : 9376,
+        "supervisores" : [],
+        "nome_empresarial" : "UKETOHI ALARAREMESA ORIVA EKABUVOWAGIFIZIBOVICAQOXAGINUQIHA ",
+        "cep" : 30974978,
+        "end" : "OSAYIPOMUNOREJUQULOJIGOVOZIDAJ",
+        "UF" : "PB"
+    }
+},
+{
+    "pk" : 2,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "OHU OJEFUZAT",
+        "nome_fantasia" : " U UVOMAFOROXOWAXA I",
+        "comp" : "",
+        "cidade" : "SEDEZAJUDAJAZEXOYUHA",
+        "nro_inscricao" : "67.713.299/0001-60",
+        "num" : 6227,
+        "supervisores" : [],
+        "nome_empresarial" : "WALIHORATEVATAFOYUHEFE INU AFILIMOZELONUTOSO EYAQOFESATOQU O",
+        "cep" : 99295305,
+        "end" : "E IBUDAKONITE E OHO ELO UZAZED",
+        "UF" : "MG"
+    }
+},
+{
+    "pk" : 3,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : " ALUHASUVAWE",
+        "nome_fantasia" : "TOHAME UZUBU IFAMI E",
+        "comp" : "",
+        "cidade" : "OCOTIVUQAXACI UHOXUY",
+        "nro_inscricao" : "13.110.775/0001-49",
+        "num" : 6962,
+        "supervisores" : [],
+        "nome_empresarial" : "ZUMITUQEKUFUVOTAHAVERELEYI OJISI EDADAHOZOLAKEWO EROSAJELOKE",
+        "cep" : 68559442,
+        "end" : "RO AYILISEJESORIMUZOTIQE AVAGO",
+        "UF" : "SC"
+    }
+},
+{
+    "pk" : 4,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "HIZAMUKE U U",
+        "nome_fantasia" : "GEDO E ASIDASEJO IWA",
+        "comp" : "",
+        "cidade" : "E UPO ATEKOLOYE ABIS",
+        "nro_inscricao" : "40.302.235/0001-14",
+        "num" : 206,
+        "supervisores" : [],
+        "nome_empresarial" : "PECOJU UMUMEFIGENE IPIHE OCOHOBIMUJICE I E UDAHUNIXO OFUVIYA",
+        "cep" : 2266935,
+        "end" : "QIYEWUKOCUKOBAFOKOSOSEQAJUYE E",
+        "UF" : "PI"
+    }
+},
+{
+    "pk" : 5,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "EBUXEDIDIBIX",
+        "nome_fantasia" : "RO IKAFADULATINUFAYO",
+        "comp" : "",
+        "cidade" : "UMU EZENUPEJUWI A IH",
+        "nro_inscricao" : "63.840.482/0001-14",
+        "num" : 6347,
+        "supervisores" : [],
+        "nome_empresarial" : "HUMEQUKUQULOFO ODEPA UMEWUXIKITOJACERE INIHEPAVOME I IVOCUBI",
+        "cep" : 15565580,
+        "end" : "ZOZOYEXICAXE IXUVA IPIZATOREMI",
+        "UF" : "SC"
+    }
+},
+{
+    "pk" : 6,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "ISIHUTEBOMIW",
+        "nome_fantasia" : "IKIDOHEWI I OVAHASUC",
+        "comp" : "",
+        "cidade" : "KOYEYIXU I IRAZA UZO",
+        "nro_inscricao" : "57.468.813/0001-21",
+        "num" : 8544,
+        "supervisores" : [],
+        "nome_empresarial" : "FEROBA ASILACETI ATUHOFOWASABATIQEMILUVORINIHEKABUKOREJIWIQO",
+        "cep" : 12444188,
+        "end" : "O OFALOMI IROMAGIBELIXINOCURUF",
+        "UF" : "DF"
+    }
+},
+{
+    "pk" : 7,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "UCUKEBASUDEG",
+        "nome_fantasia" : "IRILEZEQOVI ATOMIJUM",
+        "comp" : "",
+        "cidade" : "EGOVOPUFOFOTASA ODAM",
+        "nro_inscricao" : "87.490.862/0001-83",
+        "num" : 7126,
+        "supervisores" : [],
+        "nome_empresarial" : "U IPILIQOPOWAKUQITUZUZOGAJOFAQE IHOFOJIQOFE E O ERO U EVATIM",
+        "cep" : 5044216,
+        "end" : "RIZUGEGUWU USEKIQAPIYOYOCEMAQA",
+        "UF" : "BA"
+    }
+},
+{
+    "pk" : 8,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "DUMORU IHA U",
+        "nome_fantasia" : "UHUYEHEBAHEHOKOGAWEV",
+        "comp" : "",
+        "nro_inscricao" : "49.305.897/0001-53",
+        "num" : 4213,
+        "supervisores" : [],
+        "nome_empresarial" : "HA AXA OGIWIMIBU OGA U EXOJEBU I ISUDU UNELUDO EMUBOHEXOQIRO",
+        "cep" : 77190838,
+        "end" : "ISUKO IMEDOGOWOREMUHU AMO ENUN",
+        "UF" : "TO"
+    }
+},
+{
+    "pk" : 9,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "E AQI IQUMUW",
+        "nome_fantasia" : "OSA UNOQU EWO UMAFO ",
+        "comp" : "",
+        "cidade" : "ARASOYAWAWAGEGINO AP",
+        "nro_inscricao" : "98.440.948/0001-21",
+        "num" : 6329,
+        "supervisores" : [],
+        "nome_empresarial" : "JUPOQISA ERONI IKIMAMAMOLO UVENU UJO ULO EGE E AZU ANABESUFI",
+        "cep" : 85832810,
+        "end" : "CILEZI IPI I ENI IYEGUVIBAZAZI",
+        "UF" : "AM"
+    }
+},
+{
+    "pk" : 10,
+    "model" : "empresa.empresa",
+    "fields" : {
+        "bairro" : "YOKONIYOLUBO",
+        "nome_fantasia" : "ACUTUGOVANADE ABEXUN",
+        "comp" : "",
+        "cidade" : "E OZOWIWEHUKAFU UQIY",
+        "nro_inscricao" : "10.245.346/0001-63",
+        "num" : 9327,
+        "supervisores" : [10],
+        "nome_empresarial" : "A AZOGIFEMOVECAMOKOJISOTU UBOKU U AJIYE A ASAZALOPIQI ETEJEN",
+        "cep" : 36944655,
+        "end" : "AKO U IXAYODIJOWO O U IJEHAXEB",
+        "UF" : "PA"
+    }
+},
+{
+    "pk" : 408,
+    "model" : "empresa.supervisor",
+    "fields" : {
+        "empresa" : 10,
+        "usuario" : 10
+    }
+},
+{
+    "pk" : 1,
+    "model" : "grupos_disciplinas.grupodisciplina",
+    "fields" : {
+        "titulo" : "EC/SI (Info)",
+        "disciplinas" : [1,2,3,4,5,8]
+    }
+},
+{
+    "pk" : 2,
+    "model" : "grupos_disciplinas.grupodisciplina",
+    "fields" : {
+        "titulo" : "BCC",
+        "disciplinas" : [6,7]
+    }
+},
+{
+    "pk" : 1,
+    "model" : "cursos.curso",
+    "fields" : {
+        "nome" : "Ci\u00eancias da Computa\u00e7\u00e3o"
+    }
+},
+{
+    "pk" : 2,
+    "model" : "cursos.curso",
+    "fields" : {
+        "nome" : "Informática"
+    }
+},
+{
+    "pk" : 1,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Docentes",
+        "permissions" : [34]
+    }
+},
+{
+    "pk" : 2,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Aluno de Doutorado",
+        "permissions" : [35]
+    }
+},
+{
+    "pk" : 3,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Aluno de Mestrado",
+        "permissions" : [36]
+    }
+},
+{
+    "pk" : 4,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Aluno de Gradua\u00e7\u00e3o",
+        "permissions" : [37]
+    }
+},
+{
+    "pk" : 5,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Funcion\u00e1rio n\u00e3o-docente",
+        "permissions" : [4,5,6,10,11,12,7,8,9,114,115,116,108,109,110,42,43,44,96,97,98,111,112,113,105,106,107,102,103,104,132,133,134,123,124,125,117,118,119,135,136,137,129,130,131,126,127,128,120,121,122,45,46,47,138,139,140,38,25,26,27,22,23,24]
+    }
+},
+{
+    "pk" : 6,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Monitor",
+        "permissions" : [39]
+    }
+},
+{
+    "pk" : 7,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Estágiario PAE",
+        "permissions" : [40]
+    }
+},
+{
+    "pk" : 8,
+    "model" : "auth.group",
+    "fields" : {
+        "name" : "Supervisor",
+        "permissions" : [41]
+    }
+},
+{
+    "pk" : 1,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "root",
+        "first_name" : "Administrador",
+        "last_name" : "do Sistema",
+        "is_active" : true,
+        "is_superuser" : true,
+        "is_staff" : true,
+        "last_login" : "2011-10-26 15:26:37",
+        "groups" : [1],
+        "user_permissions" : [],
+        "password" : "sha1$43e54$e525e85475f0ca8914e5ae51a51108d6b3fd3e3a",
+        "email" : "root@jetty.com.br",
+        "date_joined" : "2011-04-07 08:19:23"
+    }
+},
+{
+    "pk" : 2,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "aluno1",
+        "first_name" : "Aluno",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:25:12",
+        "groups" : [4],
+        "user_permissions" : [],
+        "password" : "sha1$86be9$854a9b9210d8f71a44c74ae86ab80addaf578428",
+        "email" : "aluno1@example.com",
+        "date_joined" : "2011-04-12 03:05:19"
+    }
+},
+{
+    "pk" : 3,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "aluno2",
+        "first_name" : "Aluno",
+        "last_name" : "numero2",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-04-12 03:05:44",
+        "groups" : [4],
+        "user_permissions" : [],
+        "password" : "sha1$2eb26$38740ee6e7ed9bde42dc72eee68896a0429124e2",
+        "email" : "aluno2@example.com",
+        "date_joined" : "2011-04-12 03:05:44"
+    }
+},
+{
+    "pk" : 4,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "aluno3",
+        "first_name" : "Aluno",
+        "last_name" : "numero3",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-04-12 03:07:09",
+        "groups" : [4],
+        "user_permissions" : [],
+        "password" : "sha1$f7e81$11732f629948f16e55af1055c0a0ca1d57008053",
+        "email" : "aluno3@example.com",
+        "date_joined" : "2011-04-12 03:07:09"
+    }
+},
+{
+    "pk" : 5,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "funcionario1",
+        "first_name" : "funcionario",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : true,
+        "last_login" : "2011-10-26 15:04:59",
+        "groups" : [5],
+        "user_permissions" : [],
+        "password" : "sha1$b194c$3bb05401e5c1b9ff3d1c503f6aa36908df94a59b",
+        "email" : "funcionario@mail.com",
+        "date_joined" : "2011-10-26 15:04:59"
+    }
+},
+{
+    "pk" : 6,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "doutorando1",
+        "first_name" : "doutorando",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:03:44",
+        "groups" : [2],
+        "user_permissions" : [],
+        "password" : "sha1$24e4e$095eb4cde059ebc5203d4810ef2ba8b6a0cf53e7",
+        "email" : "dutorando@mail.com",
+        "date_joined" : "2011-10-26 15:03:44"
+    }
+},
+{
+    "pk" : 7,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "mestrando1",
+        "first_name" : "mestrando",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:04:08",
+        "groups" : [3],
+        "user_permissions" : [],
+        "password" : "sha1$91a7b$89dcadd2b9866437189d90877aa2dba662858624",
+        "email" : "mestrando@mail.com",
+        "date_joined" : "2011-10-26 15:04:08"
+    }
+},
+{
+    "pk" : 8,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "docente1",
+        "first_name" : "docente",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:03:17",
+        "groups" : [1],
+        "user_permissions" : [],
+        "password" : "sha1$9c3a3$4e66e52796a80d960d4a3933611310efd0e51249",
+        "email" : "docente@mail.com",
+        "date_joined" : "2011-10-26 15:03:17"
+    }
+},
+{
+    "pk" : 9,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "monitor1",
+        "first_name" : "monitor",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:05:32",
+        "groups" : [6],
+        "user_permissions" : [],
+        "password" : "sha1$0ea50$800e17826e97478bdf182ef733d1e2e72191a5eb",
+        "email" : "monitor@mail.com",
+        "date_joined" : "2011-10-26 15:05:32"
+    }
+},
+{
+    "pk" : 10,
+    "model" : "auth.user",
+    "fields" : {
+        "username" : "supervisor1",
+        "first_name" : "supervidor",
+        "last_name" : "numero1",
+        "is_active" : true,
+        "is_superuser" : false,
+        "is_staff" : false,
+        "last_login" : "2011-10-26 15:08:51",
+        "groups" : [8],
+        "user_permissions" : [],
+        "password" : "sha1$fc900$b79b43b88dfd2a8f2b924fc31ccd7ed9d0cff643",
+        "email" : "supervisor@mail.com",
+        "date_joined" : "2011-10-26 15:08:51"
+    }
+},
+{
+    "pk" : 1,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : "",
+        "tel" : "(00)0000-0000",
+        "end" : "",
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "4",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:30",
+        "user" : 1,
+        "senha_inicial" : null,
+        "bairro" : "",
+        "display_name" : "Administrador do Sistema",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : ""
+    }
+},
+{
+    "pk" : 2,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : "",
+        "tel" : "(00)0000-0000",
+        "end" : "",
+        "nro" : null,
+        "curso" : 1,
+        "funcao" : "4",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 2,
+        "senha_inicial" : null,
+        "bairro" : "",
+        "display_name" : "Aluno numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : ""
+    }
+},
+{
+    "pk" : 3,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "4",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 3,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "Aluno numero2",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 4,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "4",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 4,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "Aluno numero3",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 5,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : "",
+        "tel" : "(00)0000-0000",
+        "end" : "",
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "5",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 5,
+        "senha_inicial" : null,
+        "bairro" : "",
+        "display_name" : "funcionario numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : ""
+    }
+},
+{
+    "pk" : 6,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "2",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 6,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "doutorando numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 7,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "3",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 7,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "mestrando numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 8,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "1",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 8,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "docente numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 9,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "6",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 9,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "monitor numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+},
+{
+    "pk" : 10,
+    "model" : "usuarios.userprofile",
+    "fields" : {
+        "city" : null,
+        "tel" : "(00)0000-0000",
+        "end" : null,
+        "nro" : null,
+        "curso" : null,
+        "funcao" : "8",
+        "alterar_senha" : false,
+        "created_on" : "2011-11-30 15:46:31",
+        "user" : 10,
+        "senha_inicial" : null,
+        "bairro" : null,
+        "display_name" : "supervisor numero1",
+        "UF" : "SP",
+        "nusp" : null,
+        "cmp" : null
+    }
+}]

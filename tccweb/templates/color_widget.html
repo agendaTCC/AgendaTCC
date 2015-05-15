@@ -1,0 +1,29 @@
+<style>
+    .colorpicked {
+        border: 2px solid black;
+    }
+    span.colorpicker {
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    span.colorpicker span {
+        padding: 5px;
+    }
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<span id="colorpicker{{ attrs.id }}" class='colorpicker'>
+    {% for color in colors %}
+        <span data-color='{{ color }}' style="background-color: #{{ color }};" class="{% if color = value %}colorpicked{% endif %}">&nbsp;</span>
+    {% endfor %}
+</span>
+<input type="hidden" name="{{ name }}" value="{{ value }}" id="{{ attrs.id }}"/>
+
+<script>
+    $(document).ready(function() {
+        $('#colorpicker{{ attrs.id }} span').bind('click', function() {
+            $('#{{ attrs.id }}').val(($(this).attr('data-color')));
+            $('#colorpicker{{ attrs.id }} span').removeClass('colorpicked');
+            $(this).addClass('colorpicked');
+        });
+    });
+</script>

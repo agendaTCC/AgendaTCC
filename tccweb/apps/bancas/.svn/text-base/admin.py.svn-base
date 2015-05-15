@@ -1,0 +1,17 @@
+from django.contrib import admin
+from models import Banca, Apresentacao, Agenda, Dia_Agenda
+from forms import DiaForm
+
+
+class DiaAdmin(admin.TabularInline):
+    model = Dia_Agenda
+    form = DiaForm
+
+class AgendaAdmin(admin.ModelAdmin):
+    inlines = [DiaAdmin,]
+    
+   
+
+admin.site.register(Banca)
+admin.site.register(Apresentacao)
+admin.site.register(Agenda,AgendaAdmin)

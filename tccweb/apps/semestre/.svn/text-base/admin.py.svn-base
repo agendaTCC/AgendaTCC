@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+from django.contrib import admin
+from models import Data
+
+#DataAdmin: Organiza a visualizacao do modelo Data na administracao;
+#admin.site.register(Data,DataAdmin), coloca o modelo Data na adminstricao, respeitando o DataAdmin;
+
+class DataAdmin(admin.ModelAdmin):
+    fieldsets = (
+                (None, {
+                        'fields':['ano', 'semestre']
+                        }),
+                ('Incrição de Alunos',{
+                                       'fields':['max_inscricao']
+                                       }),
+                ('Mudança de Titulo e áreas de concentração',{
+                                                              'fields':['max_titulo_areas']
+                                                              } ),
+                ('Escolha da Banca pelos Alunos',{
+                                                  'fields':['inic_banca_alunos','max_banca_alunos']
+                                                  } ),
+                
+                ('Escolha da Banca pelos Convidados',{
+                                                      'fields':['inic_banca_convidado','max_banca_convidado']
+                                                      } ),
+                )
+    
+admin.site.register(Data,DataAdmin)

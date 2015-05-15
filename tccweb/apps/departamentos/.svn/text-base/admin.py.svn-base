@@ -1,0 +1,8 @@
+from django.contrib import admin
+from models import GrupoDiciplina
+
+class GrupoDisciplinaAdmin(admin.ModelAdmin):
+    
+    filter_horizontal = ['disciplinas']
+
+admin.site.register(GrupoDiciplina,GrupoDisciplinaAdmin)

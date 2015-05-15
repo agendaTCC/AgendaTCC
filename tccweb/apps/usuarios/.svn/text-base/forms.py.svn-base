@@ -1,0 +1,79 @@
+from models import UserProfile
+from django.forms import ModelForm
+from django.contrib.auth.models import User
+from django import forms
+#UserProfileForm, cria formulario a partir do Modelo para edicao pelo usario
+#FormRegitro, cria formulario a partir do modelo para criacao de usuario, trata a existencia ea concistencia dos dados
+
+class  UserProfileForm(ModelForm):
+#        email = forms.CharField(max_length = 255)
+#        class Meta:
+#            model = UserProfile
+#            exclude = ('user','funcao')
+    def __init__(self, *args, **kwargs):
+            super(UserProfileForm, self).__init__(*args, **kwargs)
+            try:
+                self.fields['email'].initial = self.instance.user.email
+            except User.DoesNotExist:
+                pass
+
+    required_css_class = 'required'
+    error_css_class = 'error'
+
+    email = forms.EmailField()
+
+    class Meta:
+        model = UserProfile
+        exclude = ('user','funcao')
+
+#    def clean_email(self):
+#        return check_email(self.cleaned_data['email'], self.instance.user.id)
+
+    def save(self, *args, **kwargs):
+        u = self.instance.user
+        u.email = self.cleaned_data['email']
+        u.save()
+        profile = super(UserProfileForm, self).save(*args,**kwargs)
+        return profile
+            
+class FormRegistro(ModelForm):
+    username = forms.CharField(min_length = 3, max_length = 30)
+    class Meta:
+        model=User
+        order_by = ['username', 'email', 'first_name', 'last_name','password']
+        fields = ('first_name','last_name',
+                  'email',
+                  'username',
+                  'password',
+                  
+                  )
+    confirme_a_senha = forms.CharField( max_length=30, widget=forms.PasswordInput)
+    def __init__(self, *args, **kwargs):
+        self.base_fields['password'].help_text = ''
+        self.base_fields['password'].widget = forms.PasswordInput()
+        super(FormRegistro, self).__init__(*args, **kwargs)
+
+    def clean_username(self):
+        if User.objects.filter(
+            username=self.cleaned_data['username'],
+            ).count():
+            raise forms.ValidationError('Ja existe um usuario com este username')
+
+        return self.cleaned_data['username']
+
+
+    def clean_confirme_a_senha(self):
+        if self.cleaned_data['confirme_a_senha'] != self.data['password']:
+            raise forms.ValidationError('Confirmacao da senha nao confere!')
+
+        return self.cleaned_data['confirme_a_senha']
+
+    def save(self, commit=True):
+        usuario = super(FormRegistro, self).save(commit=False)
+
+        usuario.set_password(self.cleaned_data['password'])
+
+        if commit:
+            usuario.save()
+
+        return usuario

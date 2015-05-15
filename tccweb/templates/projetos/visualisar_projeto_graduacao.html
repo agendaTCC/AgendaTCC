@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+
+{% block title %}Projeto de Graduação de {{ projeto.aluno.nome_completo }}{% endblock %}
+
+{% block section %}Projeto de Graduação de {{ projeto.aluno.nome_completo }}{% endblock %}
+
+{% block content %}
+{% addtoblock "js" %}
+<script>
+$(document).ready(function(){
+	var formDisabled = false;
+	$("input[name=validacao]:radio").change(function () {
+			
+		});
+		var elemento;
+		{% if request.user in projeto.disciplina.professores.all %}
+			{% if projeto.validacao_docente == 'p' %}
+				elemento = $('#validaProjetoForm #radioPendente');
+			{% elif projeto.validacao_docente == 's' %}
+				elemento = $('#validaProjetoForm #radioAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% elif projeto.validacao_docente == 'n' %}
+				elemento = $('#validaProjetoForm #radioNaoAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% endif %}
+		{% elif request.user.funcionario or request.user.secretario%}
+			{% if projeto.validacao_graduacao == 'p' %}
+				elemento = $('#validaProjetoForm #radioPendente');
+			{% elif projeto.validacao_graduacao == 's' %}
+				elemento = $('#validaProjetoForm #radioAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% elif projeto.validacao_graduacao == 'n' %}
+				elemento = $('#validaProjetoForm #radioNaoAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% endif %}
+		{% elif request.user == projeto.supervisor or request.user = projeto.orientador %}
+			{% if projeto.validacao_supervisor_orientador == 'p' %}
+				elemento = $('#validaProjetoForm #radioPendente');
+			{% elif projeto.validacao_supervisor_orientador == 's' %}
+				elemento = $('#validaProjetoForm #radioAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% elif projeto.validacao_supervisor_orientador == 'n' %}
+				elemento = $('#validaProjetoForm #radioNaoAprovado');
+				$('#validaProjetoForm :input').prop( "disabled", true );
+				formDisabled = true;
+			{% endif %}
+		{% endif %}
+		elemento.attr('checked',true);
+	
+
+	$("#dialogAprovado").dialog({
+      modal: true,
+            bgiframe: true,
+            width: 500,
+            height: 200,
+      autoOpen: false
+      });
+	$("#dialogNaoAprovado").dialog({
+      modal: true,
+            bgiframe: true,
+            width: 550,
+            height: 250,
+      autoOpen: false
+      });
+	
+    $("input#validacaoSubmit").click(function(e) {
+        e.preventDefault();
+        form = $("form#validaProjetoForm")
+        if (!formDisabled){
+	        if(form.find('input#radioAprovado').is(':checked')){
+		        $("#dialogAprovado").dialog('option', 'buttons', {
+		                "Sim" : function() {
+		                    form.submit();
+		         },
+		                "Não" : function() {
+		                    $(this).dialog("close");
+		                    }
+		                });
+
+		        $("#dialogAprovado").dialog("open");
+	        }
+	        else if(form.find('input#radioNaoAprovado').is(':checked')){
+					$("#dialogNaoAprovado").dialog('option', 'buttons', {
+		                "Enviar" : function() {
+		                    form.submit();
+		         	},
+		                "Cancelar" : function() {
+		                    $(this).dialog("close");
+		                    }
+		                });
+
+		        	$("#dialogNaoAprovado").dialog("open");
+			}
+		}
+    });
+});
+</script>
+
+{% endaddtoblock %}
+
+<TABLE WIDTH=100% CELLPADDING=1 CELLSPACING=1>
+	<tr valign=top>
+		<td width=17%>
+			<P>Nome:</P>
+		</td>
+		<td colspan="5">
+			<P>{{ projeto.aluno.nome_completo|default_if_none:" "}}
+			</P>
+		</td>
+		<tr valign=top>
+		<td width=17% >
+			<P>Curso:</P>
+		</td>
+		<td colspan=5 width=83%>
+			<P>{{projeto.aluno.curso|default_if_none:" "}}</P>
+		</td>
+		</tr>
+		<td width=17%>
+			<P>Numero USP:</P>
+		</td>
+		<td width=17% >
+			<P>{{projeto.aluno.numero_usp|default_if_none:" "}}
+			</P>
+		</td>
+		<td colspan="4"></td>
+	</tr>
+	
+<tr valign=top>
+		<td width=17%>
+			<P>E-mail:</P>
+		</td>
+		<td colspan=2 width=33%>
+			<P>{{ projeto.aluno.email|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Telefone:</P>
+		</td>
+		<td>
+			<P>{{ projeto.aluno.tel|default_if_none:" "}}
+			</P>
+		</td>
+		<td></td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Endereço:</P>
+		</td>
+		<td colspan=3 width=50%>
+			<P>{{ projeto.aluno.endereco|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Numero:</P>
+		</td>
+		<td width=17%>
+			<P>{{ projeto.aluno.numero|default_if_none:" "}}
+			</P>
+		</td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Complemento:</P>
+		</td>
+		<td width=17%>
+			<P>{{ projeto.aluno.cmp|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Bairro:</P>
+		</td>
+		<td width=17%>
+			<P>{{ projeto.aluno.bairro|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>CEP</P>
+		</td>
+		<td width=17% >
+			<P>{{ projeto.aluno.cep|default_if_none:" "}}
+			</P>
+		</td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Cidade:</P>
+		</td>
+		<td width=17%>
+			<P>{{ projeto.aluno.cidade|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Estado:</P>
+		</td>
+		<td>
+			<P>{{ projeto.aluno.uf|default_if_none:" "}}
+			</P>
+		</td>
+		<td></td><td></td>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Titulo:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			<P>{{projeto.titulo }}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Orientador/<BR>Supervisor:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			{% if projeto.orientador %}<p>{{projeto.orientador}}</p> {%endif%}
+			{% if projeto.supervisor  %}<p>{{projeto.supervisor}}</p> {%endif%}
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Área:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			{% for item in projeto.area %}
+    			{% if item == 'a' %} <p>Engenharia de Software e Sistemas de Informação;</p>{% endif %}
+    			{% if item == 'b' %} <p>Inteligencia Computacional;</p>{% endif %}
+    			{% if item == 'c' %} <p>Banco de Dados;</p>{% endif %}
+    			{% if item == 'd' %} <p>Computação Gráfica e Processamento de Imagens;</p>{% endif %}
+    			{% if item == 'e' %} <p>Hipermídia;</p>{% endif %}
+    			{% if item == 'f' %} <p>Computação Bioinspirada;</p>{% endif %}
+    			{% if item == 'g' %} <p>Otimização e Modelos Estocásticos;</p>{% endif %}
+    			{% if item == 'h' %} <p>Gerenciamento de Redes;</p>{% endif %}
+    			{% if item == 'i' %} <p>Mecânica dos Fluidos Computacionais;</p>{% endif %}
+    			{% if item == 'j' %} <p>Sistemas Distribuídos e Programação Concorrente;</p>{% endif %}
+    			{% if item == 'k' %} <p>Arquitetura de Computadores;</p>{% endif %}
+    			{% if item == 'l' %} <p>Outras;</p>{% endif %}
+    	 {% endfor %}
+    	 {{projeto.espc }};
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Sub-área especifica:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			<P>{{projeto.subarea }}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Descrição:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			<P>{{projeto.descricao}}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Atividades:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			<P>{{projeto.atividades }}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Cronograma</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+			<P>{{projeto.cronograma }}
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<PRE STYLE="text-align: right; widows: 2; orphans: 2">Ultima Atualizacao: {{projeto.data }}</PRE>
+
+{% if request.user in projeto.disciplina.professores.all or request.user.funcionario or request.user == projeto.supervisor or request.user = projeto.orientador %}
+	
+	<h2> Validar Projeto</h2>
+	<form id="validaProjetoForm" action="{% url 'validar_projeto_de_graduacao' projeto.id %}" method="post">
+		{% csrf_token %}
+		<table>
+		<tr><td align="center">
+		Aprovado<input id="radioAprovado" type="radio" name="validacao" value="s"> 
+		Não Aprovado<input id="radioNaoAprovado" type="radio" name="validacao" value="n">
+		Pendente<input id="radioPendente" type="radio" name="validacao" value="p">
+		<input id="validacaoSubmit" type="submit" value=" Validar ">
+		</td></tr>
+		<tr>
+			
+		</tr>
+	</table>
+	</form>
+
+{% endif %}
+<input type="button" value=" Voltar " onclick="history.go(-1)">
+{% if request.user in projeto.disciplina.professores.all or request.user in projeto.disciplina.monitores.all %}
+<input type="button" value=" Editar "  onClick="parent.location='{% url 'editar_projeto_de_graduacao' projeto.id %}'">
+{% endif %}
+<div id="dialogAprovado" title="Confirmação Necessaria" style="display:none;">
+  Você Tem certeza?
+</div>
+<div id="dialogNaoAprovado" title="Justificativa Necessaria" style="display:none;">
+  <td align="center">
+  	Justificativa<br>
+  	<p><textarea id="justificativaTextArea" name="justificativa" rows="4" cols="50" form="validaProjetoForm"></textarea></td></p>
+  	Cancelar Projeto<input id="radioCancelar" type="radio" name="opcaoJustificativa" value="cancelar" form="validaProjetoForm"> 
+	Retornar Para Rascunho<input id="radioRascunho" type="radio" name="opcaoJustificativa" value="rascunho" checked form="validaProjetoForm">
+</div>
+
+{% endblock %}

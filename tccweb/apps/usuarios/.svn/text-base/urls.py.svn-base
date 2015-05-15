@@ -1,0 +1,12 @@
+from django.conf.urls.defaults import patterns, url
+
+
+urlpatterns = patterns('',
+    url(r'^perfil/(?P<usuario_id>\w+)/$', 'usuarios.views.profile',name='usuarios_perfil'),
+    url(r'^login/$', 'usuarios.views.login', name='usuarios_login'),
+    url(r'^logout/$', 'usuarios.views.logout', name='usuarios_logout'),
+    url(r'^perfil/edit/(?P<id>\w+)/$', 'usuarios.views.editprofile',name='usuarios_editar'),
+    url(r'^cadastro/$', 'usuarios.views.cadastro', name='usuarios_cadastro'),
+    url(r'^password/change/$', 'django.contrib.auth.views.password_change',{'template_name':'usuarios/password_change_form.html'}, name='auth_password_change'), 
+    url(r'^password/change/done/$', 'django.contrib.auth.views.password_change_done',{'template_name':'usuarios/password_change_done.html'}, name='auth_password_change_done'), 
+)

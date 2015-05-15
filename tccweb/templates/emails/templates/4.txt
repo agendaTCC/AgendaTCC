@@ -1,0 +1,9 @@
+Prezado(a) aluno(a)
+ 
+Infelizmente, sua inscrição na disciplina {{ disciplina }} não foi aprovada por um ou mais responsáveis pela disciplina!!
+ 
+Por favor, acesse o sistema TCC Web, utilizando o usuário e senha recebidos em um e-mail anterior, para verificar os detalhes. O projeto pode ter sido cancelado definitivamente ou colocado em modo rascunho (nesse último caso será possível editar e submeter novamente).
+ 
+Em caso de dúvida procure um dos docentes responsáveis pelas disciplinas.
+ 
+Não responda a este email, pois foi gerado automaticamente.

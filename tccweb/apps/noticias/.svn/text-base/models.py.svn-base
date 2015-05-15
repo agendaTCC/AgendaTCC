@@ -1,0 +1,18 @@
+from django.db import models
+from disciplinas.models import Disciplina
+
+class Noticia(models.Model):
+    titulo = models.CharField(max_length=80, verbose_name='Titulo da Noticia')
+    conteudo = models.TextField(verbose_name='Conteudo da Noticia')
+    disciplina = models.ForeignKey(Disciplina, null=True, blank=True, 
+        verbose_name='Disciplina relacionada')
+    criada_em = models.DateTimeField(auto_now_add=True, 
+        verbose_name='Data de criacao')
+    
+    class Meta:
+        ordering = ['-criada_em']
+        
+    def __unicode__(self):
+        return self.titulo
+        
+

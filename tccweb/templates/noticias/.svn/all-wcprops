@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/TCCWeb/!svn/ver/2/trunks/templates/noticias
+END
+noticia_detalhe.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/TCCWeb/!svn/ver/2/trunks/templates/noticias/noticia_detalhe.html
+END
+noticia_listar.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/TCCWeb/!svn/ver/2/trunks/templates/noticias/noticia_listar.html
+END

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}Perfil de {{ user.get_profile.display_name }}{% endblock %}
+
+{% block section %}{{ user.get_profile.display_name }}{% endblock %}
+
+{% block content %}
+<div>
+  <form method="post"  >
+  <table>
+  
+
+    <tr>
+      <th>
+		<td>
+		{% csrf_token %}
+		{{ form|default_if_none:" " }}
+		</td>
+	  </th>
+      <td><input type="submit" value="Salvar"/></td>
+      <td><input type="button" value=" Voltar " onclick="history.go(-1)"></td>
+    </tr>
+  </table>
+</form>
+</div>
+{% endblock %}

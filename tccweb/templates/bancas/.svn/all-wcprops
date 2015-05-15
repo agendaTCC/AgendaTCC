@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/TCCWeb/!svn/ver/2/trunks/templates/bancas
+END
+banca_detalhe.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/TCCWeb/!svn/ver/150/trunks/templates/bancas/banca_detalhe.html
+END
+banca_reserva.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/TCCWeb/!svn/ver/145/trunks/templates/bancas/banca_reserva.html
+END
+banca_listar.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/TCCWeb/!svn/ver/153/trunks/templates/bancas/banca_listar.html
+END

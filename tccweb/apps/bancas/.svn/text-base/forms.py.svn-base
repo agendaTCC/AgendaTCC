@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+
+from django.forms import ModelForm,  MultipleChoiceField,CheckboxSelectMultiple, DateField
+from django.forms.models import inlineformset_factory
+from django.forms.widgets import CheckboxSelectMultiple
+from django.contrib.admin.widgets import AdminDateWidget 
+from models import Dia_Agenda, Banca, Agenda
+from disciplinas.models import Disciplina
+
+PERIODOS = (
+            ('m','Manha'),
+            ('t','Tarde'),
+            ('n','Noite'),            
+            )
+
+class DiaForm(ModelForm):
+    periodos = MultipleChoiceField(label='Periodos',required=False, widget=CheckboxSelectMultiple, choices=PERIODOS)
+    data = DateField(widget=AdminDateWidget())
+    class Meta:
+        model = Dia_Agenda
+        
+class BancaForm(ModelForm):
+    class Meta:
+        model = Banca
+        exclude = ('hora_inicial','hora_final','data','grupo','aluno','sala','orientador','empresa','reservada','alteravel','banca1','banca2','projeto')
+
+class AgendamentoForm(ModelForm):
+    data_inicial = DateField(widget=AdminDateWidget())
+    data_final = DateField(widget=AdminDateWidget())
+    class Meta:
+        model = Agenda
+        
+dia_agenda_formset = inlineformset_factory(Agenda,Dia_Agenda,form = DiaForm, extra = 3, can_delete=False)      
+        

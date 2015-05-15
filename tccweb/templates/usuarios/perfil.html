@@ -1,0 +1,137 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Perfil de {{ user.get_profile.display_name }}{% endblock %}
+
+{% block section %}{{ user.get_profile.display_name }}{% endblock %}
+
+{% block content %}
+<table>
+
+	
+	<TR VALIGN=TOP>
+		<tr>
+			<TD WIDTH=17%>
+				<P>Nome:</P>
+			</TD>
+			<TD COLSPAN="5">
+				<P>{{ usuario.nome_completo|default_if_none:" "}}
+				</P>
+			</TD>
+		</tr>
+		<tr>
+			<TD WIDTH=17%>
+				<P>CPF:</P>
+			</TD>
+			<TD COLSPAN="5">
+				<P>{{ usuario.cpf|default_if_none:" "}}
+				</P>
+			</TD>
+		</tr>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17% >
+				<P>Curso:</P>
+			</TD>
+			<TD COLSPAN=5 WIDTH=83%>
+				<P>{{usuario.curso|default_if_none:" "}}</P>
+			</TD>
+		</TR>
+		<tr>
+			<TD WIDTH=17%>
+				<P>Numero USP:</P>
+			</TD>
+			<TD WIDTH=17% >
+				<P>{{usuario.numero_usp|default_if_none:" "}}
+				</P>
+			</TD>
+			<td colspan="4"></td>
+		</tr>
+	</tr>
+	
+<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>e-mail:</P>
+		</TD>
+		<TD COLSPAN=2 WIDTH=33%>
+			<P>{{ usuario.email|default_if_none:" "}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Telefone:</P>
+		</TD>
+		<TD>
+			<P>{{ usuario.tel|default_if_none:" "}}
+			</P>
+		</TD>
+		<td></td>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Endereço:</P>
+		</TD>
+		<TD COLSPAN=3 WIDTH=50%>
+			<P>{{usuario.endereco|default_if_none:" "}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Numero:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{usuario.numero|default_if_none:" "}}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Complemento:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{ usuario.complemento|default_if_none:" "}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Bairro:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{ usuario.bairro|default_if_none:" "}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>CEP</P>
+		</TD>
+		<TD WIDTH=17% >
+			<P>{{usuario.cep|default_if_none:" "}}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Cidade:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{ usuario.cidade|default_if_none:" "}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Estado:</P>
+		</TD>
+		<td>
+			<P>{{ usuario.uf|default_if_none:" "}}
+			</P>
+		</td>
+		<td></td><td></td>
+</tr>
+	
+	{% if usuario.id == request.user.id %}
+	<form action="{% url 'editar_perfil' user.id %}">
+	{% csrf_token %}
+	<tr>
+	<td><input type="submit" value="Editar" /></td>
+	<td><input type="button" value=" Mudar Senha "  onClick="parent.location='{%url 'auth_password_change' %}'"></td>
+	<td colspan="4"></td>
+	</tr>
+	</form>
+
+	{% endif %}
+</table>	
+
+{% endblock %}

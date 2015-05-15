@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}{{ disciplina.titulo }}{% endblock %}
+
+{% block section %}{{ disciplina.titulo }}{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div>
+    <h2>Semestre: {{disciplina.ano}}{{ disciplina.semestre }}{{disciplina.turma}}</h2>
+    Criada em {{ disciplina.criada_em }}<br />
+  </div>
+  
+  <div>
+    {% with total=disciplina.professores.count %}
+      Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+    {% endwith %}
+    {% for professor in disciplina.professores.all %}
+      <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+  
+  <div>
+    {% with total=disciplina.monitores.count %}
+      Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+    {% endwith %}
+    {% for monitor in disciplina.monitores.all %}
+      <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+  
+</div>
+
+<div class="sidebar">
+  	<div class="sidebar-box">
+    <h1>Notícias</h1>
+    <ul class="latest-posts">
+    {% for noticia in noticias %}
+    
+      <li><span class="date">
+      	 <em class="day">{{ noticia.criada_em|date:"d" }}</em>
+       	 <em class="month">{{ noticia.criada_em|date:"M" }}</em></span>
+      	 <a href="{% url noticias_noticia_detalhe noticia.id %}">{{ noticia.titulo }}:<br /> {{ noticia.conteudo|textile|truncatewords:12 }}</a>
+	  {% endfor %}    
+    </ul>
+</div>
+</div>
+
+<div class="content">
+<h3>Ementa</h3>
+<p>{{disciplina.titulo.ementa}}</p>
+<a href="{{disciplina.titulo.link}}" >Link para o Jupiterweb</a>
+</div>
+
+
+{% endblock %}
+<div>

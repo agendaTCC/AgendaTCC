@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url disciplinas_index %}">Disciplinas</a>
+</nav>
+{% endblock %}
+{% block title %}Disciplinas{% endblock %}
+
+{% block section %}Disciplinas{% endblock %}
+
+{% block content %}
+<div id="disciplinas-container" class="grid_12">
+  {% for disciplina in disciplinas %}
+    <div class="disciplina">
+      <div class="titulo"><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.codigo }} - {{ disciplina.titulo }}</a></div>
+      <div class="professores-container">
+        {% with total=disciplina.professores.count %}
+          <span class="negrito">Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:</span> {% if total == 0 %}Sem Professor{% endif %}
+        {% endwith %}
+        {% for professor in disciplina.professores.all %}
+          <a href="{% url usuarios_perfil professor.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+      <div class="monitores-container">
+        {% with total=disciplina.monitores.count %}
+          <span class="negrito">Monitor{{ total|pluralize:"es" }}:</span> {% if total == 0 %}Sem monitor{% endif %}
+        {% endwith %}
+        {% for monitor in disciplina.monitores.all %}
+          <a href="{% url usuarios_perfil monitor.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+  {%if user.get_profile.funcao == "5"%}
+  <div><a href="{% url relatorio_total%}">Relatório</a></div>
+  {%endif%}
+</div>
+{% endblock %}

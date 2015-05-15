@@ -1,0 +1,65 @@
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.contrib import messages
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
+from django.contrib.auth import forms, authenticate, views, login
+from django import http
+from django.core.urlresolvers import reverse
+from models import Disciplina
+from forms import DisciplinaForm
+from atividades.models import Atividade
+from formularios.models import Formulario
+from eventos.models import Evento
+from noticias.models import Noticia
+from datas.models import Data
+from formularios.models import ProjetoDeGraduacao
+
+def disciplina_listar(request):
+    
+    disciplinas = Disciplina.objects.all()
+    
+    return render_to_response('disciplinas/disciplina_listar.html', {
+        'disciplinas': disciplinas,
+    }, context_instance=RequestContext(request))
+
+
+def disciplina_detalhe(request, disciplina_id):
+    
+    disciplina = get_object_or_404(Disciplina, pk=disciplina_id)
+    alunos = disciplina.alunos
+    pendentes = ProjetoDeGraduacao.objects.filter(disciplina=disciplina_id, validacao = 'p')
+    noticias = Noticia.objects.filter(disciplina=disciplina_id)
+    atividades = Atividade.objects.filter(disciplina=disciplina_id)
+    eventos = Evento.objects.filter(disciplina=disciplina_id)
+    formularios = Formulario.objects.filter(disciplina=disciplina_id)
+    datas = Data.objects.filter(disciplina=disciplina_id)
+
+    return render_to_response('disciplinas/disciplina_detalhe.html', {
+        'disciplina': disciplina,
+        'noticias': noticias,
+        'atividades': atividades,
+        'eventos': eventos,
+        'formularios': formularios,
+        'datas':datas,
+        'pendentes': pendentes,
+        'alunos': alunos,
+    }, context_instance=RequestContext(request))
+
+@login_required
+def disciplina_criar(request):    
+    if request.method == 'POST':
+        form = DisciplinaForm(request.POST)
+        if form.is_valid():
+            disciplina = form.save(commit=False)
+            disciplina.save()
+            messages.success(request, ('Nova disciplina incluida.'))
+            return redirect(reverse('disciplinas_index'))
+        else:
+            messages.error(request, ("Problemas ao criar a disciplina."))
+    else:
+        form = DisciplinaForm()
+    return render_to_response('disciplinas/disciplina_criar.html', {
+        'form': form,
+    }, context_instance=RequestContext(request))
+

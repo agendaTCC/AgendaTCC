@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Disciplinas{% endblock %}
+
+{% block section %}Disciplinas{% endblock %}
+
+{% block content %}
+<!-- ATUAL -->
+
+<div class="content">
+<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+<h2>Semestre atual</h2>
+  {% for disciplina in disciplinas_atual %}
+    <div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      <div ><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+      <div>
+        {% with total=disciplina.professores.count %}
+          <span class="negrito">Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:</span> {% if total == 0 %}Sem Professor{% endif %}
+        {% endwith %}
+        {% for professor in disciplina.professores.all %}
+          <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+      <div style="padding-bottom:5px;">
+        {% with total=disciplina.monitores.count %}
+          <span>Monitor{{ total|pluralize:"es" }}:</span> {% if total == 0 %}Sem monitor{% endif %}
+        {% endwith %}
+        {% for monitor in disciplina.monitores.all %}
+          <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+</div>
+<!-- FIM ATUAL -->
+<!-- PROXIMO -->
+{% if disciplinas_proximo.count != 0 %}
+<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+<h2>Proximo semestre</h2>
+  {% for disciplina in disciplinas_proximo %}
+    <div style="position:relative; padding-top:10px;">
+      <div ><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+      <div>
+        {% with total=disciplina.professores.count %}
+          <span class="negrito">Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:</span> {% if total == 0 %}Sem Professor{% endif %}
+        {% endwith %}
+        {% for professor in disciplina.professores.all %}
+          <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+      <div style="padding-bottom:5px;">
+        {% with total=disciplina.monitores.count %}
+          <span>Monitor{{ total|pluralize:"es" }}:</span> {% if total == 0 %}Sem monitor{% endif %}
+        {% endwith %}
+        {% for monitor in disciplina.monitores.all %}
+          <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+</div>
+<div class="sidebar"> 
+  <div class="sidebar-box">
+  
+  	<p><a href="{% url disciplinas_listar_passadas %}" ><h2 style="padding-bottom: 0;">Disciplinas passadas</h2></a></p>
+  	    <div style="position:relative; padding-top:5px; padding-bottom: 10px;"><a href="{% url disciplinas_listar_atual_proximo %}">Ver todas disciplinas</a></div>
+  	
+  </div>
+
+  </div>
+<!-- FIM PROXIMO -->
+{% endblock %}

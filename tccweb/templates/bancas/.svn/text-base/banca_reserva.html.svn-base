@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url bancas_index %}">Bancas</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url bancas_banca_detalhe banca.id %}">{{ banca.titulo }}</a>
+</nav>
+{% endblock %}
+{% block title %}Banca{% endblock %}
+
+{% block section %}Banca{% endblock %}
+
+{% block content %}
+
+<div>
+	<div id="disciplinas-container" class="grid_12 clearfix">
+	 <h1> Sala {{banca.sala}}</h1>
+	 <p>Banca do dia {{banca.data}}, das {{banca.hora_inicial}} ás {{banca.hora_final}}</p>
+		<br />
+	 <p> Faça a Reserva da Sala preenchendo o Formulario Abaixo:</p> <br />
+	</div>
+  <div id="form-container" class="grid_12 clearfix" >
+  <form method="post"  >
+  <table>
+  
+
+    <tr>
+      <th>
+		<td>
+		{% csrf_token %}
+		{{ form }}
+		{{form.Disciplina}}
+		</td>
+	  </th>
+      <td><input type="submit" value="Salvar"/></td>
+    </tr>
+  </table>
+</form>
+</div>
+  
+</div>
+
+{% endblock %}

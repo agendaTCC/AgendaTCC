@@ -1,0 +1,122 @@
+﻿{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Pendências{% endblock %}
+
+{% block section %}Pendências{% endblock %}
+
+{% block content %}
+
+{% for departamento,semestre in request.session.semestre.items %}
+	<div style="height:38px">
+		<div style="float:left"><h1>Departamento - {{departamento}}</h1></div>
+	</div>
+	{% if disciplinas %}
+				{%  with disciplinas=disciplinas|get_item:departamento%}
+					{% for disciplina,projetos in disciplinas.items %}
+						<h1>{{disciplina}}</h1>
+						{% if projetos %}
+							<table>
+								<tr>
+									<td width="40%">Aluno:</td><td width="15%" >Supervisor/Orientador</td><td width="15%" >Graduação</td><td width="15%" >Docente</td><td width="15%" colspan="2">Situação</td>
+								</tr>
+								{% for projeto in projetos %}
+									{% if not projeto.rascunho and not projeto.cancelado%}
+									<tr>
+										<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+										<td>
+											{% if projeto.validacao_supervisor_orientador == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.validacao_graduacao == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_graduacao == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_graduacao == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.validacao_docente == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_docente == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_docente == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+										{% if projeto.validacao_supervisor_orientador == 'n' or projeto.validacao_docente == 'n' or projeto.validacao_graduacao == 'n' %}
+											<td>
+												<p>Matricula Rejeitada</p>
+											</td>
+										{% endif %}
+				
+											{% if projeto.validacao_supervisor_orientador == 's' and projeto.validacao_docente = 's' and projeto.validacao_graduacao == 's' %}
+												<td ONMOUSEOVER="ddrivetip('tipSituacaoMatriculado')" ONMOUSEOUT="hideddrivetip()">
+													<p >Matriculado</p>
+												</td>
+											
+											{% elif projeto.validacao_supervisor_orientador == 'p' and projeto.validacao_docente == 's' and projeto.validacao_graduacao == 's' %}
+												<td ONMOUSEOVER="ddrivetip('tipSituacaoMatriculaparcial1')" ONMOUSEOUT="hideddrivetip()">
+													<p>Matricula Parcial</p>
+												</td>
+											{% elif projeto.validacao_supervisor_orientador == 's' and projeto.validacao_docente = 'p' and projeto.validacao_graduacao == 's' %}
+												<td ONMOUSEOVER="ddrivetip('tipSituacaoMatriculaparcial2')" ONMOUSEOUT="hideddrivetip()">
+													<p>Matricula Parcial</p>
+												</td>
+											{% elif projeto.validacao_supervisor_orientador == 's' and projeto.validacao_docente = 's' and projeto.validacao_graduacao == '0' %}
+												<td ONMOUSEOVER="ddrivetip('tipSituacaoMatriculaparcial2')" ONMOUSEOUT="hideddrivetip()">
+													<p>Matricula Parcial</p>
+												</td>
+											{% else %}
+												<td ONMOUSEOVER="ddrivetip('tipSituacaoMatriculapendente')" ONMOUSEOUT="hideddrivetip()">
+													<p>Matricula Pendente</p>
+												</td>
+											{% endif %}
+												<div class="hidden" id="tipSituacaoMatriculado"><strong>Matriculado</strong> <br />
+
+												<p>O projeto foi aprovado pelo Supervisor/Orientador, pelo Docente da Disciplina e pela Seção de Graduação!
+												</p></div>
+												<div class="hidden" id="tipSituacaoMatriculaparcial1"><strong>Matricula Parcial</strong> <br />
+
+												<p>O projeto foi aprovado pelo Supervisor/Orientador, e pelo Docente da Disciplina!
+												</p></div>
+												<div class="hidden" id="tipSituacaoMatriculaparcial2"><strong>Matricula Parcial</strong> <br />
+
+												<p>O projeto foi aprovado pelo Supervisor/Orientador, e pela Seção de Graduação!
+												</p></div>
+												<div class="hidden" id="tipSituacaoMatriculapendente"><strong>Matricula Pendente</strong> <br />
+
+												<p>O projeto foi aprovado pelo Supervisor/Orientador, Mas ainda falta aprovação do Docente e da Graduação, aluno ainda não matriculado no Sistema!
+												</p></div>
+										
+
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</table>
+						{% endif %}
+					{% endfor %}
+				
+				{% endwith %}
+			{% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

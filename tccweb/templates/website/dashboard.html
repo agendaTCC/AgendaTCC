@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Painel{% endblock %}
+
+{% block section %}Painel - Bem Vindo {{ request.user.nome_completo }}{% endblock %}
+
+
+{% block content %}
+{% addtoblock "menu" %}
+    
+{% endaddtoblock %}
+{% addtoblock "js" %}
+<script>
+$(document).ready(function(){
+
+	$('select').change(function(){
+		window.location.replace("trocar_semestre/"+$(this).val());
+	})
+	$('.menu-buttom').click(function(){
+		var target = $($(this).data('id'));
+		if(target.is('.active'))
+			target.removeClass('active').fadeOut('fast');
+        else{
+        	target.addClass('active').fadeIn('fast');
+        	
+        }
+	})
+});
+</script>
+{% endaddtoblock %}
+<div>
+
+	<div class="sidebar">
+		<div class="sidebar-box">	
+			<h1>Notícias</h1>
+    		<ul class="latest-posts">
+		    {% for noticia in noticias %}
+		    
+      			<li><span class="date">
+      	 			<em class="day">{{ noticia.criada_em|date:"d" }}</em>
+       	 			<em class="month">{{ noticia.criada_em|date:"M" }}</em></span>
+      	 			<a href="{% url 'detalhe_noticia' noticia.id %}">{{ noticia.titulo }}:<br /> {{ noticia.conteudo|truncatewords:12 }}</a>
+			
+	  		{% endfor %}    
+    		</ul>
+    
+		    <div style="padding-top: 10px;"><a href="{% url 'listar_noticia' %}">Ver todas notícias</a>
+			 {% if request.user.monitor or request.user.pae or request.user.docente or request.user.funcionario or request.user.secretario%}
+			  - <a href="{% url 'nova_noticia' %}" >Nova</a>    
+			  {% endif %}
+		    
+		    </div>
+		</div>
+ 	</div>
+	</div>
+	<div class="content">
+		{% if request.user.aluno  and not request.session.semestre%}
+		<div class="notice-box">
+			<h4>Aviso</h4>
+			<p> Obrigado por utilizar o Sistema TCCWeb</p><br>
+			<p><strong>Aos Alunos:</strong></p>
+			<p>Para a total Utilização do Sistema é necessário que seu perfil seja completamente preenchido, você pode acessar seu perfil de usuário no canto superior direito da pagina!</p><br>
+			<p><strong>Aos Demais usuários:</strong></p>
+			<p>Usuário deve entrar em contato com a administração para mudar para o perfil desejado.</p>
+		</div>
+		{% endif %}
+		{% comment %}
+
+		<!--Departamento: Todas as informações são exibidas de acordo com o semestre referente de cada departamento (Cada departamento tem seu proprio semestre atual)-->
+
+		{% endcomment %}
+		{% for departamento,semestre in request.session.semestre.items %}
+		<div style="height:38px">
+			<div style="float:left"><h1>Departamento - {{departamento}}</h1></div>
+			<div style="float:right">
+				<select id="selectSemestre_{{departamento}}">
+				{% for semestre_ in todos_semestres|get_item:departamento %}
+			  		<option {% if semestre_.id == semestre.id %}selected{% endif %} value="{{semestre_.id}}">{{semestre_.ano}} - {{semestre_.semestre}}° semestre</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+{% comment 'DASHBOARD ALUNO'%}
+	#
+	# INICIO DASHBOARD ALUNO
+	#
+	{% endcomment %}
+			{% comment %}
+		
+			<!-- Matricula: Verifica o se é periodo de matricula e exibe bloco de matricula (somente para alunos) -->
+
+			{% endcomment %}
+
+			{% if request.user.aluno and request.user.curso.departamento == departamento and request.session.hoje >= semestre.inic_inscricao  and request.session.hoje <= semestre.max_inscricao %}
+			<div class="content">
+  				<h1><a href="{% url 'matricula' departamento.id %}">Inscrição</a></h1>
+  				<p>Ainda não Fez sua Inscrição? </p>
+  				<div style="position:relative; padding: 15px;"><p class="botao"><a href="{% url 'matricula' departamento.id %}">Inscreva-se aqui</a>	</p></div>
+  			</div>
+  			{% endif %}
+  			{% comment %}
+
+  			<!-- Projetos Alunos: Lista Projetos submetidos pelos alunos, e toda interação em relação ao projeto, bancas, monografias, e questionarios (somente para alunos) -->
+
+  			{% endcomment %}
+			{% if projetos_aluno != None and request.user.aluno%}
+				{% if projetos_aluno|get_item:departamento %}
+				<h1>Projetos Submetidos</h1>
+				<table>
+					{% for projeto in projetos_aluno|get_item:departamento %}
+						{% if projeto.cancelado %}
+							<tr>
+								<td><strong>Titulo:</strong></td>
+								<td colspan="3"><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{projeto.titulo}}</a></td>	
+							</tr>	
+							<tr>
+								<td><strong>Disciplina:</strong></td>
+								<td colspan="4"><a href="#">{{projeto.disciplina.titulo}}</a></td>
+							</tr>
+							<tr>
+								<td rowspan="2"><strong>Matricula:</strong></td>
+								<td colspan="2" align="center"><strong>Estado:</strong></td>
+								<td colspan="3" align="center"><strong>Projeto:</strong></td>
+							</tr>
+		        			<tr>
+		        				<td colspan="2"  align="">
+		        					Cancelado
+		        				</td>
+		        				<td colspan="3">
+		        					Cancelado
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Justificativa:</strong></td>
+								<td colspan="5">{{projeto.justificativa}}</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td><strong>Titulo:</strong></td>
+								<td colspan="3"><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{projeto.titulo}}</a></td>	
+							</tr>	
+							<tr>
+								<td><strong>Disciplina:</strong></td>
+								<td colspan="4"><a href="#">{{projeto.disciplina.titulo}}</a></td>
+							</tr>
+							<tr>
+								<td rowspan="2"><strong>Matricula:</strong></td>
+								<td colspan="2" align="center"><strong>Estado:</strong></td>
+								<td colspan="3" align="center"><strong>Projeto:</strong></td>
+							</tr>
+		        			<tr>
+		        				<td colspan="2"  align="">
+		        					{% if request.user in projeto.disciplina.alunos.all %}
+		        						Matriculado
+	        						{% else %}
+	        							Não Matriculado
+	    							{% endif %}
+		        				</td>
+		        				<td colspan="3">
+		        					{% if projeto.rascunho %}
+		        						Rascunho
+		    						{% else %}
+		    							Salvo
+									{% endif %} /
+									{% if not max_titulo_areas   %} 
+										<a href="{% url 'editar_projeto_de_graduacao' projeto.id %}" >Editar</a> 
+									{% else %} 
+										<a href = "#">Visualizar</a>
+									{% endif %} 
+								</td>
+		        			</tr>
+		        			{% if projeto.justificativa and projeto.rascunho %}
+		        			<tr>
+								<td><strong>Justificativa:</strong></td>
+								<td colspan="5">{{projeto.justificativa}}</td>
+							</tr>	
+							{% endif %}
+							
+							{% with bancas=projeto.banca_projeto.all %}	
+						   		
+						   		{% for banca in bancas %}
+						   			{% if banca.disciplina == disciplina %}
+						   				<tr ONMOUSEOVER="ddrivetip('tip-aluno-apresentacao')" ONMOUSEOUT="hideddrivetip()">
+						   					<td rowspan="2"> <strong>Apresentação:</strong></td> 
+						   					<td><strong>Sala:</strong></td>
+						   					<td><strong>Data:</strong></td>
+						   					<td><strong>Horário:</strong></td>
+						   				</tr>  
+						   				<tr ONMOUSEOVER="ddrivetip('tip-aluno-apresentacao')" ONMOUSEOUT="hideddrivetip()">
+						   					<td>{{banca.sala.nome}}</td>
+						   					<td>{{banca.data|date:"d/m/Y"}}</td>
+						   					<td>Inicio: {{banca.hora_inicial}}, Fim: {{banca.hora_final}}</td>
+						   				</tr>
+										<div class="hidden" id="tip-aluno-apresentacao">
+											<strong>Apresentação</strong> <br />
+											<p>Titulo: {{banca.projeto.titulo}}</p>
+											<p>Membros da Banca:</p>
+									    	<p>{{banca.banca_docente.nome_completo}} </p> 
+									    	<p>{{banca.banca_convidado.nome_completo}}</p>
+										</div>
+										{% endif %}			   
+						   		{% endfor %}
+						   	{% endwith %}
+						   	
+						   	
+						  	<tr>
+						  		<td rowspan="2" ><strong>Monografias:</strong></td>
+						  		<td colspan="2"><strong>Original:</strong></td>
+						  		<td colspan="3"><strong>Revisada:</strong></td>
+						  	</tr>
+						  	<tr>
+						  		<td colspan="2" >
+						  			{% if not  projeto.monografia_original_projeto %}
+						  			<a href="{% url 'entrega_monografia_original' projeto.id %}" >Entregar</a></td>
+						  			{% else %}
+						  			Entregue - {{projeto.monografia_original_projeto.data|date:"d/m/Y, h:i"}}
+						  			{% endif %}
+						  		<td colspan="3">
+						  			{% if not  projeto.monografia_revisada_projeto %}
+						  			<a href="{% url 'entrega_monografia_revisada' projeto.id %}" >Entregar</a>
+						  			{% else %}
+						  			Entregue - {{projeto.monografia_revisada_projeto.data|date:"d/m/Y, h:i"}}
+						  			{% endif %}
+						  		</td>
+						  	</tr>
+						  	<!-- {% for questionario in questionarios%}	
+						  		<tr>
+						  			<td>{{Questionario.}}</td> <td></td>
+						  		</tr>
+						  	{% endfor %} -->
+							<tr>
+								<td rowspan="{{questionarios.count|sum:'1'}}"><strong>Questionários:</strong></td>
+							</tr>
+							{%for questionario in questionarios%}
+							<tr>
+								<td colspan="2"><strong>{{questionario.titulo}}</strong></td>
+								<td colspan="3"><a href="{% url 'responderQuestionario' projeto.id questionario.id %}" >Responder</a></td>
+							 </tr>    
+							<!--<tr>
+								<td colspan="2"><strong>Graduação:</strong></td>
+								<td colspan="3"><a href="#" >Responder</a></td>
+							</tr>   		
+							-->
+							{% endfor %}
+							<tr>
+								<td rowspan="2"><strong>Declarações</strong></td> 
+								<td colspan="5"><strong>Declaração de Horas:</strong></td> 
+							</tr>
+							<tr>
+								<td colspan="5">
+									{% if projeto.supervisor != None %}
+										<a href="#" >Imprimir</a>
+									{% endif %}
+									{% if projeto.orientador != None %}
+										<a href="#" >Imprimir</a>
+									{% endif %}
+								</td> 
+							</tr>
+							
+						{% endif %}
+					{% endfor %}
+
+				</table>
+				{% endif %}
+			{% endif %}
+	{% comment %}
+	#
+	# FIM DASHBOARD ALUNO
+	#
+{% endcomment %}
+
+{% comment 'DASHBOARD DOCENTE'%}
+	#
+	# INICIO DASHBOARD DOCENTE
+	#
+	{% endcomment %}
+			{% if bancas_docente_convidado and request.user.docente %}
+				{% with bancas=bancas_docente_convidado|get_item:departamento %}
+					{% if bancas %}
+						<h1>Bancas como convidado</h1>
+						<table>
+							<tr>
+								<td>Aluno</td><td>Titulo</td><td>Data</td><td>Inicio</td><td>Menu</td>
+							</tr>
+							{% for banca in bancas %}
+							<tr>
+								<td><a href="{% url 'visualizar_perfil' banca.projeto.aluno.id %}">{{ banca.projeto.aluno }}</a></td>
+								<td><a href="{% url 'visualisar_projeto_de_graduacao' banca.projeto.id%}">{{ banca.projeto.titulo }}</a></td>
+								<td>{{banca.data|date:"d/m/Y"}}</td>
+								<td>{{banca.hora_inicial|time:"H:i"}}</td>
+								<td align="center">
+								<img  class="menu-buttom" data-id=".banca_{{banca.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+							</tr>
+							<tr class="table-menu banca_{{banca.id}}">
+							
+							<td colspan="5">
+									<ul>
+										<li><a href="{% url 'visualizar_avaliacao' banca.projeto.id %}">Visualizar Avaliação do Aluno</a></li>
+									<ul>
+									
+
+							</td>	
+							
+							
+							
+
+						</tr>
+							{% endfor %}
+						</table>
+					{% endif %}
+				{% endwith %}
+			{% endif %}
+			{% if bancas_docente_responsavel and request.user.docente %}
+				{% with bancas=bancas_docente_responsavel|get_item:departamento %}
+					{% if bancas %}
+						<h1>Bancas como responsavel</h1>
+						<table>
+							<tr>
+								<td>Aluno</td><td>Titulo</td><td>Data</td><td>Inicio</td><td>Menu</td>
+							</tr>
+							{% for banca in bancas %}
+							<tr>
+								<td><a href="{% url 'visualizar_perfil' banca.projeto.aluno.id %}">{{ banca.projeto.aluno }}</a></td>
+								<td><a href="{% url 'visualisar_projeto_de_graduacao' banca.projeto.id%}">{{ banca.projeto.titulo }}</a></td>
+								<td>{{banca.data|date:"d/m/Y"}}</td>
+								<td>{{banca.hora_inicial|time:"H:i"}}</td>
+							<td align="center">
+								<img  class="menu-buttom" data-id=".banca_{{banca.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+							</tr>
+							<tr class="table-menu banca_{{banca.id}}">
+							
+							<td colspan="5">
+									<ul>
+										<li><a href="{% url 'visualizar_avaliacao' banca.projeto.id  %}">Visualizar Avaliação do Aluno</a></li>
+									<ul>
+									
+
+							</td>	
+							
+							
+							
+
+						</tr>
+							{% endfor %}
+						</table>
+					{% endif %}
+				{% endwith %}
+			{% endif %}
+
+			{% comment %}
+
+			<!-- Disciplinas Docente: Disciplinas na qual o docente é responsavel no semestre atual( consequentemente do departamento ao qual o semestre pertence) -->
+
+			{% endcomment %}
+			{% if disciplinas_docente and request.user.docente %}
+				{%  with disciplinas=disciplinas_docente|get_item:departamento%}
+					{% for disciplina,projetos in disciplinas.items %}
+						<h1>{{disciplina}}</h1>
+						{% if projetos %}
+							<table>
+								<tr>
+									<td>Aluno</td><td>Titulo</td><td>Status</td><td>Aprovação</td>
+								</tr>
+								{% for projeto in projetos %}
+									{% if not projeto.rascunho and not projeto.cancelado%}
+									<tr>
+										<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+										<td><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{ projeto.titulo }}</a></td>
+										<td>
+											{% if projeto.aluno in projeto.disciplina.alunos.all %}
+												Matriculado
+											{% elif  projeto.validacao_docente == 'n' or projeto.validacao_supervisor_orientador == 'n' or projeto.validacao_graduacao == 'n'%}
+												Não Matriculado
+											{% comment %}
+											{% elif not projeto.validacao_docente == 'p' and projeto.validacao_supervisor_orientador == 'p' or projeto.validacao_docente == 'p' and projeto.validacao_graduacao == 'p' or projeto.validacao_supervisor_orientador == 'p' and validacao_graduacao == 'p' %}
+											{% endcomment %}
+											{% else %}	
+												Pendente
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.validacao_docente == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_docente == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_docente == 'p'%}
+												<a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">Aprovar projeto</a>
+											{% endif %}
+										</td>
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</table>
+						{% endif %}
+					{% endfor %}
+				
+				{% endwith %}
+			{% endif %}
+			{% if projetos_docente and request.user.docente %}
+				<h2>Projetos Orientados</h2>
+					<table>
+					
+					<tr>
+						<td>Aluno</td><td>Titulo</td><td>Status</td><td>Aprovação</td><td>Menu</td>
+					</tr>
+
+					{% for projeto in  projetos_docente|get_item:departamento%}
+						{% if not projeto.rascunho and not projeto.cancelado%}
+						<tr>
+							<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+							<td><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{ projeto.titulo }}</a></td>
+							<td>
+								{% if projeto.aluno in projeto.disciplina.alunos.all %}
+									Matriculado
+								{% elif  projeto.validacao_docente == 'n' or projeto.validacao_supervisor_orientador == 'n' or projeto.validacao_graduacao == 'n'%}
+									Não Matriculado
+								{% comment %}
+								{% elif not projeto.validacao_docente == 'p' and projeto.validacao_supervisor_orientador == 'p' or projeto.validacao_docente == 'p' and projeto.validacao_graduacao == 'p' or projeto.validacao_supervisor_orientador == 'p' and validacao_graduacao == 'p' %}
+								{% endcomment %}
+								{% else %}	
+									Pendente
+								{% endif %}
+							</td>
+							<td>
+											{% if projeto.validacao_supervisor_orientador == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'p'%}
+												<a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">Aprovar projeto</a>
+											{% endif %}
+							</td>
+							<td align="center">
+								<img  class="menu-buttom" data-id=".proj_{{projeto.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+						</tr>
+						<tr class="table-menu proj_{{projeto.id}}">
+							
+							<td colspan="5">
+									<ul>
+										<li><a href="{% url 'declarar_horas' projeto.id %}">Declarar Horas</a></li>
+									<ul>
+									<ul>
+										<li><a href="{% url 'avaliacao_aluno' projeto.id %}">Avaliação do Aluno</a></li>
+									<ul>
+
+							</td>	
+							
+							
+							
+
+						</tr>
+						{% endif %}
+					{% endfor %}
+				
+			</table>
+			{% endif %}
+		
+	{% comment %}
+	#
+	# FIM DASHBOARD DOCENTE
+	#
+{% endcomment %}  
+{% comment 'DASHBOARD SUPERVISOR'%}
+	#
+	# INICIO DASHBOARD SUPERVISOR
+	#
+	{% endcomment %}	
+			{% if projetos_supervisor and request.user.supervisor %}
+				{% if  projetos_supervisor|get_item:departamento%}
+				<h2>Projetos Supervisionados</h2>
+				
+				<table>
+					
+					<tr>
+						<td>Aluno</td><td>Titulo</td><td>Status</td><td>Aprovação</td><td>Menu</td>
+					</tr>
+
+					{% for projeto in projetos_supervisor|get_item:departamento %}
+						{% if not projeto.rascunho and not projeto.cancelado%}
+						<tr>
+							<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+							<td><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{ projeto.titulo }}</a></td>
+							<td>
+								{% if projeto.aluno in projeto.disciplina.alunos.all %}
+									Matriculado
+								{% elif  projeto.validacao_docente == 'n' or projeto.validacao_supervisor_orientador == 'n' or projeto.validacao_graduacao == 'n'%}
+									Não Matriculado
+								{% comment %}
+								{% elif not projeto.validacao_docente == 'p' and projeto.validacao_supervisor_orientador == 'p' or projeto.validacao_docente == 'p' and projeto.validacao_graduacao == 'p' or projeto.validacao_supervisor_orientador == 'p' and validacao_graduacao == 'p' %}
+								{% endcomment %}
+								{% else %}	
+									Pendente
+								{% endif %}
+							</td>
+							<td>
+											{% if projeto.validacao_supervisor_orientador == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'p'%}
+												<a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">Aprovar projeto</a>
+											{% endif %}
+							</td>
+							<td align="center">
+								<img  class="menu-buttom" data-id=".proj_{{projeto.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+						</tr>
+						<tr class="table-menu proj_{{projeto.id}}">
+							
+							<td colspan="5">
+								<ul>
+										<li><a href="{% url 'declarar_horas' projeto.id %}">Declarar Horas</a></li>
+									<ul>
+									<ul>
+										<li><a href="{% url 'avaliacao_aluno' projeto.id %}">Avaliação do Aluno</a></li>
+									<ul>
+							</td>	
+							
+							
+							
+
+						</tr>
+						{% endif %}
+					{% endfor %}
+				
+			</table>
+				
+				
+				{% endif %}
+			{% endif %}
+	{% comment %}
+	#
+	# FIM DASHBOARD DOCENTE
+	#
+{% endcomment %}	
+{% comment 'DASHBOARD FUNCIONARIO E SECRETARIO' %}
+	#
+	# FIM DASHBOARD FUNCIONARIO E SECRETARIO
+	#
+	{% endcomment %}
+			{% if request.user.funcionario or request.user.secretario %}
+				{% if disciplinas_funcionario  %}
+					{%  with disciplinas=disciplinas_funcionario|get_item:departamento%}
+						{% for disciplina,projetos in disciplinas.items %}
+							<h1>{{disciplina}}</h1>
+							<table>
+								<tr>
+									<td>Aluno</td><td>Titulo</td><td>Status</td><td>Aprovação</td>
+								</tr>
+								{% for projeto in projetos %}
+									{% if not projeto.cancelado %}
+									<tr>
+										<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+										<td><a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">{{ projeto.titulo }}</a></td>
+										<td>
+											{% if projeto.rascunho %}
+												Rascunho
+											{% else %}
+												{% if projeto.aluno in projeto.disciplina.alunos.all %}
+													Matriculado
+												{% elif  projeto.validacao_docente == 'n' or projeto.validacao_supervisor_orientador == 'n' or projeto.validacao_graduacao == 'n'%}
+													Não Matriculado
+												{% comment %}
+												{% elif not projeto.validacao_docente == 'p' and projeto.validacao_supervisor_orientador == 'p' or projeto.validacao_docente == 'p' and projeto.validacao_graduacao == 'p' or projeto.validacao_supervisor_orientador == 'p' and validacao_graduacao == 'p' %}
+												{% endcomment %}
+												{% else %}	
+													Pendente
+												{% endif %}
+											{% endif %}
+										</td>
+										<td>
+											{% if not projeto.rascunho %}
+												{% if projeto.validacao_graduacao == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_graduacao == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_graduacao == 'p'%}
+												<a href="{% url 'visualisar_projeto_de_graduacao' projeto.id%}">Aprovar projeto</a>
+											{% endif %}
+											{% endif %}
+										</td>
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</table>
+						{% endfor %}
+					
+					{% endwith %}
+				{% endif %}
+			{% endif %}
+	{% comment %}
+	#
+	# FIM DASHBOARD FUNCIONARIO E SECRETARIO
+	#
+{% endcomment %}	
+{% comment 'DASHBOARD DOUTORANDO' %}
+	#
+	# FIM DASHBOARD FUNCIONARIO E SECRETARIO
+	#
+	{% endcomment %}		
+			{% if bancas_doutorando_convidado and request.user.doutorando %}
+				{% with bancas=bancas_doutorando_convidado|get_item:departamento %}
+					{% if bancas %}
+						<h1>Bancas como convidado</h1>
+						<table>
+							<tr>
+								<td>Aluno</td><td>Titulo</td><td>Data</td><td>Inicio</td><td>Menu</td>
+							</tr>
+							{% for banca in bancas %}
+							<tr>
+								<td><a href="{% url 'visualizar_perfil' banca.projeto.aluno.id %}">{{ banca.projeto.aluno }}</a></td>
+								<td><a href="{% url 'visualisar_projeto_de_graduacao' banca.projeto.id%}">{{ banca.projeto.titulo }}</a></td>
+								<td>{{banca.data|date:"d/m/Y"}}</td>
+								<td>{{banca.hora_inicial|time:"H:i"}}</td>
+							<td align="center">
+								<img  class="menu-buttom" data-id=".banca_{{banca.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+							</tr>
+							<tr class="table-menu banca_{{banca.id}}">
+							
+							<td colspan="5">
+									<ul>
+										<li><a href="{% url 'visualizar_avaliacao' banca.projeto.id %}">Visualizar Avaliação do Aluno</a></li>
+									<ul>
+									
+
+							</td>	
+							
+							
+							
+
+						</tr>
+							{% endfor %}
+						</table>
+					{% endif %}
+				{% endwith %}
+			{% endif %}
+	{% comment %}
+	#
+	# FIM DASHBOARD DOUTORANDO
+	#
+{% endcomment %}	
+{% comment 'DASHBOARD MESTRANDO' %}
+	#
+	# FIM DASHBOARD FUNCIONARIO E SECRETARIO
+	#
+	{% endcomment %}	
+			{% if bancas_mestrando_convidado and request.user.mestrando %}
+				{% with bancas=bancas_mestrando_convidado|get_item:departamento %}
+					{% if bancas %}
+						<h1>Bancas como convidado</h1>
+						<table>
+							<tr>
+								<td>Aluno</td><td>Titulo</td><td>Data</td><td>Inicio</td><td>Menu</td>
+							</tr>
+							{% for banca in bancas %}
+							<tr>
+								<td><a href="{% url 'visualizar_perfil' banca.projeto.aluno.id %}">{{ banca.projeto.aluno }}</a></td>
+								<td><a href="{% url 'visualisar_projeto_de_graduacao' banca.projeto.id%}">{{ banca.projeto.titulo }}</a></td>
+								<td>{{banca.data|date:"d/m/Y"}}</td>
+								<td>{{banca.hora_inicial|time:"H:i"}}</td>
+							<td align="center">
+								<img  class="menu-buttom" data-id=".banca_{{banca.id}}" src="{{ STATIC_URL }}img/strips-menu.png" title="Abrir Menu de projetos">
+							</td>
+							</tr>
+							<tr class="table-menu banca_{{banca.id}}">
+							
+							<td colspan="5">
+									<ul>
+										<li><a href="{% url 'declarar_horas' banca.projeto.id %}">Visualizar Avaliação do Aluno</a></li>
+									<ul>
+									
+
+							</td>	
+							
+							
+							
+
+						</tr>
+							{% endfor %}
+						</table>
+					{% endif %}
+				{% endwith %}
+			{% endif %}	
+	{% comment %}
+	#
+	# FIM DASHBOARD MESTRANDO
+	#
+{% endcomment %}	
+
+		{% endfor %}
+
+
+	</div>
+</div>
+{% endblock %}

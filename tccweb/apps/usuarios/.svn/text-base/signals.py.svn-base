@@ -1,0 +1,28 @@
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User, Group
+from models import UserProfile
+from django.db import models
+
+def create_profile(sender, **kw):
+    #Cria a extencao de logo apos que o usuario e criado, salvando tambem o usuario em um grupo
+    user = kw["instance"]
+    if kw["created"]:
+        profile = UserProfile(user=user)
+        if user.first_name != None or user.last_name != None:
+            profile.display_name = (user.first_name + ' ' + user.last_name)
+        profile.save()
+            
+post_save.connect(create_profile, sender=User, dispatch_uid="users-profilecreation-signal")
+
+def add_to_a_group(sender, **kw):
+    profile = kw["instance"]
+    if kw["created"] == False:
+        group = Group.objects.filter(user = profile.id)
+        if group.count()== 0:
+            default_group = Group.objects.get(id = int(profile.funcao) )
+            default_group.user_set.add(profile.user.id) 
+            default_group.save()
+        else:
+            pass
+        
+post_save.connect(add_to_a_group, sender=UserProfile, dispatch_uid="users-addtoagroup-signal")

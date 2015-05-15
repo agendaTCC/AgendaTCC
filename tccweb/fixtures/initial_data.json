@@ -1,0 +1,2422 @@
+[
+  {
+    "pk": 1,
+    "model": "website.splash",
+    "fields": {
+      "exibir_noticias": true,
+      "exibir_texto": true,
+      "data": "2011-12-06 11:20:38",
+      "texto": "<p style=\"text-align: center;\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+      "exibir_imagens": true
+    }
+  },
+  {
+    "pk": 1,
+    "model": "website.imagens",
+    "fields": {
+      "splash": 1,
+      "data": "2011-12-06 11:20:38",
+      "texto": "<p>Aqui</p>",
+      "entrada": "img/slide/s1.jpg",
+      "exibir": true
+    }
+  },
+  {
+    "pk": 2,
+    "model": "website.imagens",
+    "fields": {
+      "splash": 1,
+      "data": "2011-12-06 11:20:38",
+      "texto": "",
+      "entrada": "img/slide/s2.jpg",
+      "exibir": true
+    }
+  },
+  {
+    "pk": 3,
+    "model": "website.imagens",
+    "fields": {
+      "splash": 1,
+      "data": "2011-12-06 11:20:38",
+      "texto": "",
+      "entrada": "img/slide/s3.jpg",
+      "exibir": true
+    }
+  },
+  {
+    "pk": 4,
+    "model": "website.imagens",
+    "fields": {
+      "splash": 1,
+      "data": "2011-12-06 11:47:12",
+      "texto": "",
+      "entrada": "img/slide/s4.jpg",
+      "exibir": false
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.group",
+    "fields": {
+      "name": "Docentes",
+      "permissions": [
+        34
+      ]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.group",
+    "fields": {
+      "name": "Aluno de Doutorado",
+      "permissions": [
+        35
+      ]
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.group",
+    "fields": {
+      "name": "Aluno de Mestrado",
+      "permissions": [
+        36
+      ]
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.group",
+    "fields": {
+      "name": "Aluno de Graduação",
+      "permissions": [
+        37
+      ]
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.group",
+    "fields": {
+      "name": "Funcionário não-docente",
+      "permissions": [
+        4,
+        5,
+        6,
+        10,
+        11,
+        12,
+        7,
+        8,
+        9,
+        114,
+        115,
+        116,
+        108,
+        109,
+        110,
+        42,
+        43,
+        44,
+        96,
+        97,
+        98,
+        111,
+        112,
+        113,
+        105,
+        106,
+        107,
+        102,
+        103,
+        104,
+        132,
+        133,
+        134,
+        123,
+        124,
+        125,
+        117,
+        118,
+        119,
+        135,
+        136,
+        137,
+        129,
+        130,
+        131,
+        126,
+        127,
+        128,
+        120,
+        121,
+        122,
+        45,
+        46,
+        47,
+        138,
+        139,
+        140,
+        38,
+        25,
+        26,
+        27,
+        22,
+        23,
+        24
+      ]
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.group",
+    "fields": {
+      "name": "Monitor",
+      "permissions": [
+        39
+      ]
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.group",
+    "fields": {
+      "name": "Estágiario PAE",
+      "permissions": [
+        40
+      ]
+    }
+  },
+  {
+    "pk": 8,
+    "model": "auth.group",
+    "fields": {
+      "name": "Supervisor",
+      "permissions": [
+        41
+      ]
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "usuarios._user", 
+    "fields": {
+      "curso": null,
+      "numero_usp": null,
+      "tel": "(00)0000-0000", 
+      "user_permissions": [], 
+      "is_staff": true, 
+      "aluno": true, 
+      "date_joined": "2014-07-10T17:51:51", 
+      "last_login": "2014-07-10T17:51:51", 
+      "complemento": "", 
+      "is_superuser": true, 
+      "nome_completo": "Administrador do Sistema", 
+      "docente": true, 
+      "doutorando":true,
+      "mestrando":true,
+      "funcionario":true,
+      "monitor":true,
+      "pae":true,
+      "supervisor":true,
+      "secretario":true,
+      "email": "admin@admin.com", 
+      "bairro": "", 
+      "is_active": true, 
+      "numero": null, 
+      "groups": [], 
+      "cep": "00000-000", 
+      "password": "pbkdf2_sha256$10000$rLcMv60DyL1B$pDktv3VSPu5dlbjvKaIXdxA95JJd8DeHJpe4pWvkXXk=", 
+      "cidade": "", 
+      "cpf": "1234", 
+      "endereco": "", 
+      "uf": "SP"
+    }
+  },
+  {
+    "pk": 2, 
+    "model": "usuarios._user", 
+    "fields": {
+      "curso": null,
+      "numero_usp": null,
+      "tel": "(00)0000-0000", 
+      "user_permissions": [], 
+      "is_staff": true, 
+      "aluno": true, 
+      "date_joined": "2014-07-10T17:51:51", 
+      "last_login": "2014-07-10T17:51:51", 
+      "complemento": "", 
+      "is_superuser": true, 
+      "nome_completo": "Administrador do Sistema 2", 
+      "docente": true, 
+      "doutorando":true,
+      "mestrando":true,
+      "funcionario":true,
+      "monitor":true,
+      "pae":true,
+      "supervisor":true,
+      "secretario":true,
+      "email": "admin2@admin.com", 
+      "bairro": "", 
+      "is_active": true, 
+      "numero": null, 
+      "groups": [], 
+      "cep": "00000-000", 
+      "password": "pbkdf2_sha256$10000$xqnzVe811bAb$6jlRRReQa3TbLZwsSaCMEmPYZ3b0qtXGNKa+t5L3PRk=", 
+      "cidade": "", 
+      "cpf": "12345", 
+      "endereco": "", 
+      "uf": "SP"
+    }
+  },
+  {  
+      "pk":1,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Ch\u00e1cara Santo Antonio",
+         "end":"Rua Alexandre Dumas",
+         "area_de_atuacao":" ",
+         "data_inicio_convenio":"2001-01-15",
+         "nome_fantasia":"Accenture",
+         "comp":"",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"96534094000158",
+         "site":"http://www.accenture.com.br",
+         "num":2051,
+         "data_final_convenio":"2015-01-20",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Accenture do Brasil Ltda",
+         "data_inicio":null,
+         "cep":4717004,
+         "UF":"SP",
+         "email":"deborah.mazzoni@accenture.com"
+      }
+   },
+   {  
+      "pk":2,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Alphaville ",
+         "end":"Rua Alameda Andromeda ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2001-01-15",
+         "nome_fantasia":"Accenture ",
+         "comp":"",
+         "cidade":"Barueri ",
+         "nro_inscricao":"96534094000743 ",
+         "site":"-",
+         "num":2000,
+         "data_final_convenio":"2015-01-20",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Accenture Technology Solutions Brasil Ltda ",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"deborah.mazzoni@accenture.com "
+      }
+   },
+   {  
+      "pk":3,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"R. Serafim Vieria de Almeida ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2008-08-06",
+         "nome_fantasia":"AGX ",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos ",
+         "nro_inscricao":"5585600000182 ",
+         "site":"-",
+         "num":285,
+         "data_final_convenio":"2013-08-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"AGX Tecnologia LTDA. ",
+         "data_inicio":null,
+         "cep":13561130,
+         "UF":"SP",
+         "email":"patricia.caceta@agx.com.br "
+      }
+   },
+   {  
+      "pk":4,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim S\u00e3o Jorge ",
+         "end":"Rua Manaus ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2011-01-11",
+         "nome_fantasia":"Alpha7 ",
+         "comp":"",
+         "cidade":"Nova Odessa ",
+         "nro_inscricao":"13574376000199",
+         "site":"-",
+         "num":393,
+         "data_final_convenio":"2013-01-11",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Alpha7 Desenvolvimento de Software LTDA ",
+         "data_inicio":null,
+         "cep":13460000,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":5,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"Rodovia Campinas-Mogi Mirim (SP 340)",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2011-02-20",
+         "nome_fantasia":"Ci & T ",
+         "comp":"Pr\u00e9dio 23B",
+         "cidade":"Campinas ",
+         "nro_inscricao":"609634000146",
+         "site":"http://www.cit.com.br ",
+         "num":118,
+         "data_final_convenio":"2016-02-19",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Ci&T Software S.A ",
+         "data_inicio":null,
+         "cep":13086902,
+         "UF":"SP",
+         "email":"edsondeste@cit.com.br"
+      }
+   },
+   {  
+      "pk":6,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Bela Vista ",
+         "end":"Av. Brigadeiro Luiz Antonio ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2008-01-28",
+         "nome_fantasia":"Ultragaz ",
+         "comp":"",
+         "cidade":"S\u00e3o Paulo ",
+         "nro_inscricao":"61602199000112 ",
+         "site":"-",
+         "num":1343,
+         "data_final_convenio":"2013-01-27",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Cia Ultragaz S/A ",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":7,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Tangar\u00e1  ",
+         "end":"Rua Vereador Jos\u00e9 Pereira Pinheiro Filho ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2010-08-10",
+         "nome_fantasia":"DEC Web Solutions ",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"5208593000108 ",
+         "site":"-",
+         "num":180,
+         "data_final_convenio":"2013-08-09",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"DEC Web Solutions Com\u00e9rcio Ltda ME ",
+         "data_inicio":null,
+         "cep":13568100,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":8,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rodovia Washington Luiz ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2007-05-27",
+         "nome_fantasia":"Embrapa ",
+         "comp":"km 234 - Fazenda Canchim - Caixa Postal 339 ",
+         "cidade":"S\u00e3o Carlos ",
+         "nro_inscricao":"348003005422 ",
+         "site":"www.cnptia.embrapa.br ",
+         "num":null,
+         "data_final_convenio":"2012-05-26",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Empresa Brasileira de Pesquisa Agropecu\u00e1ria ",
+         "data_inicio":null,
+         "cep":13560970,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":9,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua XV de Novembro",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2007-05-27",
+         "nome_fantasia":"Embrapa",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"348003011236",
+         "site":"www.cnptia.embrapa.br",
+         "num":1452,
+         "data_final_convenio":"2012-05-26",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Empresa Brasileira de Pesquisa Agropecu\u00e1ria",
+         "data_inicio":null,
+         "cep":13560970,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":10,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida Andr\u00e9 Toselo",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2007-05-27",
+         "nome_fantasia":"Embrapa",
+         "comp":"",
+         "cidade":"Campinas",
+         "nro_inscricao":"348003011660",
+         "site":"www.cnptia.embrapa.br",
+         "num":209,
+         "data_final_convenio":"2012-05-26",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Empresa Brasileira de Pesquisa Agropecu\u00e1ria",
+         "data_inicio":null,
+         "cep":13083970,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":11,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Vila Cordeiro",
+         "end":"Av. Chucri Zaidan",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2009-01-02",
+         "nome_fantasia":"Freedom",
+         "comp":"Ed. Market Place Torre II, 17\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"7209188000121",
+         "site":"-",
+         "num":940,
+         "data_final_convenio":"2012-01-01",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Freeddom Tecnologia",
+         "data_inicio":null,
+         "cep":4583906,
+         "UF":"SP",
+         "email":"daniela@freeddom.com; daniela@paggo.com.br"
+      }
+   },
+   {  
+      "pk":12,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rod. Washington Luis",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2009-08-06",
+         "nome_fantasia":"FAI-UFSCAR",
+         "comp":"KM 235",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"66991647000130",
+         "site":"www.fai.ufscar.br",
+         "num":null,
+         "data_final_convenio":"2013-03-08",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Funda\u00e7\u00e3o de Apoio Institucional ao Desenvolvimento Cient\u00edfico e Tecnologico - FAI-UFSCAR",
+         "data_inicio":null,
+         "cep":13565905,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":13,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua S\u00e3o Sebasti\u00e3o",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2006-08-07",
+         "nome_fantasia":"Hominniss",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"5343448000121",
+         "site":"-",
+         "num":1011,
+         "data_final_convenio":"2006-08-07",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Hominiss Desenvolvimento Humano Ltda",
+         "data_inicio":null,
+         "cep":1561207,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":14,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Botafogo",
+         "end":"Av. Francisco Glic\u00e9rio",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2002-04-01",
+         "nome_fantasia":"\u00cdcaro",
+         "comp":"9\u00ba andar",
+         "cidade":"Campinas",
+         "nro_inscricao":"1534930000198",
+         "site":"-",
+         "num":2331,
+         "data_final_convenio":"2012-01-11",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Icaro Technologies Com\u00e9rcio Ltda.",
+         "data_inicio":null,
+         "cep":13023101,
+         "UF":"SP",
+         "email":"aline.oliveira@icaro.com.br"
+      }
+   },
+   {  
+      "pk":15,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Cidade Mon\u00e7\u00f5es",
+         "end":"Av. Eng. Luiz Carlos Berrini",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2007-11-26",
+         "nome_fantasia":"Neolog",
+         "comp":" 8\u00ba andar Cj. 82",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"5254381000159",
+         "site":"www.neolog.com.br",
+         "num":1681,
+         "data_final_convenio":"2012-11-25",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Neolog Consultoria e Sistemas Ltda",
+         "data_inicio":null,
+         "cep":4571011,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":16,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Pinheiros",
+         "end":"Rua Eugenio de Medeiros",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2011-01-03",
+         "nome_fantasia":"Opus",
+         "comp":"1\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"60663556000190",
+         "site":"www.opus-software.com.br",
+         "num":242,
+         "data_final_convenio":"2015-11-03",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Opus Software Com. E Repres. Ltda",
+         "data_inicio":null,
+         "cep":5425000,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":17,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Dom Pedro II",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2010-08-10",
+         "nome_fantasia":"Spektrum",
+         "comp":"Sala A",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"10444860000178",
+         "site":"www.spektrumbr.com.br",
+         "num":1330,
+         "data_final_convenio":"2013-08-09",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Spektrum Com\u00e9rcio e Consultoria em Sistemas Ltda.",
+         "data_inicio":null,
+         "cep":13560320,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":18,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Estrada Giuseppina Vianelli di Napoli",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2011-01-05",
+         "nome_fantasia":"Venturus",
+         "comp":"",
+         "cidade":"Campinas",
+         "nro_inscricao":"96499728000189",
+         "site":"www.venturus.org.br",
+         "num":1185,
+         "data_final_convenio":"2013-01-04",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Venturus - Centro de Inova\u00e7\u00e3o Tecnol\u00f3gica",
+         "data_inicio":null,
+         "cep":13086530,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":19,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Luiz Barbosa de Campos",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2010-02-25",
+         "nome_fantasia":"Virtual Seg",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"10740571000116",
+         "site":"-",
+         "num":525,
+         "data_final_convenio":"2013-02-25",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Virtual Seg Ltda ME",
+         "data_inicio":null,
+         "cep":13562330,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":20,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Maracan\u00e3 ",
+         "end":"Rua Gelsomino Saia ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2012-03-15",
+         "nome_fantasia":"EYETEC",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos ",
+         "nro_inscricao":"69163970000104 ",
+         "site":"www.eyetec.com.br ",
+         "num":230,
+         "data_final_convenio":"2013-03-15",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"EYETEC EQUIPAMENTOS OFT\u00c1LMICOS IND\u00daSTRIA ECOM\u00c9RCIO LTDA ",
+         "data_inicio":null,
+         "cep":13571310,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":21,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"R. Marechal Deodoro",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2005-04-18",
+         "nome_fantasia":"Cubo Multim\u00eddia",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"5140236000147",
+         "site":"www.cubomultimidia.com.br",
+         "num":2709,
+         "data_final_convenio":"2010-04-17",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Cubo Multim\u00eddia Ltda\u2013ME",
+         "data_inicio":null,
+         "cep":13560201,
+         "UF":"SP",
+         "email":"rafael@cubomultimidia.com.br"
+      }
+   },
+   {  
+      "pk":22,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Wernher Von Braun",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"4783281000157",
+         "site":"-",
+         "num":null,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Centro de Pesquisas Avan\u00e7adas Wernher Von Braun",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":23,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Benevides Ign\u00e1cio Ramos",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"EOS",
+         "comp":"Bloco 2",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"13382681000141",
+         "site":"-",
+         "num":90,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"EOS Tecnologia da Informa\u00e7\u00e3o",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":24,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Vila Faria ",
+         "end":"Rua Major Jos\u00e9 In\u00e1cio ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Ferraz Automa\u00e7\u00e3o ",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos ",
+         "nro_inscricao":"8019257000105 ",
+         "site":"www.ferrazautomacao.com.br ",
+         "num":3320,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Fabio Pinheiro Ferraz ME ",
+         "data_inicio":null,
+         "cep":13569010,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":25,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centreville ",
+         "end":"Rua Marcolino Lopes Barreto ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Saga Inform\u00e1tica ",
+         "comp":"Sala A ",
+         "cidade":"S\u00e3o Carlos ",
+         "nro_inscricao":"60345113000150 ",
+         "site":"-",
+         "num":1619,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Saga Inform\u00e1tica ",
+         "data_inicio":null,
+         "cep":13560400,
+         "UF":"SP",
+         "email":"saga@sagainformatica.com.br "
+      }
+   },
+   {  
+      "pk":26,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"SGI - UFSCar",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"45358058000140",
+         "site":"-",
+         "num":null,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Secretaria Geral de Inform\u00e1tica - UFSCar",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":27,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"CISC - USP",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"63025530000104",
+         "site":"-",
+         "num":null,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"CISC - USP",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":28,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"S\u00e3o Carlos ",
+         "end":"R. Conde do Pinhal ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Easy Software",
+         "comp":"Sala 506 ",
+         "cidade":"",
+         "nro_inscricao":"72995848000109 ",
+         "site":"http://www.easysoft.com.br ",
+         "num":2345,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Easy Software Ltda. ",
+         "data_inicio":null,
+         "cep":13560648,
+         "UF":"SP",
+         "email":"alexandre@easysoft.com.br "
+      }
+   },
+   {  
+      "pk":29,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"xbot ",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"8832201000167 ",
+         "site":"-",
+         "num":null,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"C. Associados ",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":30,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Higien\u00f3polis ",
+         "end":"Rua Bernardino de Campos ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":"2007-08-09",
+         "nome_fantasia":"Intelinet ",
+         "comp":"Sala 1110 ",
+         "cidade":"Ribeir\u00e3o Preto  ",
+         "nro_inscricao":"3042366000111 ",
+         "site":"-",
+         "num":1001,
+         "data_final_convenio":"2012-08-08",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Intelinet Sistemas de Inform\u00e1tica Ltda. ",
+         "data_inicio":null,
+         "cep":14015130,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":31,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Princesa Isabel ",
+         "area_de_atuacao":"-",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"AMR ",
+         "comp":"5\u00ba andar  ",
+         "cidade":"S\u00e3o Paulo  ",
+         "nro_inscricao":"125766000100 ",
+         "site":"-",
+         "num":94,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"AMR Consultoria Inform\u00e1tica Servi\u00e7os e Solu\u00e7\u00f5es Ltda  ",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":32,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Arnon de Melo",
+         "end":"Avenida Carlos Botelho",
+         "area_de_atuacao":"Gest\u00e3o de Banco de Dados e Desenvolvimento",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"DBA",
+         "comp":"sala 12",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"4220504000178",
+         "site":"www.dbaonline.com.br",
+         "num":1816,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"DBA online Inform\u00e1tica Ltda",
+         "data_inicio":null,
+         "cep":13560250,
+         "UF":"SP",
+         "email":"contato@dbaonline.com.br"
+      }
+   },
+   {  
+      "pk":33,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida Santos Dumont",
+         "area_de_atuacao":"Softwares",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"GDS",
+         "comp":"Box 20",
+         "cidade":"Araraquara",
+         "nro_inscricao":"123456789",
+         "site":"www.gdsolutions.com.br",
+         "num":50,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Global Delivery Solutions Ltda",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"contato@gdsoutions.com.br"
+      }
+   },
+   {  
+      "pk":34,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Ch\u00e1cara Santo Ant\u00f4nio",
+         "end":"Rua Alexandre Dumas",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os",
+         "data_inicio_convenio":"2000-01-01",
+         "nome_fantasia":"Deloitte",
+         "comp":"",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"2189924000103",
+         "site":"www.deloitte.com.br",
+         "num":1981,
+         "data_final_convenio":"2013-01-13",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Deloitte Consulting Lda",
+         "data_inicio":null,
+         "cep":4717906,
+         "UF":"SP",
+         "email":"comunicacao@deloitte.com"
+      }
+   },
+   {  
+      "pk":35,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim S\u00e3o Luiz",
+         "end":"Avenida Guido Caloi",
+         "area_de_atuacao":"Inform\u00e1tica",
+         "data_inicio_convenio":"2006-10-09",
+         "nome_fantasia":"Inmetrics",
+         "comp":"Bloco 1 2\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"4959158000144",
+         "site":"www.inmetrics.com.br",
+         "num":1000,
+         "data_final_convenio":"2016-10-07",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Inmetrics Ltda",
+         "data_inicio":null,
+         "cep":5802140,
+         "UF":"SP",
+         "email":"rh@inmetrics.com.br"
+      }
+   },
+   {  
+      "pk":36,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim S\u00e3o Carlos",
+         "end":"Rua General Os\u00f3rio",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Enalta",
+         "comp":"conjunto 3",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"11733198000139",
+         "site":"www.enalta.com",
+         "num":1075,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Enalta Software Ltda",
+         "data_inicio":null,
+         "cep":13560660,
+         "UF":"SP",
+         "email":"adriana.lino@enalta.com"
+      }
+   },
+   {  
+      "pk":37,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Fazenda S\u00e3o Quirino",
+         "end":"Avenida Selma Parada",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2008-01-02",
+         "nome_fantasia":"Daitan Labs",
+         "comp":"edficio 4 conjunto 444",
+         "cidade":"Campinas",
+         "nro_inscricao":"6980081000110",
+         "site":"daitangroup.com",
+         "num":201,
+         "data_final_convenio":"2013-01-01",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Daitan Labs Solu\u00e7\u00f5es em Tecnologia SA",
+         "data_inicio":null,
+         "cep":13091904,
+         "UF":"SP",
+         "email":"ealcantara@daitangroup.com"
+      }
+   },
+   {  
+      "pk":38,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Bandeirantes",
+         "end":"Rua Miguel Jo\u00e3o",
+         "area_de_atuacao":"Instrumentos Oft\u00e1lmicos",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Wavetek",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"8109979000142",
+         "site":"www.wavetek.com.br",
+         "num":940,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Wavetek Technologies Ltda",
+         "data_inicio":null,
+         "cep":13562180,
+         "UF":"SP",
+         "email":"-"
+      }
+   },
+   {  
+      "pk":39,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Bar\u00e3o Geraldo",
+         "end":"Rua Mendeleiev",
+         "area_de_atuacao":"Ensino Superior",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"FEM - UNICAMP",
+         "comp":"",
+         "cidade":"Campinas",
+         "nro_inscricao":"46068425000133",
+         "site":"www.fem.unicamp.br",
+         "num":200,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Faculdade Engenharia Mec\u00e2nica  - Unicamp",
+         "data_inicio":null,
+         "cep":13083860,
+         "UF":"SP",
+         "email":"sifem@fem.unicamp.br"
+      }
+   },
+   {  
+      "pk":41,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Cidade Universit\u00e1ria Zeferino Vaz",
+         "end":"Estrada da Telebr\u00e1s",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2012-07-30",
+         "nome_fantasia":"Sofist",
+         "comp":"sala 11",
+         "cidade":"Campinas",
+         "nro_inscricao":"10774117000186",
+         "site":"www.sofist.com.br",
+         "num":97,
+         "data_final_convenio":"2014-07-29",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Viegas e Abreu Software Ltda.",
+         "data_inicio":null,
+         "cep":13086510,
+         "UF":"SP",
+         "email":"financeiro@sofist.com.br"
+      }
+   },
+   {  
+      "pk":42,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Riachuelo",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2012-07-30",
+         "nome_fantasia":"Speedsoft Solu\u00e7\u00f5es Educacionais",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"1746423000118",
+         "site":"www.speedsoft.com.br",
+         "num":990,
+         "data_final_convenio":"2014-07-29",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"ELP Com\u00e9rcio de Materiais para Inform\u00e1tica",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"speedsoft@speedsoft.com.br"
+      }
+   },
+   {  
+      "pk":43,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Av Pres. Juscelino Kubitschek",
+         "area_de_atuacao":"Assessoria Empresarial",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Ernst & Young Terco",
+         "comp":"Torre I 5\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"59527788000131 ",
+         "site":"www.ey.com.br",
+         "num":1830,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Ernst & Young Terco Assessoria Empresarial Ltda.",
+         "data_inicio":null,
+         "cep":4543900,
+         "UF":"SP",
+         "email":"muriel.salles@br.ey.com"
+      }
+   },
+   {  
+      "pk":44,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"Rua Conde do Pinhal",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2006-04-12",
+         "nome_fantasia":"Aptor",
+         "comp":"sala 603",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"7701831000130",
+         "site":"www.aptor.com.br",
+         "num":2267,
+         "data_final_convenio":"2016-01-25",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Aptor Consultoria e Desenvolvimento de Software",
+         "data_inicio":null,
+         "cep":13560548,
+         "UF":"SP",
+         "email":"thiago@aptor.com.br"
+      }
+   },
+   {  
+      "pk":45,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2001-01-27",
+         "nome_fantasia":"Async Servi\u00e7os de Inform\u00e1tica",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"3852995000107",
+         "site":"www.async.com.br",
+         "num":null,
+         "data_final_convenio":"2013-02-24",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Async Servi\u00e7os de Inform\u00e1tica",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"kiko@async.com.br"
+      }
+   },
+   {  
+      "pk":46,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Cerqueira C\u00e9sar",
+         "end":"Rua Itapeva",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2005-12-02",
+         "nome_fantasia":"Advus",
+         "comp":"conjunto 123",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"5163715000169",
+         "site":"www.advus.com",
+         "num":378,
+         "data_final_convenio":"2012-12-01",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Advus Desenvolvimento de Software",
+         "data_inicio":null,
+         "cep":1332000,
+         "UF":"SP",
+         "email":"erika@advus.com"
+      }
+   },
+   {  
+      "pk":47,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rodovia Luiz Augusto de Oliveira SP 215",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os",
+         "data_inicio_convenio":"2011-05-18",
+         "nome_fantasia":"Amdocs",
+         "comp":"",
+         "cidade":"",
+         "nro_inscricao":"2458184000163",
+         "site":"www.amdocs.com",
+         "num":148,
+         "data_final_convenio":"2014-05-17",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Amdocs do Brasil",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"lourdesd@amdocs.com"
+      }
+   },
+   {  
+      "pk":48,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Monteiro Lobato",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os",
+         "data_inicio_convenio":"2012-08-02",
+         "nome_fantasia":"ATCP",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"3970289000160",
+         "site":"www.atcp.com.br",
+         "num":1601,
+         "data_final_convenio":"2013-08-01",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"ATCP do Brasil",
+         "data_inicio":null,
+         "cep":13569290,
+         "UF":"SP",
+         "email":"adm@atcp.com.br"
+      }
+   },
+   {  
+      "pk":49,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Nove de Julho",
+         "area_de_atuacao":"Processamento de Dados",
+         "data_inicio_convenio":"2012-01-02",
+         "nome_fantasia":"ATS",
+         "comp":"sala 504 a 506",
+         "cidade":"Mirassol",
+         "nro_inscricao":"53215794000177",
+         "site":"www.ats.com.br",
+         "num":1987,
+         "data_final_convenio":"2015-01-01",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"ATS Mirassol Sistemas em Processamento de Dados Ltda",
+         "data_inicio":null,
+         "cep":15130000,
+         "UF":"SP",
+         "email":"alvaro@ats.com.br"
+      }
+   },
+   {  
+      "pk":50,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua das Na\u00e7\u00f5es Unidas",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os",
+         "data_inicio_convenio":"2010-11-29",
+         "nome_fantasia":"Axia",
+         "comp":"18 andar  cj 1811",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"5313954000178",
+         "site":"www.axiavaluechain.com",
+         "num":12551,
+         "data_final_convenio":"2013-11-28",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Axia Consulting Ltda",
+         "data_inicio":null,
+         "cep":4578903,
+         "UF":"SP",
+         "email":"claudia.krewer@axiavaluechain.com"
+      }
+   },
+   {  
+      "pk":51,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua 1\u00ba de maio",
+         "area_de_atuacao":"Fabrica\u00e7\u00e3o de l\u00e1pis e canetas",
+         "data_inicio_convenio":"2008-01-21",
+         "nome_fantasia":"Faber-Castell",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"59596908000152",
+         "site":"www.faber-castell.com",
+         "num":61,
+         "data_final_convenio":"2013-01-20",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"A W Faber-Castell S.A.",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"webmaster@faber-castell.com.br"
+      }
+   },
+   {  
+      "pk":52,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Mountain View",
+         "end":"Castro Street",
+         "area_de_atuacao":"Venda de produtos pela internet",
+         "data_inicio_convenio":"2012-07-28",
+         "nome_fantasia":"Bombfell",
+         "comp":"",
+         "cidade":"California - USA",
+         "nro_inscricao":"800803247",
+         "site":"www.bombfell.com",
+         "num":444,
+         "data_final_convenio":"2013-07-27",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Bombfell Inc",
+         "data_inicio":null,
+         "cep":null,
+         "UF":null,
+         "email":"bernie@bomfell.com"
+      }
+   },
+   {  
+      "pk":53,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Antonio Martinez Carrera",
+         "area_de_atuacao":"Fabrica\u00e7\u00e3o de m\u00e1quinas e equipamentos",
+         "data_inicio_convenio":"2011-09-04",
+         "nome_fantasia":"Digmotor",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"52963675000130",
+         "site":"www.digmotor.com.br",
+         "num":72,
+         "data_final_convenio":"2014-09-03",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Digmotor Equipamentos Digitais Ltda",
+         "data_inicio":null,
+         "cep":13574971,
+         "UF":"SP",
+         "email":"lourdes@digmotor.com.br"
+      }
+   },
+   {  
+      "pk":54,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Alphaville",
+         "end":"Alameda Mamor\u00e9",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2012-01-03",
+         "nome_fantasia":"e-Deploy",
+         "comp":"sala 1208",
+         "cidade":"Barueri",
+         "nro_inscricao":"8496898000142",
+         "site":"www.e-deploy.com.br",
+         "num":911,
+         "data_final_convenio":"2015-01-02",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"e-Deploy Solu\u00e7\u00f5es e Servi\u00e7os de Inform\u00e1tica SS Ltda",
+         "data_inicio":null,
+         "cep":6454040,
+         "UF":"SP",
+         "email":"roberta.cardone@e-deploy.com.br"
+      }
+   },
+   {  
+      "pk":55,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida Dezoito",
+         "area_de_atuacao":"Consultoria e Desenvolvimento de Sistema",
+         "data_inicio_convenio":"2012-07-25",
+         "nome_fantasia":"Luxfacta",
+         "comp":"",
+         "cidade":"Rio Claro",
+         "nro_inscricao":"5239112000113",
+         "site":"www.luxfacta.com.br",
+         "num":636,
+         "data_final_convenio":"2013-07-24",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Ronaldo Jos\u00e9 Correa Cerqueira Filho",
+         "data_inicio":null,
+         "cep":13500490,
+         "UF":"SP",
+         "email":"rh@luxfacta.com.br"
+      }
+   },
+   {  
+      "pk":56,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rodovia Campinas-Mogi Mirim (SP 340)",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2002-06-13",
+         "nome_fantasia":"CPqD",
+         "comp":"",
+         "cidade":"Campinas",
+         "nro_inscricao":"2641663000110",
+         "site":"www.cpqd.com.br",
+         "num":118,
+         "data_final_convenio":"2014-05-30",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"CPqd - Centro de Pesquisas e Desenvolvimento em Telecomunica\u00e7\u00f5es",
+         "data_inicio":null,
+         "cep":13086902,
+         "UF":"SP",
+         "email":"aslima@cpqd.com.br"
+      }
+   },
+   {  
+      "pk":57,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida Presidente Vargas",
+         "area_de_atuacao":"Consultoria e Desenvolvimento de Sistema",
+         "data_inicio_convenio":"2012-07-05",
+         "nome_fantasia":"S2it",
+         "comp":"sala 141",
+         "cidade":"Ribeir\u00e3o Preto",
+         "nro_inscricao":"4654734000145",
+         "site":"www.s2it.com.br",
+         "num":2001,
+         "data_final_convenio":"2013-07-04",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"S2IT Solutions Consultoria Ltda",
+         "data_inicio":null,
+         "cep":14020260,
+         "UF":"SP",
+         "email":"ana.salgado@s2group.com.br"
+      }
+   },
+   {  
+      "pk":58,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Vila Olimpia",
+         "end":"Rua Gomes de Carvalho",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2009-05-20",
+         "nome_fantasia":"Spring Wireless",
+         "comp":"15 andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"4144280000162",
+         "site":"www.springwireless.com.br",
+         "num":1356,
+         "data_final_convenio":"2013-05-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Spring Wireless Tecnologia da Informa\u00e7\u00e3o Ltda",
+         "data_inicio":null,
+         "cep":4547005,
+         "UF":"SP",
+         "email":"ejsouza@springwireless.com.br"
+      }
+   },
+   {  
+      "pk":59,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Dom Pedro II",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"COSS",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"7765397000151",
+         "site":"www.cossconsulting.com",
+         "num":2085,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"COSS Solu\u00e7\u00f5es e Tecnologia Ltda.",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"flavia@cossconsulting.com"
+      }
+   },
+   {  
+      "pk":60,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Tanquinho",
+         "end":"Rodovia Campinas-Mogi Mirim (SP 340)",
+         "area_de_atuacao":"Fabrica\u00e7\u00e3o de aparelhos telef\u00f4nicos",
+         "data_inicio_convenio":"2011-12-21",
+         "nome_fantasia":"Motorola",
+         "comp":"",
+         "cidade":"Jaguari\u00fana",
+         "nro_inscricao":"1472720000112",
+         "site":"www.motorola.com.br",
+         "num":128,
+         "data_final_convenio":"2014-12-20",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Motorola Industrial Ltda",
+         "data_inicio":null,
+         "cep":13820000,
+         "UF":"SP",
+         "email":"qmrh73@motorola.com"
+      }
+   },
+   {  
+      "pk":61,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Giacomo Casale",
+         "area_de_atuacao":"Com\u00e9rcio de Equipamentos e Suprimentos de Inform\u00e1tica",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"QW3",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"13664959000173",
+         "site":"www.qw3.com.br",
+         "num":147,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"QW3 Desenvolvimento Comercial Ltda",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"contato@qw3.com.br"
+      }
+   },
+   {  
+      "pk":62,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rodovia SP 101 ",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os de tecnologia",
+         "data_inicio_convenio":"2012-10-19",
+         "nome_fantasia":"IBM",
+         "comp":"Trecho Campinas - Monte Mor",
+         "cidade":"Hortol\u00e2ndia",
+         "nro_inscricao":"33372251006278",
+         "site":"www.ibm.com/br/pt/",
+         "num":9,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"IBM  Brasil",
+         "data_inicio":null,
+         "cep":13175000,
+         "UF":"SP",
+         "email":"vivianeo@br.ibm.usp.br"
+      }
+   },
+   {  
+      "pk":63,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Ch\u00e1cara Santo Ant\u00f4nio",
+         "end":"Rua Verbo Divino",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2012-09-05",
+         "nome_fantasia":"Skanska",
+         "comp":"Bloco B",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"02154943000102",
+         "site":"www.skanska.com.br",
+         "num":1207,
+         "data_final_convenio":"2015-09-04",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Skanska Brasil Ltda.",
+         "data_inicio":null,
+         "cep":4719002,
+         "UF":"SP",
+         "email":"brunokmetz@skanska.com.br"
+      }
+   },
+   {  
+      "pk":64,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rodovia Campinas-Mogi Mirim (SP 340)",
+         "area_de_atuacao":"Prestadora de Servi\u00e7os de tecnologia",
+         "data_inicio_convenio":"2011-12-05",
+         "nome_fantasia":"Tr\u00f3pico",
+         "comp":"km 118,5",
+         "cidade":"Campinas",
+         "nro_inscricao":"84534254000503",
+         "site":"www.tropiconet.com",
+         "num":null,
+         "data_final_convenio":"2014-12-04",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Tr\u00f3pico Sistemas e Telecomunica\u00e7\u00f5es da Amaz\u00f4nia Ltda.",
+         "data_inicio":null,
+         "cep":13086902,
+         "UF":"SP",
+         "email":"wendy.inacio@tropiconet.com"
+      }
+   },
+   {  
+      "pk":65,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Fazenda Pau D'Alho",
+         "end":"RRodovia Campinas-Mogi Mirim (SP 340)",
+         "area_de_atuacao":"Telecomunica\u00e7\u00f5es",
+         "data_inicio_convenio":"2010-01-03",
+         "nome_fantasia":"Padtec",
+         "comp":"km 118,5",
+         "cidade":"Campinas",
+         "nro_inscricao":"3549807000176",
+         "site":"www.padtec.com.br",
+         "num":null,
+         "data_final_convenio":"2014-12-31",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Padtec S/A",
+         "data_inicio":null,
+         "cep":13086902,
+         "UF":"SP",
+         "email":"marcela.berretta@padtec.com.br"
+      }
+   },
+   {  
+      "pk":66,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Vila Celina",
+         "end":"Avenida Santos Dumont",
+         "area_de_atuacao":"Desenvolvimento de aplicativos m\u00f3veis",
+         "data_inicio_convenio":"2012-11-05",
+         "nome_fantasia":"TokenLab",
+         "comp":"sala 21 ",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"14319041000150",
+         "site":"www.tokenlab.com.br",
+         "num":800,
+         "data_final_convenio":"2013-11-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"TokenLab Tecnologia da Informa\u00e7\u00e3o Ltda",
+         "data_inicio":null,
+         "cep":13566345,
+         "UF":"SP",
+         "email":"contato@tokenlab.com.br"
+      }
+   },
+   {  
+      "pk":67,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Ch\u00e1cara Santo Ant\u00f4nio",
+         "end":"Rua Paul Valery",
+         "area_de_atuacao":"Engenharia de Explora\u00e7\u00e3o do Petr\u00f3leo",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Toyo Setal",
+         "comp":"",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"15563826000136",
+         "site":"www.toyosetal.com",
+         "num":255,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Toyo Setal Empreendimentos Ltda.",
+         "data_inicio":null,
+         "cep":4719050,
+         "UF":"SP",
+         "email":"contato@toyosetal.com"
+      }
+   },
+   {  
+      "pk":68,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"rua Mariano Pedroso Almeida",
+         "area_de_atuacao":"Pesquisa e desenvolvimento em ci\u00eancias",
+         "data_inicio_convenio":"2012-11-23",
+         "nome_fantasia":"Facti",
+         "comp":"",
+         "cidade":"Ribeir\u00e3o Preto",
+         "nro_inscricao":"2939127000287",
+         "site":"www.facti.com.br",
+         "num":259,
+         "data_final_convenio":"2015-11-22",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"FacTI - Funda\u00e7\u00e3o de Apoio \u00e0 Capacita\u00e7\u00e3o em Tecnologia da Informa\u00e7\u00e3o",
+         "data_inicio":null,
+         "cep":14025540,
+         "UF":"SP",
+         "email":"rh@facti.com.br"
+      }
+   },
+   {  
+      "pk":69,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim S\u00e3o Gabriel",
+         "end":"Rua Anita Stella",
+         "area_de_atuacao":"Per\u00edcias criminal\u00edsticas",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"EPC S\u00e3o Carlos",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"46377800005510",
+         "site":"http://www.polcientifica.sp.gov.br/ic_unidade22.asp",
+         "num":600,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Equipe de Per\u00edcias Criminal\u00edsticas de S\u00e3o Carlos",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"16-3361-3929"
+      }
+   },
+   {  
+      "pk":70,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Brooklin",
+         "end":"Rua James Joule",
+         "area_de_atuacao":"Consultoria e Desenvolvimento de Sistema",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Agile Solutions",
+         "comp":"conjunto 62",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"8108653000109",
+         "site":"www.agilesolutions.com",
+         "num":92,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Agile Solutions Tecnologia da Informa\u00e7\u00e3o Ltda",
+         "data_inicio":null,
+         "cep":4576080,
+         "UF":"SP",
+         "email":"recursos.humanos@agilesolutions.com"
+      }
+   },
+   {  
+      "pk":71,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Santa Helena",
+         "end":"Rua Santos Dumont",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2011-01-13",
+         "nome_fantasia":"Itera",
+         "comp":"sala 10",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"9324695000131",
+         "site":"www.itera.com.br",
+         "num":800,
+         "data_final_convenio":"2014-01-12",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Itera Inova\u00e7\u00e3o e Desenvolvimento Tecnol\u00f3gico",
+         "data_inicio":null,
+         "cep":13566445,
+         "UF":"SP",
+         "email":"contato@itera.com.br"
+      }
+   },
+   {  
+      "pk":72,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"Rua Nove de Julho",
+         "area_de_atuacao":"Assessoria Empresarial",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Clubill",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"1682911900001",
+         "site":"http://voxna.com",
+         "num":754,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"CLUBILL INTERMEDIACAO DE NEGOCIOS LTDA",
+         "data_inicio":null,
+         "cep":13560042,
+         "UF":"SP",
+         "email":"ti@voxna.com"
+      }
+   },
+   {  
+      "pk":73,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua S\u00e3o Sebasti\u00e3o",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2010-02-04",
+         "nome_fantasia":"Super Empresa",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"9044577000170",
+         "site":"www.superempresa.com.br",
+         "num":1358,
+         "data_final_convenio":"2013-11-13",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Super Empresa Inform\u00e1tica Ltda",
+         "data_inicio":null,
+         "cep":13560230,
+         "UF":"SP",
+         "email":"danny@superempresa.com.br"
+      }
+   },
+   {  
+      "pk":74,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Brooklin",
+         "end":"Rua Quintana",
+         "area_de_atuacao":"Consultoria Financeira",
+         "data_inicio_convenio":"2013-01-09",
+         "nome_fantasia":"Octaplus",
+         "comp":"9\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"4952175000150",
+         "site":"www.octaplus.com.br",
+         "num":753,
+         "data_final_convenio":"2014-01-08",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Octaplus Financial Analytics Ltda",
+         "data_inicio":null,
+         "cep":4569011,
+         "UF":"SP",
+         "email":"kelli@octaplus.com.br"
+      }
+   },
+   {  
+      "pk":75,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Dona Alexandrina",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Zarp System",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"17653808000170",
+         "site":"www.zarpsystem.com.br",
+         "num":141,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Zarp System - ZS",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"contato@zarpsystem.com.br"
+      }
+   },
+   {  
+      "pk":76,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Parque Faber",
+         "end":"Rua Passeio dos Yp\u00eas",
+         "area_de_atuacao":"Servi\u00e7os em tecnologia da informa\u00e7\u00e3o",
+         "data_inicio_convenio":"2013-05-21",
+         "nome_fantasia":"Sanca Ventures",
+         "comp":"Ed\u00edficio Tr\u00edade",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"17973923000122",
+         "site":"www.brasilao.com/sanca-ventures/",
+         "num":350,
+         "data_final_convenio":"2014-05-20",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Sanca Ventures",
+         "data_inicio":null,
+         "cep":13561385,
+         "UF":"SP",
+         "email":"16-3412-8349"
+      }
+   },
+   {  
+      "pk":77,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Dona L\u00eddia",
+         "area_de_atuacao":"estruturas met\u00e1licas para eventos",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Stick's eventos",
+         "comp":"",
+         "cidade":"Piracicaba",
+         "nro_inscricao":"1154872000177",
+         "site":"em manuten\u00e7\u00e3o",
+         "num":527,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Stick's eventos S/S Ltda.",
+         "data_inicio":null,
+         "cep":13405235,
+         "UF":"SP",
+         "email":"vendas@stick.eng.br"
+      }
+   },
+   {  
+      "pk":78,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"\u00c1gua Vermelha",
+         "end":"Rodovia SP318",
+         "area_de_atuacao":"Manuten\u00e7\u00e3o e reparo de aeronaves",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"Tam MRO",
+         "comp":"km 249,5",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"2012862000160",
+         "site":"www.tammro.com.br",
+         "num":null,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Tam Linhas A\u00e9reas SA",
+         "data_inicio":null,
+         "cep":13578000,
+         "UF":"SP",
+         "email":"16-3362-1792"
+      }
+   },
+   {  
+      "pk":79,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Maestro Jos\u00e9 Seppe",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2011-08-04",
+         "nome_fantasia":"Siena Idea",
+         "comp":"sala 52",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"13442181000191",
+         "site":"www.sienaidea.com.br",
+         "num":339,
+         "data_final_convenio":"2016-08-03",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Siena Idea",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"19-3249-0555"
+      }
+   },
+   {  
+      "pk":80,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida Trabalhador Sancarlense",
+         "area_de_atuacao":"Ensino Superior",
+         "data_inicio_convenio":null,
+         "nome_fantasia":"ICMC- USP",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"63025530005173",
+         "site":"www.icmc.usp.br",
+         "num":400,
+         "data_final_convenio":null,
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"ICMC - USP",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"16-3373-9639"
+      }
+   },
+   {  
+      "pk":81,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Avenida S\u00e3o Carlos",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2014-01-06",
+         "nome_fantasia":"Biosphera",
+         "comp":"sala 910",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"11574935000106",
+         "site":"www.biosphera.com.br",
+         "num":2205,
+         "data_final_convenio":"2015-01-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Victor Eduardo Skrabe Ilustra\u00e7\u00f5es Biom\u00e9dicas",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"19-3413-2034"
+      }
+   },
+   {  
+      "pk":82,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Parque Jabaquara",
+         "end":"Pra\u00e7a Alfredo Egydio de Souza Aranha",
+         "area_de_atuacao":"Financeira",
+         "data_inicio_convenio":"2010-10-05",
+         "nome_fantasia":"It\u00e1u Unibanco",
+         "comp":"2\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"60701190000104",
+         "site":"www.itau-unibanco.com.br",
+         "num":100,
+         "data_final_convenio":"2015-01-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"It\u00e1u Unibanco S.A. ",
+         "data_inicio":null,
+         "cep":4344902,
+         "UF":"SP",
+         "email":"11-5029-3513"
+      }
+   },
+   {  
+      "pk":83,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"Avenida S\u00e3o Carlos",
+         "area_de_atuacao":"Desenvolvimento de Software",
+         "data_inicio_convenio":"2013-10-04",
+         "nome_fantasia":"Gama Desenvolvimentos",
+         "comp":"sala 3",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"12411376000178",
+         "site":"www.gamadesenvolvimentos.com.br",
+         "num":2614,
+         "data_final_convenio":"2014-10-03",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Pucciarelli e Pucciarelli Desenvolvimentos Ltda.",
+         "data_inicio":null,
+         "cep":13560002,
+         "UF":"SP",
+         "email":"16-3413-7959"
+      }
+   },
+   {  
+      "pk":84,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Macarengo",
+         "end":"Rua Doutor Orlando Damiano",
+         "area_de_atuacao":"Consultoria",
+         "data_inicio_convenio":"2013-11-11",
+         "nome_fantasia":"Logtrac",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"799070000151",
+         "site":"www.logtrac.com.br",
+         "num":2212,
+         "data_final_convenio":"2014-11-10",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Logtrac - Consultores Associados",
+         "data_inicio":null,
+         "cep":13566450,
+         "UF":"SP",
+         "email":"16-3364-5159"
+      }
+   },
+   {  
+      "pk":85,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Jardim Cruzeiro do Sul",
+         "end":"Rua Allan Kardec",
+         "area_de_atuacao":"Projetos de design gr\u00e1fico",
+         "data_inicio_convenio":"2014-01-22",
+         "nome_fantasia":"Qui\u00e7\u00e1 Design",
+         "comp":"sala 7",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"8893532000107",
+         "site":"www.quicadesign.com.br",
+         "num":365,
+         "data_final_convenio":"2015-01-21",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Qui\u00e7\u00e1 Design Servi\u00e7os Ltda ME",
+         "data_inicio":null,
+         "cep":13572080,
+         "UF":"SP",
+         "email":"16-3415-2350"
+      }
+   },
+   {  
+      "pk":86,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"",
+         "end":"Rua Santa Cruz",
+         "area_de_atuacao":"Equipamentos de Laborat\u00f3rio",
+         "data_inicio_convenio":"2013-08-07",
+         "nome_fantasia":"QGene",
+         "comp":"",
+         "cidade":"S\u00e3o Carlos",
+         "nro_inscricao":"8299792000159",
+         "site":"www.qgene.com.br",
+         "num":969,
+         "data_final_convenio":"2016-08-06",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"QGene Ind\u00fastria e Com\u00e9rcio de Equipamentos para Laborat\u00f3rio Ltda.",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"16-3386-9787"
+      }
+   },
+   {  
+      "pk":87,
+      "model":"empresa.empresa",
+      "fields":{  
+         "bairro":"Centro",
+         "end":"Avenida Presidente Juscelino Kubitschek",
+         "area_de_atuacao":"Produ\u00e7\u00e3o de etanol, a\u00e7\u00facar e bioenergia",
+         "data_inicio_convenio":"2014-02-06",
+         "nome_fantasia":"Ra\u00edzen Energia",
+         "comp":"5\u00ba andar",
+         "cidade":"S\u00e3o Paulo",
+         "nro_inscricao":"8070508000178",
+         "site":"www.raizen.com.br",
+         "num":1327,
+         "data_final_convenio":"2017-02-05",
+         "supervisores":[  
+
+         ],
+         "nome_empresarial":"Ra\u00edzen Energia S/A",
+         "data_inicio":null,
+         "cep":null,
+         "UF":"SP",
+         "email":"19-3423-8134"
+      }
+	}
+]

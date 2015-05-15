@@ -1,0 +1,7 @@
+Prezado(a) supervisor(a) de estágio
+ 
+O aluno {{ aluno }} do ICMC-USP submeteu a inscrição na disciplina {{ disciplina }}. Por favor, acesse o sistema TCC Web (http://tccweb.icmc.usp.br), utilizando o usuário e senha recebidos em um e-mail anterior, para validar o projeto do aluno, que pode ser visualizado no próprio sistema.
+ 
+Em caso de dúvida procure um dos docentes responsáveis pelas disciplinas.
+ 
+Não responda a este email, pois foi gerado automaticamente.

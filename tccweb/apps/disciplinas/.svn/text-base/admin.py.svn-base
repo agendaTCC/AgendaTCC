@@ -1,0 +1,15 @@
+from django.contrib import admin
+from models import Disciplina
+from eventos.models import Evento
+
+
+class DisciplinaAdmin(admin.ModelAdmin):
+    save_on_top = True
+    list_display = (['__unicode__'])
+    list_display_links = (['__unicode__'])
+    list_filter = ('semestre', 'codigo', 'titulo')
+    search_fields = ['semestre', 'codigo', 'titulo']
+    date_hierarchy = 'criada_em'
+    filter_horizontal = ['alunos', 'professores', 'monitores']
+
+admin.site.register(Disciplina, DisciplinaAdmin)

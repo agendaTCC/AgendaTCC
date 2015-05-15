@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Bancas{% endblock %}
+
+{% block section %}Bancas{% endblock %}
+
+{% block content %}
+
+
+<div>
+{%if bancas == None %}
+<p>Você não esta participando de nenhuma Banca!</p>
+{% endif %}
+{% for item in bancas %}
+{% for banca in item %}
+	<p><a href="{% url bancas_banca_detalhe banca.id %}" > {{banca.aluno.get_profile.display_name}} - {{banca.projeto.titulo}}, Dia: {{banca.data}}, Hora: {{banca.hora_inicial}}, Sala: {{banca.sala}}</a></p>
+{% endfor %}
+{% endfor %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url usuarios_login %}">Login</a>
+</nav>
+{% endblock %}
+{% block title %}Login{% endblock %}
+
+{% block section %}Login{% endblock %}
+
+{% block content %}
+<div id="login-container" class="grid_6 push_1">
+  <form method="post" action="{% url usuarios_login %}">
+    {% csrf_token %}
+      {{ form.username.label_tag }}
+      {{ form.username }}
+      
+      {{ form.password.label_tag }}
+      {{ form.password }}
+      
+    <input type="submit" value="Entrar" />
+	
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  <a href="{% url usuarios_cadastro %}">Registre-se...</a>
+ &nbsp;<a href="{% url password_reset %}">Esqueceu a senha?</a>
+</div>
+
+<div id="login-info-container" class="grid_5">
+  Informações administrativas sobre o login.
+</div>
+
+{% endblock %}

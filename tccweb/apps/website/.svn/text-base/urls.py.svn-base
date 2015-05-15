@@ -1,0 +1,13 @@
+from django.conf.urls.defaults import patterns, url
+from django.views.generic.simple import direct_to_template
+
+
+urlpatterns = patterns('',
+    url(r'^$', 'website.views.index', name='website_index'),
+    url(r'^termos/$', direct_to_template, {
+           'template': 'website/termos_de_uso.html',
+       }, name='website_termos'),
+    url(r'^sobre/$', direct_to_template, {
+           'template': 'website/sobre.html',
+       }, name='website_sobre'),
+)

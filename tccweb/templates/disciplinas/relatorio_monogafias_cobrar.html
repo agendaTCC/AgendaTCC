@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Apresentações sem Banca Completa{% endblock %}
+
+{% block section %}Apresentações sem Banca Completa{% endblock %}
+
+{% block content %}
+
+    {% for grupo in grupos %}
+ 
+     {% for disciplina in grupo.disciplinas %}
+     {{disciplina.alunos.count}}
+     		{% if disciplina.alunos|length == 0%}
+     			{{forloop|continue}}
+			{% endif %}
+			<A NAME="{{disciplina.disciplina.titulo}}"></A>
+			<h3>{{disciplina.disciplina.titulo}}</h3>
+     		<table>
+     		<tr><td width="200"><b>Aluno</b></td><td align="CENTER" width="450"><b>Título</b></td><td><b>Monografia Original</b></td><td><b>Monografia Revisada</b></td></tr>
+     			
+     				{% for aluno in disciplina.alunos %}
+     				
+     				<tr>
+     					<td>{{aluno.aluno.get_profile.display_name.title}}</td>
+     					<td align="CENTER">
+     					{% if aluno.titulo == None %}
+     					 <img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					{{aluno.titulo.title}}
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.monografia_original == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					<a href="{% url monografias.views.download_monografia_original aluno.monografia_original.id %}">{{aluno.monografia_original.data|date:"d/m/Y"}}</a>
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.monografia_revisada == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					<a href="{% url monografias.views.download_monografia_revisada aluno.monografia_revisada.id %}">{{aluno.monografia_revisada.data|date:"d/m/Y"}}</a>
+     					{% endif %}
+     					</td>
+     		     </tr>
+     				{% endfor %}
+
+     		</table>
+     	{% endfor %}
+    {% endfor %}
+	
+<input type="button" value=" Voltar " onclick="history.go(-1)">	
+{% endblock %}

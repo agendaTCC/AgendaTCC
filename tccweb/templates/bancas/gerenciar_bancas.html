@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+
+{% load markup %}
+{% block title %}Gerenciar Apresentações{% endblock %}
+
+{% block section %}Gerenciar Apresentações{% endblock %}
+
+{% block links %}
+<script type="text/javascript">
+$(document).ready(function() 
+    { 
+    
+        $("#TabelaApresentacoes").tablesorter({ 
+        headers: { 
+        		2: { 
+                sorter: false 
+            }, 
+        } 
+    }); 
+	 
+    }     
+); 
+</script>
+{% endblock %}
+
+{% block content %}
+<div>
+	{% for grupo in grupos %}
+		<div style="padding-bottom:10px;">
+		<h2>Grupo {{grupo}}</h2>
+			
+				
+					<table id="TabelaApresentacoes" class="tablesorter">
+						<thead>
+						<tr>
+							<th width="100"><strong>Sala</strong></th>
+							<th width="50"><strong>Data:</strong></th>
+							<th width="55" ><strong>Horário:</strong></th>
+							<th width="150"><strong>Aluno</strong></th>
+							<th width="150"><strong>Titulo</strong></th>
+							<th width="150"><strong>Orientador</strong></th>
+							<th width="150" ><strong>Banca1</strong></th>
+							<th width="150" ><strong>Banca2</strong></th>
+						</tr>
+						</thead>
+						<tbody> 
+						{% if bancas.count == 0 %}
+							<tr><td colspan="7">Não existem Apresentações agendadas</td></tr>
+						{% endif %}
+						{% for banca in bancas %}
+							{% if banca.data.year == hoje.year %}
+								{% if banca.grupo.id == grupo.id %}
+								<tr onclick="location.href='{% url banca_editar_banca_monitor banca.id %}'" {% if banca.cancelada %} style="background-color:#ff3333;"{% endif %}>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.sala.nome}} </td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.data|date:"d/m/y"}}</td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.hora_inicial}} - {{banca.hora_final}}</td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.aluno.get_profile.display_name}}</td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.projeto.titulo|truncatewords:3}}</td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}>{{banca.projeto.orientador.get_profile.display_name}}</td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}><p>{{banca.banca1.get_profile.display_name}}</p></td>
+									<td {% if banca.cancelada %}  style="background-color:#ff3333 !important;" {% endif %}><p>{{banca.banca2.get_profile.display_name}}</p></td>
+									<!-- <td><a href="{% url banca_editar_banca_monitor banca.id %}" >editar</a></td> -->
+								</tr>
+							{% endif %}	
+							{% endif %}
+						{% endfor %}
+						</tbody>
+					 
+						{% if bancas.count != 0 %}
+						<tr><td colspan="8"><a href="{% url banca_liberar_nao_utilizadas grupo.id%}">Liberar Apresentações não utilizadas</a></td></tr>
+						{% endif %}
+						
+					</table>
+
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url disciplinas_index %}">Disciplinas</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.codigo }} - {{ disciplina.titulo }}</a>
+</nav>
+{% endblock %}
+{% block title %}{{ disciplina.codigo }} - {{ disciplina.titulo }}{% endblock %}
+
+{% block section %}{{ disciplina.codigo }} - {{ disciplina.titulo }}{% endblock %}
+
+{% block content %}
+<div id="disciplina-detalhe" class="grid_12 clearfix">
+  <div class="info">
+    <h2>Semestre: {{disciplina.ano}}{{ disciplina.semestre }}{{disciplina.turma}}</h2>
+    Criada em {{ disciplina.criada_em }}<br />
+  </div>
+  
+  <div>
+    {% with total=disciplina.professores.count %}
+      Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+    {% endwith %}
+    {% for professor in disciplina.professores.all %}
+      <a href="{% url usuarios_perfil professor.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+  
+  <div>
+    {% with total=disciplina.monitores.count %}
+      Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+    {% endwith %}
+    {% for monitor in disciplina.monitores.all %}
+      <a href="{% url usuarios_perfil monitor.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+  <div>
+  {%if user.get_profile.funcao == 5%}
+  		<div><a href="{% url relatorio_disciplina disciplina.id %}">Relatório</a></div>
+  {%else%}
+	{% for professor in disciplina.professores.all %}
+		{%if professor.id == user.get_profile.id%}
+		
+				<div><a href="{% url relatorio_disciplina disciplina.id %}">Relatório</a></div>
+		{%endif%}
+	{%endfor%}
+	 {% for monitor in disciplina.monitores.all %}
+	 	{%if monitor.id == user.get_profile.id%}
+	 		<div><a href="{% url relatorio_disciplina disciplina.id %}">Relatório</a></div>
+	 	{%endif%}
+	 {%endfor%}
+	{%endif%}
+  </div>
+</div>
+
+<div class="grid_6 clearfix">
+  <h1>Atividades</h1>
+  {% for atividade in atividades %}
+    <a href="{% url atividades_atividade_detalhe atividade.id %}">{{ atividade.titulo }}</a><br />
+  {% endfor %}
+</div>
+
+<div class="grid_6 clearfix">
+  <h1>Eventos</h1>
+  {% for evento in eventos %}
+    <a href="{% url eventos_evento_detalhe evento.id %}">{{ evento.titulo }}</a><br />
+  {% endfor %}
+</div>
+
+<div class="grid_6 clearfix">
+  <h1>Questionários</h1>
+  {% for formulario in formularios %}
+    <a href="{% url formularios_formulario_detalhe formulario.id %}">{{ formulario.titulo }}</a><br />
+  {% endfor %}
+</div>
+
+<div id="container-noticias" class="grid_6 clearfix">
+  <h1>Notícias</h1>
+  {% for noticia in noticias %}
+  <div class="noticia-item clearfix">
+    <span>{{ noticia.criada_em|date:"d M Y" }}</span>
+    <p class="titulo"><a href="{% url noticias_noticia_detalhe noticia.id %}">{{ noticia.titulo }}</a></p>
+    <p class="conteudo">{{ noticia.conteudo|textile|truncatewords:160 }}<p>
+  </div>
+  {% endfor %}
+</div>
+
+{%if perms.usuarios.docente and user.get_profile in disciplina.professores.all or user.is_staff == 1%}
+
+	<div>&nbsp;</div>
+		<div  class="grid_6 clearfix">
+  			<h1>Matriculados</h1>
+  			{%for aluno in alunos.all%} 
+  				<div class="noticia-item clearfix">
+  					{{aluno.display_name}}
+  				</div>
+  			{%endfor%}
+		   <div>&nbsp;</div>
+			{% if pendentes.count != 0 %}
+				<h1>Pendentes</h1>
+  				{%for pendente in pendentes%} 
+ 					<div class="noticia-item clearfix">
+  						<a href="{% url usuario_aproveformgrad pendente.user.id disciplina.id %}">{{pendente.display_name}}</a>
+  					</div>
+  				{%endfor%}
+  			{% endif %}
+		</div>
+{% endif %}
+{% endblock %}
+<div>

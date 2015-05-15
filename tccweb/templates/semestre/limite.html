@@ -1,0 +1,158 @@
+﻿{% extends "base.html" %}
+
+{% block links %}
+{% load adminSTATIC %}
+
+
+<link type="text/css" href="{{ STATIC_URL }}css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link type="text/css" href="{{ STATIC_URL }}css/DatePicker.css" rel="stylesheet" />
+<link type="text/css"href="{{ STATIC_URL }}css/jquery.datepick.css" rel="stylesheet" /> 
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.formset.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.datepick.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.datepick-pt-BR.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $('#formset tbody tr').formset({
+      prefix: '{{ formset.prefix }}'
+    });
+  })
+</script>
+
+{%endblock%}
+
+{% block title %}Datas Limites do {{grupo.titulo}} {% endblock %}
+
+{% block section %}Datas Limites do {{grupo.titulo}}{% endblock %}
+
+{% block content %}
+<div>
+<form method="post"  >
+  {% csrf_token %}
+  <table>
+  
+
+    <tr>
+      <tr>
+      <td width="20%">{{ formdatas.autorizacao_mestrando.label }}:</td>
+		<td>
+		{{ formdatas.autorizacao_mestrando }}
+		</td>
+	  </tr>
+      <td colspan="2">
+
+      </td>
+      
+    </tr>
+  </table>
+
+  {% csrf_token %}
+  {{formdatas.errors}}
+  <table>
+  	 <tr>
+		<td colspan="2"><p><strong>Período de Matricula dos Alunos</strong></p>
+		</td>  	 
+  	 </tr>
+  	 <tr>
+  	 	<td>{{ formdatas.inic_inscricao.label }}</td>
+      <td>
+		{{ formdatas.inic_inscricao }}
+		</td>
+	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.max_inscricao.label }}</td>
+      <td>
+		{{ formdatas.max_inscricao }}
+		</td>
+	 </tr>
+	  <tr>
+		<td colspan="2"><p><strong>Data de Fechamento de Matricula, após essa data projetos não poderão ser aprovados</strong></p></td>  	 
+  	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.max_autorizacao.label }} </td>
+      <td>
+		{{ formdatas.max_autorizacao }}
+		</td>
+	 </tr>
+	 <tr>
+		<td colspan="2"><p><strong>Período para escolha de Sala e horário de apresentação dos alunos</strong></p></td>  	 
+  	 </tr>
+    <tr>
+     <td>{{ formdatas.inic_banca_alunos.label }}</td>
+      <td>
+		{{ formdatas.inic_banca_alunos }}
+		</td>
+	 </tr>
+	 <tr>
+	  	<td>{{ formdatas.max_banca_alunos.label }}</td>
+      <td>
+		{{ formdatas.max_banca_alunos }}
+		</td>
+	 </tr>
+	 <tr>
+		<td colspan="2"><p><strong>Data máxima para alteração do Título e áreas de concentração</strong></p></td>  	 
+  	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.max_titulo_areas.label}}</td>
+      <td>
+		{{ formdatas.max_titulo_areas }}
+		</td>
+	 </tr>
+	 <tr>
+		<td colspan="2"><p><strong>Período Para escolha da segunda banca</strong></p></td>  	 
+  	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.inic_banca_convidado.label }}</td>
+      <td>
+		{{ formdatas.inic_banca_convidado }}
+		</td>
+	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.max_banca_convidado.label }}</td>
+      <td>
+		{{ formdatas.max_banca_convidado }}
+		</td>
+	 </tr>
+	 <tr>
+		<td colspan="2"><p><strong>Período de Apresentações</strong></p></td>  	 
+  	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.inic_apresentacao.label }}</td>
+      <td>
+		{{ formdatas.inic_apresentacao }}
+		</td>
+	 </tr>
+	 <tr>
+	 	<td>{{ formdatas.max_apresentacao.label }}</td>
+      <td>
+		{{ formdatas.max_apresentacao }}
+		</td>
+	 </tr>
+	 
+	  <tr>
+      <td colspan="2">
+      
+      </td>
+      
+    </tr>
+  </table>
+
+  <table>
+  {% csrf_token %}
+		{{formmonografia.errors}}
+   	<tr><td colspan="2"><p><strong>Datas Para entrega de Monografias:</strong></p></td></tr>
+		
+		{{ formmonografia }}
+		<tr>
+      <td colspan="2">
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+      </td>
+      
+    </tr>
+  </table>
+</form>
+</div>
+<script type="text/javascript">
+$("input").datepick({dateFormat: 'dd/mm/yyyy'});
+</script>
+{% endblock %}

@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+{% load website_extras sekizai_tags%}
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>ICMC | {% block title %}{% endblock %}</title>
+<link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_URL }}img/favicon.png" /> 
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style_novo.css" STATIC="all" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/slide.css" STATIC="screen" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style_table.css" STATIC="all" />
+<!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/color/red.css" STATIC="all" /> -->
+<link rel="stylesheet" type="text/css" STATIC="screen" href="{{ STATIC_URL }}css/prettyPhoto.css"  />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.slider.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/type/museo.css" STATIC="all" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/type/ptsans.css" STATIC="all" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/type/charis.css" STATIC="all" />
+<link rel="stylesheet" STATIC="screen,projection" href="{{ STATIC_URL }}css/ui.totop.css" />
+<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}css/smoothness/jquery-ui-1.8.11.custom.css' />
+<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}css/jquery.weekcalendar.css' />
+{% render_block "css" %}
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ie7.css" media="all" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ie8.css" media="all" />
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href=".{{ STATIC_URL }}css/ie9.css" media="all" />
+<![endif]-->
+
+
+
+	   
+   
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/ddsmoothmenu.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/transify.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.jcarousel.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/carousel.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.superbgimage.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/twitter.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.slickforms.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.slider.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/slide.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script> 
+<script type='text/javascript' src='{{ STATIC_URL }}js/libs/jquery-ui-1.8.11.custom.min.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/date.js"></script>
+<script type='text/javascript' src='{{ STATIC_URL }}js/jquery.weekcalendar.js'></script>
+
+
+
+<script language ="javascript" type="text/javascript">
+	function popup(pagina){
+		window.open(pagina, width=500,' height=400, scrollbar=no')
+		}
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+	$('.forms').dcSlickForms();
+});
+</script>
+  <script type="text/javascript">
+    jQuery(document).ready(function($) {
+      $(".slider").slideshow({
+        width      : 900,
+        height     : 400,
+        transition : 'fade'
+      });
+    });
+  </script>
+  <!-- render block js-->
+  {% render_block "js" %}
+    {% block links %}{% endblock %}
+</head>
+<body>
+<div id="dhtmltooltip"></div>
+ <script charset="utf-8" type="text/javascript" src="{{ STATIC_URL }}js/tooltip.js"></script>
+<!-- Panel -->
+<div id="toppanel">
+	<div id="panel">
+	<div id="wrapper">
+		<div class="content clearfix">
+			<div class="left">
+				<h1 style="padding-bottom:1px">Bem vindo ao TCCweb</h1>
+				<h2 style="padding-bottom:1px">Entrar ou registrar-se?</h2>		
+				<p class="grey">Se você ainda não possui um login, registre-se e já poderá utilizar o sistema como aluno de graduação. Docentes e funcionários do ICMC-USP já estão previamente cadastrados. Utilize a opção "Esqueceu a senha" para receber instruções de como entrar. Se você participará de banca e ainda não possui um login, registre-se e entre em contato com os docentes responsáveis para ter seu papel modificado.</p>
+				</div>
+			<div class="left">
+				<!-- Login Form -->
+				<form class="clearfix" action="{% url 'usuarios_login' %}" method="post">
+					 {% csrf_token %}
+					<h1>Entrar</h1>
+					<!-- <label class="grey" for="log">{{ form.username.label_tag }}</label>
+					<input class="field" {{ form.username }} 
+					<label class="grey" for="pwd">{{ form.password.label_tag }}</label>
+					<input class="field" {{ form.password }} -->
+					<label class="grey" for="log" >Cpf</label><input class="field" type="text" name="cpf" value="" id="cpf" />
+					<label class="grey" for="pwd" >Senha</label><input class="field" type="password" name="password" value="" id="password" />
+				    			
+        			<div class="clear"></div>
+					<input type="submit" name="submit" value="Entrar" class="bt_login" />
+					<a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+				</form>
+			</div>
+			<div class="left right">			
+				<!-- Register Form -->
+				<form action="{% url 'usuarios_cadastro' %}" method="post">
+					{% csrf_token %}
+					<h1>Registre-se</h1>		
+					<label class="grey" for="signup">Cpf:</label>
+					<input class="field" type="text" name="cpf" id="cpf" value="" size="23" />
+					<label class="grey" for="email">Email:</label>
+					<input class="field" type="text" name="email" id="email" size="23" />
+					<input type="submit" name="registro" value="Registre-se" class="bt_register" />
+				</form>
+			</div>
+		</div>
+</div>
+</div> <!-- /login -->	
+
+	<!-- The tab on top -->	
+	<div class="tab">
+		<div id="wrapper">
+		<ul class="login">
+			<li class="left">&nbsp;</li>
+			{%if user.is_authenticated%}
+			<li>Perfil: <a href="{% url 'visualizar_perfil' request.user.id %}">{{request.user.nome_completo}}</a></li>
+			{% else %}
+			<li>Bem Vindo!</li>
+			{% endif %}	
+			<li class="sep">|</li>
+			<li id="toggle">
+				{%if user.is_authenticated%}
+				<a  href="{% url 'usuarios_logout' %}">Sair</a>
+				<a id="close" style="display: none;"  href="#">Até Logo!</a>	
+				{% else %}
+				<a id="open" class="open" href="#">Entrar | Registre-se</a>
+				<a id="close" style="display: none;" class="close" href="#">Fechar Painel</a>	
+				{% endif %}		
+			</li>
+			<li class="right">&nbsp;</li>
+		</ul> 
+		</div>
+	</div> <!-- / top -->
+	
+</div> <!--panel -->
+<!-- Fullscreen backgrounds -->
+
+ <div id="thumbs">
+<a href="{{ STATIC_URL }}img/mosaico.jpg"></a>
+</div>
+<div id="superbgimage">
+	<div class="scanlines"></div>
+</div>
+<!-- End Fullscreen backgrounds -->
+<!-- Begin Wrapper -->
+<div id="wrapper">
+  <div id="header">
+    <div class="logo opacity"><a href="#"><img src="{{ STATIC_URL }}img/icmc2.png" alt="" /></a></div>
+    <div class="social">
+      <ul>
+      </ul>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!-- Begin Menu -->
+  <div id="menu" class="menu opacity">
+    <ul>
+      <li><a href="{% url 'website_index' %}">Inicio</a></li>
+     
+     <!-- <li><a href="#">Calendário</a></li> -->
+      <li><a href="{% url 'listar_empresas' %}">Empresas</a></li>
+      <li><a href="{% url 'bancas_index' %}">Calendário</a>
+    <!-- <ul>
+    	<li><a href="#">Geral</a></li>
+    </ul> -->
+    </li>
+    {%if request.user.docente or request.user.funcionario or request.user.secretario %}
+    	<li><a href="{% url 'website_relatorios' %}">Relatórios</a>
+	    	<ul>
+	    		<li><a href="{% url 'pendencias_projeto' %}">Pendencias</a></li>
+	    		<li><a href="{% url 'relatorio_entrega' %}">Entrega</a></li>
+	    		<li> <a href="{% url 'bancas_relatorio' %}">Bancas</a></li>
+	    	</ul>
+	   		
+    	</li>
+    {% endif %}
+	{%if request.user.is_staff %}
+        <li><a href="/admin" >Administração</a></li>
+    {% endif %}
+      {% render_block "menu" %}
+    </ul>
+    
+    <br style="clear: left" />
+  </div>
+  <!-- End Menu --> 
+  
+  <!-- Begin Container -->
+   <div id="container" class="opacity">   
+        {% if messages %}
+        
+          <div id="messages">
+            {% for message in messages %}
+              <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+          </div> 
+        {% endif %}
+   <h1>{% block section %}{% endblock %}</h1>
+	{% block content %}{% endblock %}
+  </div>
+  
+  <!-- End Container -->
+  <div id="copyright" class="opacity">
+     <p><a href="{% url 'website_termos' %}">Termos de uso</a> - <a href="{% url 'website_sobre' %}">Sobre</a> - <a href="http://www.icmc.usp.br/">ICMC</a></p>
+  </div>
+</div>
+<!-- End Wrapper --> 
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/scripts.js"></script>
+</body>
+</html>

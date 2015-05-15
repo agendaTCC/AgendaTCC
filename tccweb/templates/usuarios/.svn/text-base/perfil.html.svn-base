@@ -1,0 +1,36 @@
+﻿{% extends "base.html" %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Inicio</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url usuarios_perfil user.id %}">Perfil de {{ user.get_profile.display_name }}</a>
+</nav>
+{% endblock %}
+{% block title %}Perfil de {{ user.get_profile.display_name }}{% endblock %}
+
+{% block section %}{{ user.get_profile.display_name }}{% endblock %}
+
+{% block content %}
+<div class="grid_12 clearfix">
+	Nome:{{ usuario.get_profile.display_name }} <br />
+	N.Usp:{{usuario.get_profile.nusp}}<br />
+	Curso: {{usuario.curso}}<br/>
+	Endereço: {{usuario.get_profile.end}}, {{usuario.get_profile.nro}}<br />
+	Complemento: {{ usuario.get_profile.cmp}}<br />
+	Cidade: {{ usuario.get_profile.city}} - {{ usuario.get_profile.UF}}<br />
+	Bairro: {{ usuario.get_profile.bairro}}<br />
+	Telefone: {{ usuario.get_profile.tel}}<br />
+	E-mail:{{ usuario.email }}<br />
+	{% if usuario.id == user.id %}
+	<form action="{% url usuarios_editar user.id %}">
+	{% csrf_token %}
+	<table>
+	<td><input type="submit" value="Editar" /></td>
+	<td><input type="button" value=" Mudar Senha "  onClick="parent.location='{%url auth_password_change%}'"></td>
+	</table>
+	</form>
+	
+	{% endif %}
+</div>
+
+{% endblock %}

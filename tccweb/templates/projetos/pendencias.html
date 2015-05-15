@@ -1,0 +1,75 @@
+﻿{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Pendências{% endblock %}
+
+{% block section %}Pendências{% endblock %}
+
+{% block content %}
+
+{% for departamento,semestre in request.session.semestre.items %}
+	<div style="height:38px">
+		<div style="float:left"><h1>Departamento - {{departamento}}</h1></div>
+	</div>
+	{% if disciplinas and request.user.docente %}
+				{%  with disciplinas=disciplinas|get_item:departamento%}
+					{% for disciplina,projetos in disciplinas.items %}
+						<h1>{{disciplina}}</h1>
+						{% if projetos %}
+							<table>
+								<tr>
+									<td width="40%">Nomes:</td><td width="15%" >Supervisor/Orientador</td><td width="15%" >Graduação</td><td width="15%" >Docente</td><td width="15%" colspan="2">Situação</td>
+								</tr>
+								{% for projeto in projetos %}
+									{% if not projeto.rascunho and not projeto.cancelado%}
+									<tr>
+										<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+										<td>
+											{% if projeto.validacao_supervisor_orientador == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_supervisor_orientador == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.validacao_graduacao == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_graduacao == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_graduacao == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.validacao_docente == 's'%}
+												Aprovado
+											{% elif  projeto.validacao_docente == 'n'%}
+												Não Aprovado
+											{% elif  projeto.validacao_docente == 'p'%}
+												<a href="#">Cobrar</a>
+											{% endif %}
+										</td>
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</table>
+						{% endif %}
+					{% endfor %}
+				
+				{% endwith %}
+			{% endif %}
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

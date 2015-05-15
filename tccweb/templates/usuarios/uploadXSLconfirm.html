@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Importar usuários do Tidia - Confirmar{% endblock %}
+
+{% block section %}Importar Alunos do Tidia{% endblock %}
+
+{% block content %}
+
+		{% for a in alunos %}
+		<div>
+			<hr/>
+			<h3>{{ a.nome }}</h3>
+			<p>{{ a.email }} - {{ a.nusp }}</p>
+			<br/>
+			<br/>
+		</div>
+		{% endfor %}
+
+{% endblock %}

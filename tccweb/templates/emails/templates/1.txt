@@ -1,0 +1,9 @@
+Prezado(a) aluno(a)
+ 
+Sua inscrição na disciplina {{ disciplina }} foi realizada com sucesso!!
+ 
+Acompanhe o andamento no site do sistema TCC Web, utilizando o usuário e senha recebidos em um e-mail anterior. A próxima etapa será a validação de sua inscrição pelos responsáveis, nessa ordem:  1-orientador do projeto ou supervisor do estágio; 2-Docente responsável pela disciplina; e 3-Seção de graduação.
+ 
+Em caso de dúvida procure um dos docentes responsáveis pelas disciplinas.
+ 
+Não responda a este email, pois foi gerado automaticamente.

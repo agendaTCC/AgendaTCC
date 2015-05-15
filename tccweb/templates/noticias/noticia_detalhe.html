@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}{{ noticia.titulo }}{% endblock %}
+
+{% block section %}{{ noticia.titulo }}{% endblock %}
+
+{% block content %}
+<ul class="latest-posts">
+		<li>
+        <span class="date">
+        <em class="day">{{ noticia.criada_em|date:"d" }}</em>
+        <em class="month">{{ noticia.criada_em|date:"M" }}</em>
+        <em class="year">{{ noticia.criada_em|date:"Y" }}</em>
+        
+        </span>
+        <p>{{ noticia.titulo }}:</a></p>
+        <p>{{ noticia.conteudo}}<p>
+      </li> 
+</ul>
+{% endblock %}

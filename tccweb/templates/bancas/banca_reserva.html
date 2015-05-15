@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Banca{% endblock %}
+
+{% block section %}Banca{% endblock %}
+
+{% block content %}
+
+<div>
+	<div>
+	 <h1> Sala {{banca.sala.nome}}</h1>
+	 <p>Banca do dia {{banca.data}}, das {{banca.hora_inicial}} ás {{banca.hora_final}}</p>
+		<br />
+	 <p> Faça a Reserva da Sala preenchendo o Formulário Abaixo:</p> <br />
+	</div>
+  <div>
+  <form method="post"  >
+  <table>
+  
+
+    <tr>
+      <th>
+		<td>
+		{% csrf_token %}
+		{{ form }}
+		
+		</td>
+	  </th>
+      <td colspan='2'><input type="submit" value="Salvar"/></td>
+      <td colspan='2'><input type="button" value="Voltar" onclick="history.go(-1)"></td>
+    </tr>
+  </table>
+</form>
+</div>
+  
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Alunos sem horario de apresentação{% endblock %}
+
+{% block section %}Alunos sem horario de apresentação{% endblock %}
+
+{% block content %}
+
+    {% for grupo in grupos %}
+ 
+     {% for disciplina in grupo.disciplinas %}
+     {{disciplina.alunos.count}}
+     		{% if disciplina.alunos|length == 0%}
+     			{{forloop|continue}}
+			{% endif %}
+			<A NAME="{{disciplina.disciplina.titulo}}"></A>
+			<h3>{{disciplina.disciplina.titulo}}</h3>
+     		<table>
+     		<tr><td >Aluno</td><td width="100">Cobrar</td></tr>
+     			
+     				{% for aluno in disciplina.alunos %}
+     				
+     				<tr>
+     					<td>{{aluno.aluno.get_profile.display_name.title}}</td>
+     					<td>
+     				     					<a href="{% url formularios_avisar_pendencia disciplina.disciplina.id 'apresentacao' aluno.aluno.id aluno.aluno.id %}">e-mail</a>	
+     					</td>
+  
+     		     </tr>
+     				{% endfor %}
+     				<tr><td></td><td><a href="{% url avisar_pendencia_apresentacao_varios disciplina.disciplina.id  %}" >Todos</a></td></tr>
+     		</table>
+     	{% endfor %}
+    {% endfor %}
+	
+<input type="button" value=" Voltar " onclick="history.go(-1)">	
+{% endblock %}

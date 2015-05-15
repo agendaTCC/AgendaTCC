@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+
+
+{% block title %}Relatório Bancas{% endblock %}
+
+{% block section %}Relatório Bancas{% endblock %}
+
+{% block content %}
+
+
+	{% for departamento,semestre in request.session.semestre.items %}
+		<h1>Departamento - {{departamento}}</h1>
+		<div class="inner-menu-box">
+			<ul>
+				<li><a href="{% url 'bancas_relatorio_csv' departamento.id %}">Imprimir CSV</li>
+			</ul>
+		</div>
+		{% for banca in bancas|get_item:departamento %}
+		<table>
+			<tr height="45">
+				<td width="179"><strong>Nome do aluno</strong></td>
+				<td width="478" colspan="3">{{ banca.projeto.aluno.nome_completo }}</td>
+				<td width="79"><strong>Curso</strong></td>
+	 			<td width="179">{{ banca.projeto.aluno.curso }}</td>
+ 			</tr>
+ 			<tr height="45">
+ 				<td ><strong>Título</strong></td>
+	 			<td colspan="3">{{ banca.projeto.titulo }}</td>
+	 			<td ><strong>Disciplina</strong></td>
+	 			<td>{{ banca.projeto.disciplina.titulo.titulo }}</td>
+ 			</tr>
+			<tr height="45">
+				<td ><strong>Nome do orientador ou supervisor</strong></td>
+	 			<td colspan="5">
+	 				{% if banca.projeto.supervisor %}
+	 					{{ banca.projeto.supervisor.nome_completo }}
+					{% elif banca.projeto.orientador %}
+							{{ banca.projeto.orientador.nome_completo }}
+					{% endif %}
+	 			</td>
+ 			</tr>
+ 			<tr height="45">
+ 				<td><strong>Nome Banca Convidada</strong></td>
+ 				<td colspan="3">
+ 					{% if banca.banca_convidado %}
+ 						{{ banca.banca_convidado.nome_completo }}
+ 					{% else %}
+ 						Não escolhido
+ 					{% endif %}
+ 				</td>
+ 				<td ><strong>Email Banca Convidada</strong></td>
+	 			<td >{{ banca.banca_convidado.email }}</td>
+ 			</tr>
+ 			<tr height="45">
+ 				<td ><strong>Nome da Banca responsavel</strong></td>
+	 			<td colspan="5">
+	 				{% if banca.banca_docente %}
+	 					{{ banca.banca_docente.nome_completo }}
+	 				{% else %}
+	 					Não escolhido
+ 					{% endif %}
+	 			</td>
+ 			</tr>
+			<tr height="45">
+				<td><strong>Data da apresentação</strong></td>
+	 			<td>{{ banca.data|date:"d/m/Y" }}</td>
+	 			<td><strong>Hora de Inicio</strong></td>
+	 			<td>{{ banca.hora_inicial|time:"h:i" }}</td>
+	 			<td><strong>Hora de Final</strong></td>
+	 			<td>{{ banca.hora_final|time:"h:i" }}</td>
+	 		</tr>
+	 		
+		</table>		
+		{% endfor %}
+		
+	{% endfor %}
+{% endblock %}

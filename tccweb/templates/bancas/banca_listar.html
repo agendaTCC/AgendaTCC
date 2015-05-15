@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block links %}
+
+<script type='text/javascript'>
+
+ 
+	var year = new Date().getFullYear();
+	var month = new Date().getMonth();
+	var day = new Date().getDate();
+	
+// Mostra calendario Para Alunos de graduação,  alunos podem cadastrar suas bancas apartir desse calendario
+
+	var eventData_alunos = {
+		events : [
+{% for banca in bancas%}
+		   {"id":{{banca.id}},
+		    "start": new Date({{banca.data.year}}, {{banca.data.month}}-1, {{banca.data.day}},{{ banca.hora_inicial.hour }},{{ banca.hora_inicial.minute }} ), 
+		    "end": new Date({{banca.data.year}}, {{banca.data.month}}-1 , {{banca.data.day}}, {{ banca.hora_final.hour }}, {{ banca.hora_final.minute }}),
+            "title":
+                {% if banca.projeto %} 
+                    "<p>{{banca.projeto.titulo}}</p>\
+                    Responsavel:\
+                    {% if banca.banca_docente %}\
+                        <img src=\"{{ STATIC_URL }}img/true.png\" title=\"true\" ><br>\
+                    {% else %}\
+                        <img src=\"{{ STATIC_URL }}img/false.png\" title=\"true\" ><br>\
+                    {% endif %}<br>\
+                    Convidado:\
+                    {% if banca.banca_convidado %}\
+                        <img src=\"{{ STATIC_URL }}img/true.png\" title=\"true\" ><br>\
+                    {% else %}\
+                        <img src=\"{{ STATIC_URL }}img/false.png\" title=\"true\" ><br>\
+                    {% endif %}<br>"
+                    {% else %} 
+                        "Sala: {{banca.sala.nome}}"
+                    {% endif %},
+		    "title_cell":
+                {% if banca.projeto %}
+                    "{{banca.projeto.titulo}}"
+                {% else %} 
+                    "Sala: {{banca.sala.nome}}"
+                {% endif %},
+		    "color":
+                "{% if banca.projeto.supervisor != None %}1{% else %}{% if banca.projeto.orientador != None %}2{% else %}3{% endif %}{% endif %}",
+			"departamento":"#{{banca.semestre.grupo.cor}}",	    
+		    "reservada":
+                {% if banca.reservada %}
+                    true
+                {% else %}
+                    false 
+                {% endif %},
+		    },  
+		                         
+{% endfor%}
+		   
+		]
+	};
+$(document).ready(function() {
+        var $dialogContent
+		var $calendar = $('#calendar').weekCalendar({
+				date : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}} ),
+				minDate : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}}, {{hora_inicial.hour}}+1, {{hora_inicial.minute}}),
+				maxDate : new Date({{ultimo.year}},{{ultimo.month}}-1,{{ultimo.day}}),
+			height: function($calendar){
+				if(new Date().getDate() > new Date(2011,12,1)){
+			   $calendar.find(".ui-widget-header").css({"background": "#dadada url({{ MEDIA_URL }}css/smoothness/images/ui-bg_glass_75_dadada_1x400.png) 50% 50%"});
+				}
+				return $(window).height() - 255 - $("h1").outerHeight(true);
+			},
+			
+			eventRender : function(calEvent, $event) {  
+         			if(calEvent.color == "1"){
+         			$event.find(".wc-time").css("backgroundColor","#e05346");
+         			}
+         			if(calEvent.color == "2"){
+         			$event.find(".wc-time").css("backgroundColor","#3d77c9");
+         			}
+         			if(calEvent.color == "3"){
+         			$event.find(".wc-time").css("backgroundColor","#000");
+         			}
+         			$event.css("color","#000");
+					$event.css("backgroundColor",calEvent.departamento ); 
+                    $event.find(".wc-title").bind("mouseover",function(){
+                        calEvent.height = $event.css('height');
+                        calEvent.width = $event.css('width');
+                        calEvent.left = $event.css('left');
+                        $event.css('min-height',calEvent.height);
+                        $event.css('height','auto');
+                        $event.css('width','100%');
+                        $event.css('z-index','100');
+                        $event.css('left','0%');
+                    })
+                    $event.find(".wc-title").bind("mouseout",function(){
+                        $event.css('height',calEvent.height);
+                        $event.css('width',calEvent.width);
+                        $event.css('left',calEvent.left);
+                        $event.css('z-index','0')
+                    })
+
+						
+			},
+			eventClick : function(calEvent, $event) {
+                var $titulo
+    			if (calEvent.reservada == false){
+    				$titulo = "Disponivel";			
+    			}
+                else{ 
+                    $titulo = ""+calEvent.title_cell; 
+                }
+                $dialogContent = $("#event_edit_container_"+calEvent.id);
+                $dialogContent.dialog({
+                    modal: true,
+                    resizable: false,
+                    width: 920,
+                    height: 400,
+                    title: $titulo,
+                    close: function() {
+                       $dialogContent.dialog("destroy");
+                       $dialogContent.hide();
+                       $('#calendar').weekCalendar("removeUnsavedEvents");
+                    }, 
+                }).show();
+
+                $(window).resize().resize(); //fixes a bug in modal overlay size ??
+
+            },
+			eventMouseover : function(calEvent, $event) {
+                calEvent.height = $event.css('height');
+                calEvent.width = $event.css('width');
+                calEvent.left = $event.css('left');
+                $event.css('width','100%');
+                $event.css('min-height',calEvent.height);
+                $event.css('height','auto');
+                $event.css('z-index','100');
+                $event.css('left','0%');
+
+
+				
+			},
+			eventMouseout : function(calEvent, $event) {
+				$event.css('height',calEvent.height);
+                $event.css('width',calEvent.width);
+                $event.css('left',calEvent.left);
+                $event.css('z-index','0')
+			},
+			data: function(start, end, callback) {
+					callback(eventData_alunos);
+            }
+            
+            
+		});
+
+		$("#data_source").change(function() {
+			$calendar.weekCalendar("refresh");
+			updateMessage();
+			
+		});
+
+        $("#dialogConfirmacao").dialog({
+          modal: true,
+                bgiframe: true,
+                width: 500,
+                height: 200,
+          autoOpen: false
+          });
+
+        $("#libera_aluno , #libera_docente").click(function(e){
+            e.preventDefault();
+            $dialogContent.dialog("close");
+            var confirm = $(this);
+            $("#dialogConfirmacao").dialog('option', 'buttons', {
+                    "Sim" : function() {
+                        window.location.href = confirm.attr('href');
+
+             },
+                    "Não" : function() {
+                        $(this).dialog("close");
+                        }
+                    });
+
+            $("#dialogConfirmacao").dialog("open");
+
+        });
+	});
+
+</script>
+ 	
+{% endblock %}
+{% load markup %}
+{% block title %}Calendário {% endblock %}
+
+{% block section %}Calendário {% endblock %}
+
+{% block content %}
+
+	{% if bancas.count == 0 %}
+		<div><p>As Datas e os Horários ainda não foram definidos , Aguardem!</p></div>
+		
+	{%else%}
+		
+	
+		<div id='calendar'>
+			<div class="sidebar">
+			
+				<!-- <div class="sidebar-box" style="position:relative; top:5px; right:10px;">
+					<form class="searchform" action="/busca" method="get">
+         			 <input type="text" value="Busca por banca" onfocus="this.value=''" onblur="this.value='Buscar por banca'"document.submit();{{ form.q }}  
+     			 	</form>
+    		</div> -->
+    		</div>
+    </div>
+    <div> <div style="background-color:{{banca.cor}}"></div>
+    </div>
+    
+	{% endif %}
+{% for banca in bancas %}
+<div id="event_edit_container_{{banca.id}}" style="display:none;">
+{% if banca.reservada %}
+		{% if banca.projeto.orientador != None %}
+    	<p><b style="color:#3d77c9">Banca de Trabalho de Graduação.</b></p>
+    	{% endif %}
+    	{% if banca.projeto.supervisor != None %}
+    	<p><b  style="color:#e05346">Banca de Estágio.</b></p>
+    	{% endif %}
+    	<br />
+        <p>Titulo: {{banca.projeto.titulo}}</p>
+    	<p>Aluno: {{banca.projeto.aluno.nome_completo}}.</p>
+    	<p>Apresentação na sala <b>{{banca.sala.nome}}</b>, das <b>{{banca.hora_inicial}}</b> até as <b>{{banca.hora_final}}</b> no dia <b>{{banca.data}}</b>.</p>
+    	<br />
+            {% if banca.projeto.orientador %} 
+                <p>Orientador:{{banca.projeto.orientador.nome_completo}}</p>
+            {% endif %}
+            {% if banca.projeto.supervisor and  banca.projeto.supervisor.empresa %}
+            <p>Empresa:{{ banca.projeto.supervisor.empresa.0 }}</p>
+            <p>Supervisor:{{banca.projeto.supervisor.nome_completo}}</p>
+            {% endif %}
+       
+    	<br />
+    	<p>Áreas de Concentração: 
+    	{% for item in banca.projeto.area %}
+    			{% if item == 'a' %}<p>Engenharia de Software e Sistemas de Informação;</p>{% endif %}
+    			{% if item == 'b' %}<p>Inteligencia Computacional;</p>{% endif %}
+    			{% if item == 'c' %}<p>Banco de Dados;</p>{% endif %}
+    			{% if item == 'd' %}<p>Computação Gráfica e Processamento de Imagens;</p>{% endif %}
+    			{% if item == 'e' %}<p>Hipermídia;</p>{% endif %}
+    			{% if item == 'f' %}<p>Computação Bioinspirada;</p>{% endif %}
+    			{% if item == 'g' %}<p>Otimização e Modelos Estocásticos;</p>{% endif %}
+    			{% if item == 'h' %}<p>Gerenciamento de Redes;</p>{% endif %}
+    			{% if item == 'i' %}<p>Mecânica dos Fluidos Computacionais;</p>{% endif %}
+    			{% if item == 'j' %}<p>Sistemas Distribuídos e Programação Concorrente;</p>{% endif %}
+    			{% if item == 'k' %}<p>Arquitetura de Computadores;</p>{% endif %}
+    			{% if item == 'l' %}<p>Outras: {{banca.projeto.espc }};</p>{% endif %}
+    	 {% endfor %}
+    	</p>
+    	<br />
+    	<p>Membros da Banca:</p>
+    	<p>{{banca.banca_docente.nome_completo}} </p> 
+    	<p>{{banca.banca_convidado.nome_completo}}</p>
+        <div class=" ui-widget-content ui-helper-clearfix" style = "position: absolute; width:95%; bottom:10px;text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; ">
+                <div class="ui-dialog-buttonset" style = "float:right">
+                    {%if request.user == banca.projeto.aluno and banca.semestre.emEscolhaAlunos%}
+                    <a id="libera_aluno" href="{% url 'bancas_aluno_liberar' banca.id %}">
+                        <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover ui-state-active" role="button">
+                            <span class="ui-button-text">Liberar</span>
+                        </button>
+                    </a>
+                    {% endif %}
+                    {% if banca.semestre.emEscolhaDocenteResponsavel or banca.semestre.emEscolhaDocenteConvidado  %}
+                        {% if request.user == banca.banca_docente or request.user == banca.banca_convidado %}
+                        <a id="libera_docente" href="{% url 'bancas_docente_liberar' banca.id %}">
+                            <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover ui-state-active" role="button">
+                                <span class="ui-button-text">Liberar</span>
+                            </button>
+                        </a>
+
+                        {% endif %}
+                    {% endif %}
+
+                    {% if banca.semestre.emEscolhaDocenteResponsavel or banca.semestre.emEscolhaDocenteConvidado  %}
+                        {% if request.user.docente or request.user.doutorando or request.user.mestrando  %}
+                            {% if not banca.banca_docente or not banca.banca_convidado %}
+                                {% if request.user != banca.banca_docente and request.user != banca.banca_convidado%}
+                                    <a href="{% url 'bancas_banca_escolher' banca.id %}">
+                                        <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover ui-state-active" role="button">
+                                            <span class="ui-button-text">Reservar</span>
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+    	 
+{% else %}
+    <p>Sala <b>{{banca.sala.nome}}</b>, das <b>{{banca.hora_inicial}}</b> até as <b>{{banca.hora_final}}</b> no dia <b>{{banca.data}}</b>.</p>
+    {%if request.user.aluno and matriculado and banca.semestre.emEscolhaAlunos  %}
+            <div class=" ui-widget-content ui-helper-clearfix" style = "position: absolute; width:95%; bottom:10px; text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; ">
+                <div class="ui-dialog-buttonset" style = "float:right">
+                    <a href="{% url 'bancas_banca_reserva' banca.id %}"><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover ui-state-active" role="button">
+                        <span class="ui-button-text">Reservar</span>
+                    </button></a>
+                </div>
+            </div>
+    {% endif %}
+    
+{% endif %}
+    	
+		
+	</div>
+{% endfor %}
+
+<div id="dialogConfirmacao" title="Liberação de banca" style="display:none;">
+    <p>Você ira liberar a sua participação nessa banca, tem certeza disso?</p>
+</div>
+{% endblock %}

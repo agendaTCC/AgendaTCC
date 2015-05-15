@@ -1,0 +1,68 @@
+from models import Dia_Agenda, Agenda, Banca
+from salas.models import Sala
+from datetime import timedelta
+from django.db.models.signals import post_save
+from django.db import models
+
+def cria_banca(sender,**kwargs):
+    dia = kwargs["instance"]
+    agenda = dia.agenda
+    sala = agenda.salas
+    salas = Sala.objects.get(id = sala.id)
+    horarios = sala.horarios.split(';')
+    horarios_manha = []
+    horarios_tarde = []
+    horarios_noite = []
+    flag = 0
+    for item in horarios:
+        auxiliar = item.split('-')
+        if int(auxiliar[0].split(':')[0]) < 12:
+            horarios_manha = horarios_manha + [auxiliar,]
+        elif int(auxiliar[0].split(':')[0]) >= 18:
+            horarios_noite = horarios_noite + [auxiliar,]
+        else:
+            horarios_tarde = horarios_tarde + [auxiliar,]
+    
+    if sala.data_inicial >= agenda.data_inicial:
+        data_inicial = sala.data_inicial
+    else:
+        data_inicial = agenda.data_inicial
+    
+    if sala.data_final <= agenda.data_final:
+        data_final = sala.data_final
+    else:
+        data_final = agenda.data_final
+    if sala.data_final < agenda.data_inicial:
+        flag = 1
+    if agenda.data_final < sala.data_inicial:
+        flag = 1
+    while(1):
+        if flag == 1:
+            break
+        if data_inicial == dia.data:
+            for periodo in dia.periodos:
+                if periodo == 'm':
+                    for item in horarios_manha:
+                        banca_ = Banca.objects.filter(data = data_inicial, hora_inicial = item[0], hora_final = item[1], sala=salas.id)
+                        if banca_.count() == 0:
+                            banca = Banca(data=data_inicial, hora_inicial = item[0], hora_final = item[1],sala_id = salas.id, grupo_id = salas.grupo.id)
+                            banca.save()
+                if periodo == 't':
+                    for item in horarios_tarde:
+                        banca_ = Banca.objects.filter(data = data_inicial, hora_inicial = item[0], hora_final = item[1], sala=salas.id)
+                        if banca_.count() == 0:
+                            banca = Banca(data=data_inicial, hora_inicial = item[0], hora_final = item[1],sala_id = salas.id, grupo_id = salas.grupo.id)    
+                            banca.save()
+                if periodo == 'n':
+                    for item in horarios_noite:
+                        banca_ = Banca.objects.filter(data = data_inicial, hora_inicial = item[0], hora_final = item[1], sala=salas.id)
+                        if banca_.count() == 0:
+                            banca = Banca(data=data_inicial, hora_inicial = item[0], hora_final = item[1],sala_id = salas.id, grupo_id = salas.grupo.id)
+                            banca.save()
+        if (data_final != data_inicial):
+            data_inicial=data_inicial + timedelta(days=1)
+            continue
+        else:
+            break
+ 
+post_save.connect(cria_banca, sender=Dia_Agenda, dispatch_uid="bancas.models.Agenda")

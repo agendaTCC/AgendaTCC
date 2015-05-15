@@ -1,0 +1,56 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Gerencia - Disciplinas - Criar/Editar Disciplinas{% endblock %}
+
+{% block section %}Gerencia - Disciplinas - Criar/Editar Disciplinas{% endblock %}
+
+{% block content %}
+<div>
+<h3>Disciplinas do Semestre Atual</h3>
+<table>
+ <tr><td>Disciplinas</td><td>Grupo</td><td><a href="{% url disciplina_criar %}" >adicionar</a></td></tr>
+ {% for disciplina in disciplinas %}
+ {% for grupo in grupos %}
+ {% if disciplina.titulo in grupo.disciplinas.all %}
+ <tr><td>{{disciplina.titulo}}</td><td>{{grupo}}</td><td><a href="{% url disciplina_editar disciplina.id %}" >editar</a> / <a href="{% url disciplina_apagar disciplina.id %}" >apagar</a></td> </tr> 
+{% endif %} 
+ {% endfor %}
+ {% empty %}
+ <tr><td colspan="3">Não existem Disciplinas Criadas para esse semestre!</td></tr>
+  {% endfor %}
+</table>
+</div>
+
+<div class="one-half">
+<h3>Disciplinas do Semestre Passado</h3>
+<table>
+ <tr><td>Disciplinas</td><td>Grupo</td></tr>
+{% for disciplina in disciplinas_passadas %}
+ {% for grupo in grupos %}
+ {% if disciplina.titulo in grupo.disciplinas.all %}
+ <tr><td>{{disciplina.titulo}}</td><td>{{grupo}}</td></tr> 
+{% endif %} 
+ {% endfor %}
+ {% empty %}
+ <tr><td colspan="2">Não existem Disciplinas Criadas para esse semestre!</td></tr>
+{% endfor %}
+</table>
+</div>
+<div class="one-half last">
+<h3>Disciplinas do Próximo Semestre</h3>
+<table>
+ <tr><td>Disciplinas</td><td>Grupo</td><td><a href="{% url disciplina_criar %}" >adicionar</a></td></tr>
+{% for disciplina in disciplinas_proximas %}
+
+ {% for grupo in grupos %}
+ {% if disciplina.titulo in grupo.disciplinas.all %}
+ <tr><td>{{disciplina.titulo}}</td><td>{{grupo}}</td><td><a href="{% url disciplina_editar disciplina.id %}" >editar</a> / <a href="{% url disciplina_apagar disciplina.id %}" >apagar</a></td> </tr> 
+{% endif %} 
+ {% endfor %}
+ {% empty %}
+ <tr><td colspan="3">Não existem Disciplinas Criadas para esse semestre!</td></tr>
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}

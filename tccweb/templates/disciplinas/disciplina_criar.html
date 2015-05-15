@@ -1,0 +1,49 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Criar/Editar Disciplina{% endblock %}
+
+{% block section %}Criar/Editar Disciplina{% endblock %}
+
+{% block links %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.asmselect.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.asmselect.css" />
+<script type="text/javascript">
+$(document).ready(function() {
+    $("select[multiple]").asmSelect({
+        animate: true,
+        addItemTarget: 'top',
+        removeLabel: 'remover',
+    });
+});
+	</script>
+{% endblock %}
+{% block content %}
+<div >
+  <form method="post"  >
+  <table>
+  
+
+    <tr>
+      <th>
+		<td>
+		{% csrf_token %}
+		{% for item in form %}
+		{% if item.label == "Professores Responsáveis"%}
+		<tr><td>{{item.label}}</td><td><p><select title="{{item.label}}"{{item}}</p><p>Escolha o Professor da lista, ele será adicionado automaticamente!</p></td></tr>
+		
+		{% else %}
+		<tr><td>{{item.label}}</td><td>{{item}}</td></tr>
+		{% endif %}
+		{% endfor %}
+		</td>
+	  </th>
+      <td colspan="2">
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+      </td>
+      
+    </tr>
+  </table>
+</form>
+</div>
+{% endblock %}

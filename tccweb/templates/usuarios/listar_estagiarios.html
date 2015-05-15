@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Formulários/Documentos{% endblock %}
+
+{% block section %}Formulários/Documentos{% endblock %}
+
+{% block content %}
+{% if alunos == None %}
+<p>Você ainda não está ligado a nenhuma empresa ou não supervisiona nenhum estagiário!</p>
+{% else %}
+<div class="one-third last">
+<h3>Estágiarios</h3>
+{% for aluno in alunos %}
+<p><a href="{% url usuarios_perfil aluno.id %}" >{{aluno.get_profile.display_name}}</a></p>
+{% endfor %}
+</div>
+<div class="two-third last">
+<h3>Projetos:</h3>
+{%for aluno in alunos%}
+{%for projeto in projetos%}
+	<p>
+	{% if aluno.id == projeto.user.id and projeto.supervisor.usuario.id == user.id%}
+		<a href="{% url usuario_validarformgrad aluno.id projeto.disciplina.id %}" >{{projeto.disciplina}}</a>;
+	{%endif%}
+	</p>
+{% endfor %}
+{% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

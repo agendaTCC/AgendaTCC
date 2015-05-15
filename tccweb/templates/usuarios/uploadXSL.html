@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Importar usuários do Tidia{% endblock %}
+
+{% block section %}Importar Alunos do Tidia{% endblock %}
+
+{% block content %}
+
+	<form action="{% url 'cadastro_usuarios_tidia' %}" method="post" enctype="multipart/form-data">
+
+    	{% csrf_token %}
+
+		<label for="arquivo_xsl_input">Arquivo .xsl (exportado do Tidia)</label><br/>
+		<input type="file" name="xsl_file" id="arquivo_xsl_input">
+
+		<input type="submit" value="enviar">
+
+	</form>
+
+{% endblock %}

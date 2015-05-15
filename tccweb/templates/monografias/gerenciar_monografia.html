@@ -1,0 +1,152 @@
+﻿{% extends "base.html" %}
+{% load website_extras %}
+{% block title %}Gerenciar Monografias{% endblock %}
+
+{% block section %}Gerenciar Monografias{% endblock %}
+
+{% block links %}
+<script type='text/javascript'> 
+$(document).ready(function(){
+    $("#selectAll").change(function() {
+        $(".checkbox_delete:checkbox").attr('checked', this.checked);
+    });
+});
+</script> 
+
+{% endblock %}
+
+{% block content %}
+
+	<div>
+		{% for grupo in grupos %}
+			<div style="padding-top: 10px">
+				<h2>Grupo {{grupo.titulo}}</h2>
+			</div>
+			{% for disciplina in disciplinas %}
+			{% if disciplina.titulo in grupo.disciplinas.all %}
+				
+				
+      		<div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      			<A NAME="{{disciplina.titulo}}"></A>
+        			<div><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        			<div>
+          			{% with total=disciplina.professores.count %}
+            			Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          			{% endwith %}
+          			{% for professor in disciplina.professores.all %}
+            			<a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          			{% endfor %}
+        			</div>
+        			<div>
+         			 {% with total=disciplina.monitores.count %}
+           				 Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          			 {% endwith %}
+          			 {% for monitor in disciplina.monitores.all %}
+           				 <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          			 {% endfor %}
+        			</div>
+					<div>
+						<form method="post"  id="frm{{disciplina.id}}">
+						
+						{% csrf_token %}
+  						 <table>
+  						 	<tr><td rowspan="2"><strong>Alunos:</strong></td> <td colspan="3"><strong>Entrega:</strong></td><td><strong>Devolução</strong></td><td><strong>Cobranças:</strong></td></tr>
+  						 	<tr><td><strong>Original</strong></td><td><strong>Revisada</strong></td><td><strong>Impressa</strong></td><td><strong>Emprestada</strong></td><td align="center"><input type='checkbox' name='checkall' class="checkallboxes{{disciplina.id}}"></td></tr>
+  						 	{% for aluno in disciplina.alunos.all|order_by:"display_name" %}
+  						 	<tr>
+  						 	<td>{{aluno.display_name}}</td>
+  						 	<td>
+  						 	{% if monografias_originais.count == 0 %}
+  						 	Não Entregue
+  						 	{% endif %}
+							{% for monografia in monografias_originais %}  	
+							{% if monografia.alunos.id == aluno.user.id %}
+							<a href="{% url download_monografia_original monografia.id %}" >{{monografia.data}}</a>
+							{{forloop|break}}	
+							{% endif %}
+							{% if forloop.last and monografia.alunos.id != aluno.user.id %} 	
+  						 	Não Entregue
+  						 	{% endif %}
+  						 	{% endfor %}
+  						 	</td>
+  						 	<td>
+  						 	{% if monografias_revisadas.count == 0 %}
+  						 	Não Entregue
+  						 	{% endif %}
+  						 	{% for monografia in monografias_revisadas %}  	
+							{% if monografia.alunos.id == aluno.get_profile.id %}
+							<a href="{% url download_monografia_revisada monografia.id %}" >{{monografia.data}}</a>
+							{{forloop|break}}	
+							{% endif %}
+							{% if forloop.last and monografia.alunos.id != aluno.user.id %} 	
+  						 	Não Entregue
+  						 	{% endif %}
+  						 	{% endfor %}
+  						 	</td>
+  						 	<td>
+  						 	{% if monografias_impressas.count == 0 %}
+  						 	<a href="{% url receber_monografia_impressa aluno.id disciplina.id%}" >Receber</a>
+  						 	{% endif %}
+  						 	{% for monografia in monografias_impressas %}  	
+							{% if monografia.alunos == aluno.user %}
+							{{monografia.data}}
+							{{forloop|break}}	
+							{% endif %}
+							{% if forloop.last and monografia.alunos != aluno.user %} 	
+  						 	<a href="{% url receber_monografia_impressa aluno.id disciplina.id%}" >Receber</a>
+  						 	{% endif %}
+  						 	{% endfor %}
+  						 	</td>
+  						 	<td>
+  						 	{% if monografias_emprestadas.count == 0 %}
+  						 	<a href="{% url receber_monografia_emprestada aluno.id disciplina.id%}" >Receber</a>
+  						 	{% endif %}
+  						 	{% for monografia in monografias_emprestadas %}  	
+							{% if monografia.alunos == aluno.user %}
+							{{monografia.data}}
+							{{forloop|break}}	
+							{% endif %}
+							{% if forloop.last and monografia.alunos != aluno.user %} 	
+  						 	<a href="{% url receber_monografia_emprestada aluno.id disciplina.id%}" >Receber</a>
+  						 	{% endif %}
+  						 	{% endfor %}
+  						 	</td>
+  						 	<td align="center">
+  						 	<label  for="id_alunos_{{forloop.counter0}}">
+  						 	<input class="checkbox{{disciplina.id}}" type="checkbox" name="alunos" value="{{aluno.user.id}}" id="id_alunos_{{forloop.counter0}}" />
+  						 	</label>
+  						 	</td>
+  						 	</tr>
+  						 	{% endfor %}
+  						 	<tr><td colspan="6"><input name="revisada_{{disciplina.id}}" type="submit" value="Cobrar Impressa"/> <input name="atrasada_{{disciplina.id}}" type="submit" value="Cobrar Atrasada"/> </td></tr>
+  						 </table>	 
+				   			 
+   			 </form>		
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".checkallboxes{{disciplina.id}}").toggle(                    //this is the gif file id
+    function() {
+        $('.checkbox{{disciplina.id}}').attr('checked','checked'); //add the atrribute checked
+    },
+    function () {
+        $('.checkbox{{disciplina.id}}').removeAttr("checked");     //remove the attribute checked
+    });
+});
+</script>  			 
+  					</div>
+      		</div>
+  				
+  				
+  			{% endif %}
+    		{% endfor %}
+	{% endfor %}
+	
+	
+	
+      
+	
+	
+  </div>
+
+{% endblock %}

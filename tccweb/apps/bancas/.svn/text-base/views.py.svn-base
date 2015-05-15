@@ -1,0 +1,247 @@
+# -*- coding: utf-8 -*-
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.contrib import auth
+from django.contrib.auth import forms, authenticate, views, login
+from django.contrib.auth.models import User, Group
+from django import http
+from django.db import IntegrityError
+from django.db.models import Q
+from django.core.urlresolvers import reverse
+from models import Dia_Agenda, Banca, Agenda
+from forms import BancaForm, AgendamentoForm, dia_agenda_formset
+from disciplinas.models import Disciplina
+from formularios.models import ProjetoDeGraduacao
+from datas.models import Data
+import datetime
+
+
+def banca_liberar_aluno(request, banca_id):
+    banca = Banca.objects.get(id =banca_id)
+    banca.aluno = None
+    banca.banca1 = None
+    banca.banca2 = None
+    banca.disciplina = None
+    banca.projeto = None
+    banca.empresa = None
+    banca.reservada = False
+    banca.save()
+    messages.success(request, ('Banca Liberada com sucesso!'))
+    return HttpResponseRedirect('/bancas/')
+
+def banca_liberar_professor(request, banca_id, user_id):
+    banca = Banca.objects.get(id = banca_id)
+    
+    if banca.banca1 != None and int(banca.banca1.id) == int(user_id):
+        banca.banca1 = None
+    elif banca.banca2 != None and int(banca.banca2.id) == int(user_id):
+        banca.banca2.id = None
+    else:
+        messages.error(request, ('Usuario não pertence a essa banca!'))
+        return HttpResponseRedirect('/bancas/')   
+    banca.save()
+    messages.success(request, ('Banca Liberada com sucesso!'))
+    return HttpResponseRedirect('/bancas/')   
+    
+
+def banca_listar(request):
+    hoje = datetime.datetime.now()
+    if hoje.month < 6:
+        semestre = 1
+    else:
+        semestre = 2
+        
+    datas_limites = Data.objects.filter(ano = hoje.year, semestre = semestre)
+    user = request.user.get_profile()
+    formulario = ProjetoDeGraduacao.objects.filter(user=user.id)
+    disciplinas = Disciplina.objects.filter(alunos=user.id)
+    bancas = Banca.objects.all()
+    datas=[]
+    primeiro = None
+    ultimo = None
+    if bancas.count() != 0:
+        for banca in bancas:
+            datas+=[banca.data]
+        datas.sort(key=lambda r: datas)
+        primeiro = datas[0]
+        ultimo = datas[-1]
+        
+    return render_to_response('bancas/banca_listar.html', {
+        'bancas': bancas,
+        'formulario': formulario,
+        'disciplinas':disciplinas,
+        'primeiro':primeiro,
+        'ultimo':ultimo,
+        'datas_limites':datas_limites,
+    }, context_instance=RequestContext(request))
+
+
+def banca_detalhe(request, banca_id):
+    
+    banca = get_object_or_404(Banca, pk=banca_id)
+    aluno = banca.aluno
+    projeto = banca.projeto
+    return render_to_response('bancas/banca_detalhe.html', {
+        'banca': banca,
+        'aluno': aluno,
+        'projeto': projeto,
+    }, context_instance=RequestContext(request))
+    
+def banca_reserva(request, banca_id, user_id):
+    usuario = User.objects.get(id=user_id)
+    banca = get_object_or_404(Banca, pk=banca_id)
+    banca_usuario = Banca.objects.filter(aluno = user_id)
+    hoje = datetime.datetime.now()
+    if hoje.month < 6:
+        semestre = 1
+    else:
+        semestre = 2
+    try: 
+        datas_limites = Data.objects.get(ano = hoje.year, semestre = semestre)
+    except:
+        datas_limites = None
+    if datas_limites != None:
+            if datas_limites.inic_banca_alunos != None:
+                if datas_limites.inic_banca_alunos > hoje:
+                    messages.error(request, ('Reserva de sala ainda não foi Liberada!'))
+                    return HttpResponseRedirect('/bancas/')
+            if datas_limites.max_banca_alunos != None:
+                if datas_limites.max_banca_alunos < hoje:
+                    messages.error(request, ('A Data Limite para reserva foi ultrapassada'))
+                    return HttpResponseRedirect('/bancas/')
+    try:
+        projetos = ProjetoDeGraduacao.objects.filter(user=user_id)
+    except:
+        messages.error(request, ('Não existem Projetos Associados a esse usuario! '))
+        return HttpResponseRedirect('/bancas/')
+    if banca_usuario.count() == projetos.count():
+        messages.error(request, ('Já existem bancas associadas a esse Usuario!'))
+        return HttpResponseRedirect('/bancas/')
+    instance = None
+    if banca_id is not None:
+        instance = Banca.objects.get(id=banca_id)
+        instance.aluno  = usuario
+        instance.reservada = True
+    if projetos.count() == 1:  
+        for projeto in projetos:
+            instance.projeto = projeto
+            instance.disciplina = projeto.disciplina
+            instance.empresa = projeto.empresa      
+        instance.save()
+        messages.success(request, ('Banca salvo com sucesso!'))
+        return HttpResponseRedirect('/bancas/')
+    else:
+        if request.method == 'POST':
+            form = BancaForm(request.POST, instance=instance)
+            form.fields['disciplina'].queryset = Disciplina.objects.filter(grupodiciplina=instance.grupo)
+            if form.is_valid():
+                disciplina = Disciplina.objects.filter(id = form.cleaned_data['disciplina'].id, alunos = user_id)
+                if disciplina.count() == 0:
+                    messages.error(request, ('Usuario Nao matriculado nessa disciplina!'))
+                else:
+                    verificacao = Banca.objects.get(id=banca_id)
+                    if verificacao.reservada:
+                        messages.error(request, ('Ja existe reserva para essa Banca '))
+                    else:
+                        try:
+                            form.save()
+                            messages.success(request, ('Banca salvo com sucesso!'))
+                        except IntegrityError:
+                            messages.error(request, ('Usuario ja tem banca reservada'))
+                return HttpResponseRedirect('/bancas/')
+        else:
+            form = BancaForm(instance=instance)
+            form.fields['disciplina'].queryset = Disciplina.objects.filter(aluno=user_id)
+
+    return render_to_response('bancas/banca_reserva.html', {
+        'banca': banca,
+        'form' : form,
+    }, context_instance=RequestContext(request))
+
+
+
+def banca_escolher(request, banca_id):
+    user = request.user.get_profile()
+    banca = get_object_or_404(Banca, pk=banca_id)
+    hoje = datetime.datetime.now()
+    if hoje.month < 6:
+        semestre = 1
+    else:
+        semestre = 2
+    try:   
+        datas_limites = Data.objects.get(ano = hoje.year, semestre = semestre)
+    except:
+        datas_limites = None
+    if user in banca.disciplina.professores.all():
+        if banca.banca1 is None:
+            banca.banca1 = request.user
+            banca.save()
+            messages.success(request, ('Vaga reservada com sucesso!'))
+        else:
+            messages.error(request, ('Vaga ja preenchida'))
+    else:
+        if datas_limites != None:
+            if datas_limites.inic_banca_convidado != None:
+                if datas_limites.inic_banca_convidado > hoje:
+                    messages.error(request, ('Escolha ainda não Liberada para convidados!'))
+                    return HttpResponseRedirect('/bancas/')
+            if datas_limites.max_banca_convidado != None:
+                if datas_limites.max_banca_convidado < hoje:
+                    messages.error(request, ('A Data Limite para cadastro foi ultrapassada'))
+                    return HttpResponseRedirect('/bancas/')
+        print banca.projeto.orientador
+        print request.user
+        if banca.projeto.orientador.id != request.user.id:
+            if banca.banca2 is None:
+                banca.banca2= request.user
+                banca.save()
+                messages.success(request, ('Vaga reservada com sucesso!'))
+            else:
+                messages.error(request, ('Vaga ja preenchida'))
+        elif banca.projeto.orientador.id == request.user.id:
+            messages.error(request, ('Você é o orientador do aluno!'))
+    return HttpResponseRedirect('/bancas/')
+
+
+@permission_required('usuarios.monitor')
+def agendamento(request):
+    if request.method == 'POST':
+        form = AgendamentoForm(request.POST)
+        if form.is_valid():
+            agenda=form.save(commit = False)
+            formset = dia_agenda_formset(request.POST, instance=agenda,prefix='dia')
+            if formset.is_valid():
+                agenda.save()
+                formset.save()
+                return HttpResponseRedirect('/')
+    else:
+        form = AgendamentoForm()
+        formset = dia_agenda_formset(prefix='dia',instance=Agenda())
+    return render_to_response('bancas/agendamento.html', {
+        'form' : form,
+        'formset': formset, 
+    }, context_instance=RequestContext(request))
+    
+def banca_listar_usuario(request, user_id):
+    grupo = Group.objects.get(user = user_id)
+    print grupo.id
+    if grupo.id == 1: #se docente
+        bancas= Banca.objects.filter(Q(banca1 = user_id) or Q(banca2= user_id))
+        return render_to_response('bancas/listar_bancas_usuario.html', {
+        'bancas' : bancas,
+    }, context_instance=RequestContext(request))
+    elif grupo.id == 2 or grupo.id == 3: #se mestrando ou doutorando
+        bancas = Banca.objects.filter(banca2 = user_id)
+        return render_to_response('bancas/listar_bancas_usuario.html', {
+        'bancas' : bancas,
+    }, context_instance=RequestContext(request))
+    elif grupo.id == 4: #se aluno
+        bancas = Banca.objects.filter(aluno = user_id)
+        return render_to_response('bancas/listar_bancas_usuario.html', {
+        'bancas' : bancas,
+    }, context_instance=RequestContext(request))
+    

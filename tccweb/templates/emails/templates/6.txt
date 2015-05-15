@@ -1,0 +1,3 @@
+Prezado(a) docente(a) responsável por disciplinas de estágio/projeto
+ 
+A inscrição do aluno {{aluno}} na disciplina {{disciplina}} foi efetivada com sucesso!!

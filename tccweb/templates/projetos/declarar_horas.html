@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Declarar Horas{% endblock %}
+
+{% block section %}Declarar Horas{% endblock %}
+
+{% block content %}
+<div>
+	<p><strong>Aluno:</strong> {{projeto.aluno.nome_completo}}</p>
+	{% if projeto.supervisor %}
+	<p><strong>Supervisor:</strong>{{projeto.supervisor.nome_completo}}</p>
+	{% elif projeto.orientador %}
+	<p><strong>Orientador:</strong>{{projeto.orientador.nome_completo}}</p>
+	{% endif %}
+	<br><br>
+  <form method="post"  >
+  
+		{% csrf_token %}
+		{{form}}
+		
+		<br>
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+     
+</form>
+
+</div>
+{% endblock %}

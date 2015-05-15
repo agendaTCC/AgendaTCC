@@ -1,0 +1,93 @@
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.contrib.auth.models import User, Group
+from django.contrib import admin
+from cursos.models import Curso
+
+ESCOLHA_FUNCAO = (
+        ('1', 'Docente'),
+        ('2', 'Aluno de Doutorado'),
+        ('3', 'Aluno de Mestrado'),
+        ('4', 'Aluno de Graduação'),
+        ('5', 'Funcionário não-docente'),
+        ('6', 'Monitor'),
+        ('7', 'Monitor PAE'),
+        ('8', 'Supervisor de Estagio'),
+        )
+UF = (
+      ('AC','AC'),
+      ('AP','AP'),
+      ('AM','AM'),
+      ('BA','BA'),
+      ('CE','CE'),
+      ('DF','DF'),
+      ('ES','ES'),
+      ('GO','GO'),
+      ('MA','MA'),
+      ('MT','MT'),
+      ('MS','MS'),
+      ('MG','MG'),
+      ('PA','PA'),
+      ('PB','PB'),
+      ('PR','PR'),
+      ('PE','PE'),
+      ('PI','PI'),
+      ('RJ','RJ'),
+      ('RN','RN'),
+      ('RS','RS'),
+      ('RO','RO'),
+      ('RR','RR'),
+      ('SC','SC'),
+      ('SP','SP'),
+      ('SE','SE'),
+      ('TO','TO'),
+                )
+
+
+
+class UserProfile(models.Model):
+    class Meta:
+        permissions = (
+                      ('docente', 'Docente'),
+                      ('aluno_de_doutorado', 'Aluno de Doutorado'),
+                      ('aluno_de_mestrado', 'Aluno de Mestrado'),
+                      ('aluno_de_graduacao', 'Aluno de Graduação'),
+                      ('funcionario', 'Funcionário não-docente'),
+                      ('monitor', 'Monitor'),
+                      ('pae', 'Monitor PAE'),
+                      ('surpervisor', 'Supervisor de Estagio'),
+                       )
+    #modelo de Usuario extendido, trata como o usuario extendido é salvo
+    user = models.ForeignKey(User, unique=True, null=True, blank=True)
+    
+    # Additional Info
+    created_on = models.DateTimeField(
+        auto_now_add=True)
+    display_name = models.CharField(
+        max_length=255, default='Novo Usuario',verbose_name='Nome Completo', null=True, blank=True)
+    nusp = models.IntegerField( unique=True,null=True, blank=True, 
+        verbose_name='Numero USP')
+    curso  = models.ForeignKey(Curso,verbose_name='Curso',related_name = 'curso', null = True, blank = True)
+    end = models.CharField(max_length=255, verbose_name = 'Endereco', null = True, blank = True)
+    nro = models.IntegerField(max_length=4, verbose_name = 'Numero', null = True, blank = True)
+    cmp = models.CharField(max_length=255, verbose_name = 'Complemento', null = True, blank = True)
+    city = models.CharField(max_length=255, verbose_name = 'Cidade', null = True, blank = True)
+    UF = models.CharField(max_length = 2,default = 'SP',  null = True, blank = True, choices = UF)
+    bairro = models.CharField(max_length= 255, verbose_name = 'Bairro', null = True, blank = True)
+    tel = models.CharField(max_length=15,default='(00)0000-0000', verbose_name = 'Telefone', null = True, blank = True)
+    funcao = models.CharField(max_length = 1, default = 4,  choices = ESCOLHA_FUNCAO, null = True, blank = True)
+    def __unicode__(self):
+        return self.user.get_full_name()
+    def save(self, *args, **kwargs):
+        #Aqui eu adiciono funcionabilidades ao metodo save, para que ao salvar o usuario seja incerido ao grupo selecionado em funcao
+        try:
+            existing = UserProfile.objects.get(user=self.user)
+            self.id = existing.id
+            self.created_on = existing.created_on
+        except UserProfile.DoesNotExist:
+            pass
+        models.Model.save(self, *args, **kwargs)
+
+
+    
+    

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Avaliação Aluno{% endblock %}
+
+{% block section %}Avaliação Aluno{% endblock %}
+
+{% block content %}
+<div>
+	<p><strong>Aluno:</strong> {{avaliacao.projeto.aluno.nome_completo}}</p>
+	{% if avaliacao.projeto.supervisor %}
+	<p><strong>Supervisor:</strong>{{avaliacao.projeto.supervisor.nome_completo}}</p>
+	{% elif avaliacao.projeto.orientador %}
+	<p><strong>Orientador:</strong>{{avaliacao.projeto.orientador.nome_completo}}</p>
+	{% endif %}
+	<br><br>
+  <form method="post"  >
+  
+		{% csrf_token %}
+		<p><strong>Avaliação em Pontos:</strong>Ótimo (5); Muito Bom (4); Bom (3); Regular (2); Insuficiente (1)</p>
+		<table align="CENTER">
+			<tr>
+				<td><strong>INDICADORES</strong></td><td><strong>PONTOS</strong></td>
+			</tr>
+			<tr>
+				<td>1. Capacidade de Aprendizagem</td><td>{{avaliacao.capacidade_de_aprendizagem}}</td>
+			</tr>
+			<tr>
+				<td>2. Qualidade do Trabalho Realizado</td><td>{{avaliacao.qualidade_do_trabalho}}</td>
+			</tr>
+			<tr>
+				<td>3. Produtividade</td><td>{{avaliacao.produtividade}}</td>
+			</tr>
+			<tr>
+				<td>4. Responsabilidade</td><td>{{avaliacao.responsabilidade}}</td>
+			</tr>
+			<tr>
+				<td>5. Assiduidade</td><td>{{avaliacao.assiduidade}}</td>
+			</tr>
+			<tr>
+				<td>6. Iniciativa</td><td>{{avaliacao.iniciativa}}</td>
+			</tr>
+			<tr>
+				<td>7. Relacionamento no Trabalho</td><td>{{avaliacao.relacionamento_no_trabalho}}</td>
+			</tr>
+			<tr>
+				<td>8. Cooperação</td><td>{{avaliacao.cooperacao}}</td>
+			</tr>
+			<tr>
+				<td>9. Conhecimentos Pŕevios</td><td>{{avaliacao.conhecimentos_previos}}</td>
+			</tr>
+		</table>
+
+		<h2>DESCRIÇÃO DOS INDICADORES</h2>
+
+		<table>
+			<tr>
+				<td>1. Capacidade de Aprendizagem</td><td>Aprende as tarefas e absorve as informações com rapidez.</td>
+			</tr>
+			<tr>
+				<td>2. Qualidade do Trabalho Realizado</td><td>Executa as tarefas determinadas de maneira a alcançar a maior precisão possível.</td>
+			</tr>
+			<tr>
+				<td>3. Produtividade</td><td>A quantidade do trabalho apresentado é compatível com o solicitado ao estagiário.</td>
+			</tr>
+			<tr>
+				<td>4. Responsabilidade</td><td>Executa as tarefas visando sempre os objetivos propostos no prazo estabelecido.</td>
+			</tr>
+			<tr>
+				<td>5. Assiduidade</td><td>Não falta.</td>
+			</tr>
+			<tr>
+				<td>6. Iniciativa</td><td>Sabe resolver sozinho novas imprevistas situações. Frequentemente tem idéias próprias e faz sugestões sobre o trabalho.
+</td>
+			</tr>
+			<tr>
+				<td>7. Relacionamento no Trabalho</td><td>Bom entrosamento, tanto individual, quanto em equipe.</td>
+			</tr>
+			<tr>
+				<td>8. Cooperação</td><td>Disponibilidade, boa vontade.</td>
+			</tr>
+			<tr>
+				<td>9. Conhecimentos Pŕevios</td><td>Possui os conhecimentos técnicos necessários.</td>
+			</tr>
+		</table>
+
+		<p>Observações/Justificativa da avaliação: <p/>
+		<p>{{avaliacao.observacoes}}</p>
+		
+		<br>
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+     
+</form>
+
+</div>
+{% endblock %}

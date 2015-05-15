@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Novo Usuário Autorizado{% endblock %}
+
+{% block section %}Novo Usuário Autorizado{% endblock %}
+
+{% block content %}
+
+	<form action="{% url 'cadastro_usuario_autorizado' %}" method="post">
+
+    	{% csrf_token %}
+
+		<label for="in_nome">Nome Completo</label><br/>
+		<input type="text" name="nome" id="in_nome"><br/><br/>
+
+		<label for="in_nusp">Número USP</label><br/>
+		<input type="text" name="nusp" id="in_nusp"><br/><br/>
+
+		<label for="in_email">Email</label><br/>
+		<input type="text" name="email" id="in_email"><br/><br/>
+
+		<input type="submit" value="enviar">
+
+	</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url website_sobre %}">Sobre</a>
+</nav>
+{% endblock %}
+{% block title %}Sobre{% endblock %}
+
+{% block section %}Sobre o tccweb{% endblock %}
+
+{% block content %}
+<div class="grid_12 clearfix">
+  <p>Criado por ...</p>
+</div>
+{% endblock %}

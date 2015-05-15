@@ -1,0 +1,46 @@
+from django.shortcuts import render_to_response, redirect
+from django.contrib import messages
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django import http
+from django.core.urlresolvers import reverse
+from disciplinas.models import Disciplina
+from noticias.models import Noticia
+from usuarios.models import UserProfile
+from formularios.models import ProjetoDeGraduacao
+from django.db.models import Q
+import datetime
+from django.contrib.auth.models import Group
+
+def splash(request):
+    
+    return render_to_response('website/splash.html', {
+        
+    }, context_instance=RequestContext(request))
+
+@login_required
+def dashboard(request):
+    now = datetime.datetime.now()
+    user = request.user.get_profile()
+    formularios = ProjetoDeGraduacao.objects.filter(user=user.id)
+    if now.month <= 8:
+        semestre = 1
+    else:
+        semestre = 2
+    disciplinas_aluno = Disciplina.objects.filter(alunos=user.id, esta_ativa=True,ano = now.year,semestre = semestre)
+    disciplinas_professor = Disciplina.objects.filter(professores=user.id, esta_ativa=True,ano = now.year,semestre = semestre)
+    disciplinas_monitor = Disciplina.objects.filter(monitores=user.id, esta_ativa=True,ano = now.year,semestre = semestre)
+    noticias = Noticia.objects.all()[:8]
+    
+    return render_to_response('website/dashboard.html', {
+        'disciplinas_aluno': disciplinas_aluno,
+        'disciplinas_professor': disciplinas_professor,
+        'disciplinas_monitor': disciplinas_monitor,
+        'noticias': noticias,
+        'formularios':formularios,
+    }, context_instance=RequestContext(request))
+
+def index(request):
+    if request.user.is_authenticated():
+        return dashboard(request)
+    return splash(request)

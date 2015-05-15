@@ -1,0 +1,18 @@
+from django.conf.urls.defaults import patterns, url
+
+
+urlpatterns = patterns('',
+    url(r'^bancas/$', 'bancas.views.banca_listar', name='bancas_index'),
+    url(r'^bancas/detalhe/(?P<banca_id>\w+)/$', 'bancas.views.banca_detalhe', 
+        name='bancas_banca_detalhe'),
+    url(r'^bancas/reserva/(?P<banca_id>\w+)/(?P<user_id>\w+)/$', 'bancas.views.banca_reserva', 
+        name='bancas_banca_reserva'),
+    url(r'^bancas/escolher/(?P<banca_id>\w+)/$', 'bancas.views.banca_escolher', 
+        name='bancas_banca_escolher'),
+    url(r'^bancas/sair/(?P<banca_id>\w+)/(?P<user_id>\w+)/$', 'bancas.views.banca_liberar_professor', 
+        name='bancas_banca_sair'),
+    url(r'^bancas/deleta/(?P<banca_id>\w+)/$', 'bancas.views.banca_liberar_aluno', 
+        name='bancas_banca_deleta'),
+    url(r'^agendamento/$', 'bancas.views.agendamento', name='agendamento'),
+    url(r'^bancas/(?P<user_id>\w+)/$', 'bancas.views.banca_listar_usuario', name='banca_listar_usuario'),
+)

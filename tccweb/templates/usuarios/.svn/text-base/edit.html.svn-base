@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Inicio</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url usuarios_perfil user.id %}">Perfil de {{ usuario.get_profile.display_name }}</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url usuarios_editar user.id %}">Editar</a>
+</nav>
+{% endblock %}
+{% block title %}Perfil de {{ user.get_profile.display_name }}{% endblock %}
+
+{% block section %}{{ user.get_profile.display_name }}{% endblock %}
+
+{% block content %}
+<div id="login-container" class="grid_12 clearfix">
+  <form method="post"  >
+  <table>
+  
+
+    <tr>
+      <th>
+		<td>
+		{% csrf_token %}
+		{{ form }}
+		</td>
+	  </th>
+      <td><input type="submit" value="Salvar"/></td>
+      <td><input type="button" value=" Voltar " onclick="history.go(-1)"></td>
+    </tr>
+  </table>
+</form>
+</div>
+{% endblock %}

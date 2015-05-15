@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url noticias_index %}">Noticias</a>
+</nav>
+{% endblock %}
+{% block title %}Notícias{% endblock %}
+
+{% block section %}Notícias{% endblock %}
+
+{% block content %}
+<div id="noticias-container" class="grid_12 clearfix">
+  {% for noticia in noticias %}
+    <div class="noticia-item clearfix">
+      <div class="data grid_2">
+        <span class="dia">{{ noticia.criada_em|date:"d" }}</span>
+        <span class="mes">{{ noticia.criada_em|date:"M" }}</span>
+        <span class="ano">{{ noticia.criada_em|date:"Y" }}</span>
+      </div>
+      <div class="estoria grid_10">
+        <p class="titulo"><a href="{% url noticias_noticia_detalhe noticia.id %}">{{ noticia.titulo }}</a></p>
+        <p class="conteudo">{{ noticia.conteudo|textile|truncatewords:160 }}<p>
+        <p class="ver-mais"><a href="{% url noticias_noticia_detalhe noticia.id %}">Ler mais</a></p>
+      </div> 
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

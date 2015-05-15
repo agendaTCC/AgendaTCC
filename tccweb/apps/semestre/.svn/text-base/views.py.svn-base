@@ -1,0 +1,59 @@
+from models import Data
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
+from grupos_disciplinas.models import GrupoDisciplina
+from disciplinas.models import Disciplina
+from forms import DatasLimiteForm
+from models import Data
+from django.contrib.auth.decorators import permission_required
+
+
+#Lista todos os objetos de Data
+def data_listar(request):
+    
+    datas = Data.objects.all()
+    
+    return render_to_response('datas/datas_listar.html', {
+        'datas': datas,
+    }, context_instance=RequestContext(request))
+    
+    
+@permission_required('usuarios.monitor','usuarios.pae')
+def datas_limites(request):
+    user = request.user.get_profile()
+    disciplinas_se_professor = Disciplina.objects.filter(professores=user.id, esta_ativa=True)
+    disciplinas_se_monitor = Disciplina.objects.filter(monitores=user.id, esta_ativa=True)
+    grupo_de_disciplina = None
+    if disciplinas_se_monitor.count() == 0:
+        for disciplina in disciplinas_se_professor:
+            grupo_de_disciplina = GrupoDisciplina.objects.get(disciplinas = disciplina.id)
+    elif disciplinas_se_professor.count() == 0 :
+        for disciplina in disciplinas_se_monitor:
+            grupo_de_disciplina = GrupoDisciplina.objects.get(disciplinas = disciplina.id)
+    else:
+        for disciplina in disciplinas_se_professor:
+            
+            grupo_de_disciplina = GrupoDisciplina.objects.get(disciplinas = disciplina.id)
+    try:
+        instance = Data.objects.get(grupo_de_disciplinas = grupo_de_disciplina)
+    except:
+        instance = None
+    if request.method == 'POST':
+        form = DatasLimiteForm(request.POST,instance = instance)
+        saving_grupo = form.save(commit=False)
+        saving_grupo.grupo_de_disciplinas = grupo_de_disciplina
+        saving_grupo.save()
+        return HttpResponseRedirect('/')
+    else:
+        form = DatasLimiteForm(instance = instance)
+    return render_to_response(
+        'datas/limite.html',
+        {'form':form,
+         'grupo': grupo_de_disciplina,
+         },
+        context_instance=RequestContext(request),
+        )
+            
+    
+    

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Apresentações sem Banca Completa{% endblock %}
+
+{% block section %}Apresentações sem Banca Completa{% endblock %}
+
+{% block content %}
+
+    {% for grupo in grupos %}
+ 
+     {% for disciplina in grupo.disciplinas %}
+     {{disciplina.alunos.count}}
+     		{% if disciplina.alunos|length == 0%}
+     			{{forloop|continue}}
+			{% endif %}
+			<A NAME="{{disciplina.disciplina.titulo}}"></A>
+			<h3>{{disciplina.disciplina.titulo}}</h3>
+     		<table>
+     		<tr><td width="400">Titulo</td><td>Horário</td><td>Data</td><td>banca1</td><td>banca2</td></tr>
+     			
+     				{% for aluno in disciplina.alunos %}
+     				
+     				<tr>
+     					<td>{{aluno.banca.projeto.titulo}}</td>
+     					<td>
+     					{{aluno.banca.hora_inicial}} - {{aluno.banca.hora_final}}
+     					</td>
+     					</td>
+     					<td>{{aluno.banca.data|date:"d/m/Y"}}</td>
+     					<td>{% if aluno.banca.banca1 == None %}X{% else %}{{aluno.banca.banca1.get_profile.display_name}}{% endif %}</td>
+     					<td>{% if aluno.banca.banca2 == None %}X{% else %}{{aluno.banca.banca2.get_profile.display_name}}{% endif %}</td>
+     		     </tr>
+     				{% endfor %}
+     				<tr><td colspan="5"><a href="{% url avisar_pendencia_bancas_varios disciplina.disciplina.id %}" >Todos</td></tr>
+     		</table>
+     	{% endfor %}
+    {% endfor %}
+	
+<input type="button" value=" Voltar " onclick="history.go(-1)">	
+{% endblock %}

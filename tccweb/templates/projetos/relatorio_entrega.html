@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Entrega{% endblock %}
+
+{% block section %}Entrega{% endblock %}
+
+{% block content %}
+
+{% for departamento,semestre in request.session.semestre.items %}
+	<div style="height:38px">
+		<div style="float:left"><h1>Departamento - {{departamento}}</h1></div>
+	</div>
+	{% if disciplinas %}
+				{%  with disciplinas=disciplinas|get_item:departamento%}
+					{% for disciplina,projetos in disciplinas.items %}
+						<h1>{{disciplina}}</h1>
+						{% if projetos %}
+							<table>
+								<tr>
+									<td width="30%">Aluno:</td><td width="20%" >Monografia Original</td><td width="20%" >Monografia Revisada</td><td width="15%" >Declaração de horas</td><td width="15%" colspan="2">Questionario Graduação</td>
+								</tr>
+								{% for projeto in projetos %}
+									{% if not projeto.rascunho and not projeto.cancelado%}
+									<tr>
+										<td><a href="{% url 'visualizar_perfil' projeto.aluno.id %}">{{ projeto.aluno }}</a></td>
+										<td>
+											{% if projeto.monografia_original_projeto%}
+												<span style="display:inline-block; vertical-align:middle;">Entregue - {{projeto.monografia_original_projeto.data|date:"d/m/Y"}}</span>
+												<span style="display:inline-block;vertical-align:middle;"><a href="{% url 'download_monografia_original' projeto.id %}"><img src="{{ STATIC_URL }}img/download.png" title="Baixar monografia original."></a></span>
+											{% else %}
+												Não Entregue
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.monografia_revisada_projeto%}
+												<span style="display:inline-block; vertical-align:middle;">Entregue - {{projeto.monografia_revisada_projeto.data|date:"d/m/Y"}}</span>
+												<span style="display:inline-block;vertical-align:middle;"><a href="{% url 'download_monografia_revisada' projeto.id %}"><img src="{{ STATIC_URL }}img/download.png" title="Baixar monografia revisada."></a></span>
+											{% else %}
+												Não Entregue
+											{% endif %}
+										</td>
+										<td>
+											{% if projeto.declaracao_projeto %}
+												{{ projeto.declaracao_projeto.horas}}
+											{% else %}
+												Não Declarado
+											{% endif %}
+										</td>
+										<td>
+										</td>
+										
+
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</table>
+						{% endif %}
+					{% endfor %}
+				
+				{% endwith %}
+			{% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

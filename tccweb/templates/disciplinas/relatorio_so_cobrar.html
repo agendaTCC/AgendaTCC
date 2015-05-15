@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Pendências de Supervisor/Orientador{% endblock %}
+
+{% block section %}Pendências de Supervisor/Orientador{% endblock %}
+
+{% block content %}
+
+    {% for grupo in grupos %}
+ 
+     {% for disciplina in grupo.disciplinas %}
+     {{disciplina.alunos.count}}
+     		{% if disciplina.alunos|length == 0%}
+     			{{forloop|continue}}
+			{% endif %}
+			<A NAME="{{disciplina.disciplina.titulo}}"></A>
+			<h3>{{disciplina.disciplina.titulo}}</h3>
+     		<table>
+     		<tr><td>Aluno</td><td>Horas Cumpridas</td><td>Avaliação de Desempenho</td><td>Cobrar</td></tr>
+     			
+     				{% for aluno in disciplina.alunos %}
+     				
+     				<tr>
+     					<td>{{aluno.aluno.get_profile.display_name.title}}</td>
+     					<td align="CENTER">
+     					{% if aluno.horas == None %}
+     					 <img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					<a href="{% url declaracao_horas_cumpridas aluno.horas.id %}">{{aluno.horas.horas}}</a>
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.avaliacao == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					<a href="{% url avaliacao_SO_html aluno.avaliacao.id %}">Visualizar</a>
+     					{% endif %}
+     					</td>
+     					
+     					<td><a href="{% url formularios_avisar_pendencia disciplina.disciplina.id 'so' aluno.responsavel.id aluno.aluno.id %}">e-mail</a>	</td>
+     		     </tr>
+     				{% endfor %}
+     				<tr align="center"><td></td><td></td><td></td><td><a href="{% url avisar_pendencia_so_varios disciplina.disciplina.id %}" >Todos</a></td></tr>
+     		</table>
+     	{% endfor %}
+    {% endfor %}
+	
+<input type="button" value=" Voltar " onclick="history.go(-1)">	
+{% endblock %}

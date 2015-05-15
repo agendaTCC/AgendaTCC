@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Banca do dia {{banca.data}}, das {{banca.hora_inicial}} ás {{banca.hora_final}}{% endblock %}
+
+{% block section %}Banca do dia {{banca.data}}, das {{banca.hora_inicial}} ás {{banca.hora_final}}{% endblock %}
+
+{% block content %}
+
+<div>
+	<table>
+	 <tr><td width="20%">Aluno:</td><td> {{banca.aluno.get_profile.display_name}}</td></tr>
+	 <tr><td>Título do Projeto:</td><td>{{banca.projeto.titulo}}</td></tr>
+	 <tr><td width="20%">Banca1:</td><td>{{banca.banca1.get_profile.display_name}}</td></tr>
+	 <tr><td width="20%">Banca2:</td><td>{{banca.banca2.get_profile.display_name}}</td></tr>
+	 <tr><td width="20%">Orientador/Supervisor:</td> <td>{{banca.projeto.orientador.get_profile.display_name}} {{banca.projeto.supervisor.usuario.get_profile.display_name}}</td></tr>
+	 
+	 <tr><td colspan="2" width="20%"><input type="button" value=" Voltar " onclick="history.go(-1)">
+	 {% if perms.usuarios.aluno_de_graduacao or perms.usuarios.monitor or perms.usuarios.pae%}
+	 {% if banca.aluno.id == user.id %}
+	 <input type="button" value="Liberar Banca"  onClick="parent.location='{%url bancas_banca_deleta banca.id %}'">	 
+	 {% endif %}
+	 {%endif%}
+	 {% if perms.usuarios.docente or perms.usuarios.aluno_de_doutorado or perms.usuarios.aluno_de_mestrado %}
+	 {% if banca.banca1.id == user.id or banca.banca2.id == user.id %}
+	 <input type="button" value="Liberar Banca"  onClick="parent.location='{%url bancas_banca_sair banca.id user.id %}'">
+	 {%endif%}
+	 {%endif%}</td></tr>
+	 </table>
+</div>
+
+{% endblock %}

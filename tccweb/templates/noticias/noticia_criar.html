@@ -1,0 +1,31 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Nova Noticia{% endblock %}
+
+{% block section %}Nova Noticia{% endblock %}
+
+{% block content %}
+<div>
+  <form method="post"  >
+  
+		{% csrf_token %}
+		<p>{{form.titulo.label}}: {{ form.titulo}}</p>
+		<p>{{form.conteudo.label}}:</p>
+		<p>{{form.conteudo}}</p>
+		{% if request.user.monitor or request.user.pae or request.user.docente %}
+		<p>{{form.disciplina.label}}:</p>
+		<p>{{form.disciplina}}</p>
+		{% endif %}
+		<p>{{form.grupo.label}}</p>
+		{% if request.user.monitor or request.user.pae or request.user.docente %}
+		<p>{{form.departamento}}</p>
+		{% endif %}
+		
+		
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+     
+</form>
+
+</div>
+{% endblock %}

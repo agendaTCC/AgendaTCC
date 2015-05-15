@@ -1,0 +1,74 @@
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
+from disciplinas.models import Disciplina
+from empresa.models import Empresa
+from grupos_disciplinas.models import GrupoDisciplina
+from formularios.models import ProjetoDeGraduacao
+from salas.models import Sala
+
+class Banca(models.Model):
+    hora_inicial = models.TimeField( null=True, blank = True)
+    hora_final = models.TimeField( null=True, blank = True)
+    data = models.DateField()
+    grupo = models.ForeignKey(GrupoDisciplina,verbose_name = 'Grupo de Disciplinas', related_name='grupo', null=True, blank = True)
+    aluno = models.ForeignKey(User, related_name= 'aluno',unique = True, verbose_name = 'Aluno', null=True, blank = True)
+    orientador = models.ForeignKey(User, related_name= 'orientador', verbose_name = 'Orientador', limit_choices_to={'groups': 1},null=True, blank = True)
+    empresa = models.ForeignKey(Empresa, null = True, blank= True)
+    banca1= models.ForeignKey(User,related_name= 'banca1',limit_choices_to={'groups': 1}, null=True, blank=True)
+    banca2 = models.ForeignKey(User,related_name= 'banca2',limit_choices_to={'groups': 1}, null=True, blank=True)
+    disciplina = models.ForeignKey(Disciplina, null=True, blank=True)
+    sala = models.ForeignKey(Sala, null=True, blank = True)
+    reservada = models.BooleanField()
+    alteravel = models.BooleanField(default = True)
+    projeto = models.ForeignKey(ProjetoDeGraduacao, related_name = 'projeto', null = True, blank = True)
+    def __unicode__(self):
+        if self.reservada:
+            reservada = 'Reservada'
+        else:
+            reservada = ''
+        return str(self.sala)+ ', Dia: '+str(self.data)+' Horario: '+ str(self.hora_inicial)+' - '+str(self.hora_final)+ ' '+reservada
+   
+
+    
+class Agenda(models.Model):
+    data_inicial = models.DateField(null = True, blank =True) 
+    data_final = models.DateField(null = True, blank =True)
+    salas = models.ForeignKey(Sala, related_name= 'sala')
+    def __unicode__(self):
+        return str(self.salas) + ' (' + str(self.data_inicial)+' : '+str(self.data_final)+')'
+    
+DIAS_DA_SEMANA = (
+                  ('seg','Segunda-feira'),
+                  ('ter','Terça-feira'),
+                  ('qua','Quarta-feira'),
+                  ('qui','Quinta-feira'),
+                  ('sex','Sexta-feira'),
+                  ('sab','Sabado'),
+                  )    
+
+class Dia_Agenda(models.Model):
+    agenda = models.ForeignKey(Agenda)
+    dia_da_semana = models.CharField(max_length = 10,verbose_name = 'Dia da Semana', null = True, blank = True, choices =  DIAS_DA_SEMANA)
+    data  =  models.DateField(null = True, blank = True, verbose_name = "Data")
+    periodos = models.CharField(max_length = 255,verbose_name = 'Periodos',null = True, blank = True)
+
+
+    
+
+
+class Apresentacao(models.Model):
+    data = models.DateTimeField(verbose_name='Data da apresentacao')
+    sala = models.CharField(max_length=80,verbose_name='Sala')
+    usuario = models.ForeignKey(User, verbose_name='Usuario')
+    banca = models.ForeignKey(Banca, verbose_name='Banca')
+
+
+
+
+        
+        
+        
+        
+        

@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | tccweb {% endblock %}
+
+{% block branding %}
+<h1 id="site-name">tccweb</h1>
+{% endblock %}
+
+{% block nav-global %}
+	<style type="text/css">
+        .menu {
+        		margin:0 10px 10px;
+        		display:block;
+        		float:left;
+        		}
+    </style>
+    <style type="text/css">
+        .menuicon {
+        		margin:0 10px 10px;
+        		display:block;
+        		float:right;
+        		}
+    </style>
+    
+	 
+    <a href="/" class="menu">tccWeb</a>  
+    <a href="/admin/" class="menu">Administração</a>
+    <a href="/admin/auth/user/?is_active__exact=0" class="menu">Novos Usuários</a>
+    <a href="/admin/auth/user/" class="menu">Usuários</a>
+    <a href="{{ MEDIA_URL }}csv/exemplo.csv" class="menuicon"><img title="Exemplo de Arquivo CSV" src="{{ MEDIA_URL }}img/csv.png" /></a>
+    {% endblock %}

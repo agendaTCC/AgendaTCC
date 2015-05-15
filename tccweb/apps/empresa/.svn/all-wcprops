@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/TCCWeb/!svn/ver/25/trunks/apps/empresa
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/21/trunks/apps/empresa/tests.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/TCCWeb/!svn/ver/21/trunks/apps/empresa/__init__.py
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/TCCWeb/!svn/ver/105/trunks/apps/empresa/admin.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/21/trunks/apps/empresa/views.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/TCCWeb/!svn/ver/135/trunks/apps/empresa/models.py
+END

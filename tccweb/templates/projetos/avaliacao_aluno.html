@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Avaliação Aluno{% endblock %}
+
+{% block section %}Avaliação Aluno{% endblock %}
+
+{% block content %}
+<div>
+	<p><strong>Aluno:</strong> {{projeto.aluno.nome_completo}}</p>
+	{% if projeto.supervisor %}
+	<p><strong>Supervisor:</strong>{{projeto.supervisor.nome_completo}}</p>
+	{% elif projeto.orientador %}
+	<p><strong>Orientador:</strong>{{projeto.orientador.nome_completo}}</p>
+	{% endif %}
+	<br><br>
+  <form method="post"  >
+  
+		{% csrf_token %}
+		<p><strong>Avaliação em Pontos:</strong>Ótimo (5); Muito Bom (4); Bom (3); Regular (2); Insuficiente (1)</p>
+		<table align="CENTER">
+			<tr>
+				<td><strong>INDICADORES</strong></td><td><strong>PONTOS</strong></td>
+			</tr>
+			<tr>
+				<td>{{form.capacidade_de_aprendizagem.label}}</td><td>{{form.capacidade_de_aprendizagem}}</td>
+			</tr>
+			<tr>
+				<td>{{form.qualidade_do_trabalho.label}}</td><td>{{form.qualidade_do_trabalho}}</td>
+			</tr>
+			<tr>
+				<td>{{form.produtividade.label}}</td><td>{{form.produtividade}}</td>
+			</tr>
+			<tr>
+				<td>{{form.responsabilidade.label}}</td><td>{{form.responsabilidade}}</td>
+			</tr>
+			<tr>
+				<td>{{form.assiduidade.label}}</td><td>{{form.assiduidade}}</td>
+			</tr>
+			<tr>
+				<td>{{form.iniciativa.label}}</td><td>{{form.iniciativa}}</td>
+			</tr>
+			<tr>
+				<td>{{form.relacionamento_no_trabalho.label}}</td><td>{{form.relacionamento_no_trabalho}}</td>
+			</tr>
+			<tr>
+				<td>{{form.cooperacao.label}}</td><td>{{form.cooperacao}}</td>
+			</tr>
+			<tr>
+				<td>{{form.conhecimentos_previos.label}}</td><td>{{form.conhecimentos_previos}}</td>
+			</tr>
+		</table>
+
+		<h2>DESCRIÇÃO DOS INDICADORES</h2>
+
+		<table>
+			<tr>
+				<td>{{form.capacidade_de_aprendizagem.label}}</td><td>Aprende as tarefas e absorve as informações com rapidez.</td>
+			</tr>
+			<tr>
+				<td>{{form.qualidade_do_trabalho.label}}</td><td>Executa as tarefas determinadas de maneira a alcançar a maior precisão possível.</td>
+			</tr>
+			<tr>
+				<td>{{form.produtividade.label}}</td><td>A quantidade do trabalho apresentado é compatível com o solicitado ao estagiário.</td>
+			</tr>
+			<tr>
+				<td>{{form.responsabilidade.label}}</td><td>Executa as tarefas visando sempre os objetivos propostos no prazo estabelecido.</td>
+			</tr>
+			<tr>
+				<td>{{form.assiduidade.label}}</td><td>Não falta.</td>
+			</tr>
+			<tr>
+				<td>{{form.iniciativa.label}}</td><td>Sabe resolver sozinho novas imprevistas situações. Frequentemente tem idéias próprias e faz sugestões sobre o trabalho.
+</td>
+			</tr>
+			<tr>
+				<td>{{form.relacionamento_no_trabalho.label}}</td><td>Bom entrosamento, tanto individual, quanto em equipe.</td>
+			</tr>
+			<tr>
+				<td>{{form.cooperacao.label}}</td><td>Disponibilidade, boa vontade.</td>
+			</tr>
+			<tr>
+				<td>{{form.conhecimentos_previos.label}}</td><td>Possui os conhecimentos técnicos necessários.</td>
+			</tr>
+		</table>
+
+		{{form.observacoes.label}}<br/>
+		{{form.observacoes}}
+		
+		<br>
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+     
+</form>
+
+</div>
+{% endblock %}

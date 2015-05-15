@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Banca{% endblock %}
+
+{% block section %}Banca{% endblock %}
+
+{% block content %}
+
+<form method="post"  >
+<table>
+		{% csrf_token %}
+		
+		<tr><td colspan="2"><strong>Projeto</strong></td></tr>
+		<tr><td>{{form.aluno.label}}</td><td>{{form.aluno}}</td></tr>
+		{% if banca.projeto != None %}
+		<tr><td>Título</td><td>{{banca.projeto.titulo}}</td></tr>
+		<tr><td>Orientador</td><td>{{banca.projeto.orientador.get_profile.display_name}}</td></tr>
+		{% endif %}
+		<tr><td colspan="2"><strong>Apresentação</strong></td></tr>
+		<tr><td colspan="2"><strong>Sala: {{banca.sala.nome}}, Data: {{banca.data|date:"d/m/y"}} , Horários: {{banca.hora_inicial}} - {{banca.hora_final}}</strong></td></tr>
+		<tr><td>{{form.banca1.label}}</td><td>{{form.banca1}}</td></tr>
+		<tr><td>{{form.banca2.label}}</td><td>{{form.banca2}}</td></tr>
+		<tr><td>{{form.disciplina.label}}</td><td>{{form.disciplina}}</td></tr>
+		<tr><td>{{form.cancelada.label}}</td><td>{{form.cancelada}}</td></tr>
+      <tr><td colspan="2"><input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)"></td></tr>
+      </table>
+</form>
+{% endblock %}

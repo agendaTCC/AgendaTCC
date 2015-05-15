@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Pendências{% endblock %}
+
+{% block section %}Pendências{% endblock %}
+
+{% block content %}
+
+
+{% for grupo in grupos %}
+{% for disciplina in grupo.disciplinas %}
+<h3>{{disciplina.disciplina.titulo}}</h3>
+	<table>
+	<tr><td colspan="2"><b>Pendências</b></td></tr>
+	<tr><td width="400"><b>Matricula</b></td><td>{% if disciplina.pendencia_matricula != 0 %} <a href="{% url avaliar_projeto %}#{{disciplina.disciplina.titulo}}" >{{disciplina.pendencia_matricula}} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td><b>Apresentação</b></td><td>{% if disciplina.pendencia_apresentacao != 0 %} <a href="{% url relatorio_apresentacoes_cobrar %}#{{disciplina.disciplina.titulo}}">{{disciplina.pendencia_apresentacao}} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td><b>Bancas</b></td><td>{% if disciplina.pendencia_banca != 0 %} <a href="{% url relatorio_bancas_cobrar %}#{{disciplina.disciplina.titulo}}" >{{disciplina.pendencia_banca }} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td><b>Monografias</b></td><td>{% if disciplina.pendencia_monografia != 0 %} <a href="{% url gerenciar_monografias %}#{{disciplina.disciplina.titulo}}" >{{disciplina.pendencia_monografia}} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td><b>Supervisor/Orientador</b></td><td>{% if disciplina.pendencia_so != 0 %} <a href="{% url relatorio_so_cobrar %}#{{disciplina.disciplina.titulo}}" >{{disciplina.pendencia_so}} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td><b>Avaliação</b></td><td>{% if disciplina.pendencia_avaliacao != 0 %} <a href="{% url relatorio_avaliacao_cobrar %}#{{disciplina.disciplina.titulo}}" >{{disciplina.pendencia_avaliacao}} pendência(s)</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	</table>
+{% endfor %}{% endfor %}	 
+	 
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block breadcrumbs %}
+<nav>
+  <a href="{% url website_index %}">Início</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url noticias_index %}">Noticias</a>
+  <span class="arrow">&rsaquo;</span>
+  <a href="{% url noticias_noticia_detalhe noticia.id %}">{{ noticia.titulo }}</a>
+</nav>
+{% endblock %}
+{% block title %}{{ noticia.titulo }}{% endblock %}
+
+{% block section %}{{ noticia.titulo }}{% endblock %}
+
+{% block content %}
+
+<div id="noticias-container" class="grid_12 clearfix">
+  <div class="noticia-item clearfix">
+    <div class="data grid_2">
+      <span class="dia">{{ noticia.criada_em|date:"d" }}</span>
+      <span class="mes">{{ noticia.criada_em|date:"M" }}</span>
+      <span class="ano">{{ noticia.criada_em|date:"Y" }}</span>
+    </div>
+    <div class="estoria grid_10">
+      <p class="titulo">{{ noticia.titulo }}</p>
+      <p class="conteudo">{{ noticia.conteudo|textile }}<p>
+    </div> 
+  </div>
+</div>
+
+
+{% endblock %}

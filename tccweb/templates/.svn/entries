@@ -1,0 +1,166 @@
+10
+
+dir
+66
+http://svn.jetty.com.br/TCCWeb/trunks/templates
+http://svn.jetty.com.br/TCCWeb
+
+
+
+2011-08-29T20:37:45.010069Z
+58
+asenechal
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+3a197d91-738c-427b-8cad-36b4071c23f9
+
+admin
+dir
+
+atividades
+dir
+
+bancas
+dir
+
+base.html
+file
+145
+
+
+
+2011-10-18T19:23:24.000000Z
+3eff11a41855261e2c39f678f38bea0a
+2011-10-19T19:27:35.884857Z
+145
+asenechal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4605
+
+base1.html
+file
+0
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+base2.html
+file
+0
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+base4.html
+file
+0
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+datas
+dir
+
+
+
+add
+
+disciplinas
+dir
+
+empresa
+dir
+
+
+
+add
+
+eventos
+dir
+
+formularios
+dir
+
+noticias
+dir
+
+search
+dir
+
+
+
+add
+
+style
+dir
+
+
+
+add
+
+style.css
+file
+0
+
+
+add
+
+usuarios
+dir
+
+website
+dir
+

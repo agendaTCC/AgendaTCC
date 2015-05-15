@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Formulários/Documentos{% endblock %}
+
+{% block section %}Formulários/Documentos{% endblock %}
+
+{% block content %}
+{% if empresa == None %}
+<p>Você não esta ligado a nenhum empresa!</p>
+{% else %}
+<h2>{{empresa.nome_fantasia}}</h2>
+
+<TABLE WIDTH=100% CELLPADDING=1 CELLSPACING=1>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<COL WIDTH=43*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17% >
+			<P>Nome Empresarial:</P>
+		</TD>
+		<TD COLSPAN=5>
+			<P>{{empresa.nome_empresarial}}</P>
+		</TD>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17% >
+			<P>Numero de Inscrição:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83%>
+			<P>{{empresa.nro_inscricao}}</P>
+		</TD>
+
+	</TR>
+	<tr><td>Data de inicio de convênio:</td><td colspan="2">{{empresa.data_inicio}}</td><td>Data de fim de convênio:</td><td colspan="2">{{empresa.data_final}}</td></tr>
+	<TR>
+		<TD COLSPAN=6 WIDTH=100% VALIGN=TOP >
+			<P ALIGN=CENTER>Informações
+			de Contato</P>
+		</TD>
+	</TR>
+	<tr><td>Site:</td><td colspan="5">{{empresa.site}}</td></tr>
+	<tr><td>E-mail:</td><td colspan="5">{{empresa.email}}</td></tr>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Endereço:</P>
+		</TD>
+		<TD COLSPAN=3 WIDTH=50%>
+			<P>{{empresa.end}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Numero:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{empresa.num}}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Complemento:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{empresa.comp}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Bairro:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{empresa.bairro}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>CEP</P>
+		</TD>
+		<TD WIDTH=17% >
+			<P>{{empresa.cep}}
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Cidade:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{empresa.cidade}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>Estado:</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P>{{empresa.UF}}
+			</P>
+		</TD>
+		<TD WIDTH=17%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=17% >
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=17%>
+			<P>Supervisores:</P>
+		</TD>
+		<TD COLSPAN=5 WIDTH=83% >
+		{%for supervisor in empresa.supervisores.all%}
+		<p>{{supervisor.get_profile.display_name}};</p>
+		{% endfor %}
+		</TD>
+	</TR>
+	
+</TABLE>
+
+
+{% endif %}
+{% endblock %}

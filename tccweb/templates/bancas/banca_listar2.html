@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block links %}
+
+    <!--
+	<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css' />
+	-->
+
+    <link rel='stylesheet' type='text/css' href='{{ MEDIA_URL }}css/smoothness/jquery-ui-1.8.11.custom.css' />
+
+
+	<link rel='stylesheet' type='text/css' href='{{ MEDIA_URL }}css/jquery.weekcalendar.css' />
+
+
+	   <!--
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js'></script>
+    -->
+    <script type='text/javascript' src='{{ MEDIA_URL }}js/libs/jquery-ui-1.8.11.custom.min.js'></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/libs/date.js"></script>
+	<script type='text/javascript' src='{{ MEDIA_URL }}js/jquery.weekcalendar.js'></script>
+<script type='text/javascript'>
+
+ 
+	var year = new Date().getFullYear();
+	var month = new Date().getMonth();
+	var day = new Date().getDate();
+	
+// Mostra calendario Para Alunos de graduação,  alunos podem cadastrar suas bancas apartir desse calendario
+
+	var eventData_alunos = {
+		events : [
+{% for banca in bancas%}
+		   {"id":{{banca.id}},
+		    "start": new Date({{banca.data.year}}, {{banca.data.month}}-1, {{banca.data.day}},{{ banca.hora_inicial.hour }},{{ banca.hora_inicial.minute }} ), 
+		    "end": new Date({{banca.data.year}}, {{banca.data.month}}-1 , {{banca.data.day}}, {{ banca.hora_final.hour }}, {{ banca.hora_final.minute }}),
+		    "title":"{% if perms.usuarios.docente or perms.usuarios.aluno_de_doutorado or perms.usuarios.aluno_de_mestrado %}{%if banca.reservada %}{%if banca.banca2 == None or banca.banca1 == None and user.get_profile in banca.disciplina.professores.all%}<a href='{% url bancas_banca_escolher banca.id %}'>Escolher</a><br />{%endif%}{%endif%}{%endif%}{%if banca.reservada %}<a href='{% url bancas_banca_detalhe banca.id %}'>Detalhes</a><br />{%else%}{%if perms.usuarios.aluno_de_graduacao%}{% if liberar %}<a href='{% url bancas_banca_reserva banca.id user.id %}'>reservar</a><br />{% endif %}{% endif %}{% endif %}Sala: {{banca.sala.nome}}<br />{%if banca.reservada %}Titulo:{{banca.projeto.titulo}}<br/ >Aluno: {{banca.aluno.get_profile.display_name}}{%endif%}",
+		    "color":"{% if not banca.cancelada %}{{banca.grupo.id}}{% else %}cancelada{% endif %}",
+		    },                             
+{% endfor%}
+		   
+		]
+	};
+
+// Mostra calendário para Professores, professores podem acessar conteúdo das bancas, ou se inscreverem como banca1 ou banca2 
+
+	var eventData_professores = {
+		events : [
+{% for banca in bancas%}
+{% if banca.reservada %}
+		   {"id":{{banca.id}},
+		    "start": new Date({{banca.data.year}}, {{banca.data.month}}-1, {{banca.data.day}},{{ banca.hora_inicial.hour }},{{ banca.hora_inicial.minute }} ), 
+		    "end": new Date({{banca.data.year}}, {{banca.data.month}}-1 , {{banca.data.day}}, {{ banca.hora_final.hour }}, {{ banca.hora_final.minute }}),
+		    "title":"{% if perms.usuarios.docente or perms.usuarios.aluno_de_doutorado or perms.usuarios.aluno_de_mestrado %}{%if banca.banca1 == None or banca.banca2 == None%}<a href='{% url bancas_banca_escolher banca.id %}'>Escolher</a>{%endif%}{%endif%}<br /><a href='{% url bancas_banca_detalhe banca.id %}'>Detalhes</a><br />{%if user.get_profile in banca.disciplina.professores.all%}* {%endif%}Sala: {{banca.sala.nome}}<br />Titulo:{{banca.projeto.titulo}}<br/ >Aluno: {{banca.aluno.get_profile.display_name}}",
+		    "color":"{% if not banca.cancelada %}{{banca.grupo.id}}{% else %}cancelada{% endif %}",
+		    }, 
+{% endif %}                            
+{% endfor%}
+		   
+		]
+	};
+
+
+	   
+
+
+$(document).ready(function() {
+
+		var $calendar = $('#calendar').weekCalendar({
+				date : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}}),
+				minDate : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}}),
+				maxDate : new Date({{ultimo.year}},{{ultimo.month}}-1,{{ultimo.day}}),
+			height: function($calendar){
+				if(new Date().getDate() > new Date(2011,12,1)){
+			   $calendar.find(".ui-widget-header").css({"background": "#dadada url({{ MEDIA_URL }}css/smoothness/images/ui-bg_glass_75_dadada_1x400.png) 50% 50%"});
+				}
+				return $(window).height() - 255 - $("h1").outerHeight(true);
+			},
+			
+			eventRender : function(calEvent, $event) {  	
+         	if(calEvent.color == "1"){
+         			
+         			$event.find(".wc-time").css("backgroundColor","#3CB371");
+         			$event.css("color","#000");
+						$event.css("backgroundColor","#98FB98"); 
+						}
+				if(calEvent.color == "2"){
+         			
+         			$event.find(".wc-time").css("backgroundColor","#ffff00");
+         			$event.css("color","#000");
+						$event.css("backgroundColor","#ffff99"); 
+						}
+				if(calEvent.color == "3"){
+         			
+         			$event.find(".wc-time").css("backgroundColor","#ff6600");
+         			$event.css("color","#000");
+						$event.css("backgroundColor","#ff9966"); 
+						}
+				if(calEvent.color == "cancelada"){
+         			
+         			$event.find(".wc-time").css("backgroundColor","#cc0000");
+         			$event.css("color","#000");
+						$event.css("backgroundColor","#ff3333"); 
+						}
+				
+			},
+			eventClick : function(calEvent, $event) {
+				
+			},
+			
+			data: function(start, end, callback) {
+				var dataSource = "1";
+				if(dataSource === "1") {
+					callback(eventData_alunos);
+				} else if(dataSource === "2") {
+					callback(eventData_professores);
+				} else {
+					callback(eventData_professores);
+				}
+            }
+            
+            
+		});
+
+		$("#data_source").change(function() {
+			$calendar.weekCalendar("refresh");
+			updateMessage();
+			
+		});
+
+		
+		
+	});
+
+</script>
+ 	
+{% endblock %}
+{% load markup %}
+{% block title %}Calendário{% endblock %}
+
+{% block section %}Calendário{% endblock %}
+
+{% block content %}
+
+	{% if bancas.count == 0 %}
+		<div><p>Não existem Salas disponíveis ou os horários ainda não foram definidos, Aguardem</p></div>
+		
+	{%else%}
+	
+		
+			<div id="calendar_selection" >
+					<!-- <select id="data_source">
+						<option value="1">Todos os Horários</option>
+						<option value="2">Horários Reservados</option>	
+					</select> -->
+			</div>
+		
+	
+		<div id='calendar'>
+			<div class="sidebar">
+				<div class="sidebar-box" style="position:relative; top:5px; right:10px;">
+					<form class="searchform" action="/busca" method="get">
+         			 <input type="text" value="Busca por banca" onfocus="this.value=''" onblur="this.value='Buscar por banca'"document.submit();{{ form.q }}  
+     			 	</form>
+    		</div>
+    		</div>
+    </div>
+    <div>Legenda: 
+    		{% for grupo in grupos %}
+    		{%if grupo.id == 1%} <img src="{{ MEDIA_URL }}/img/box1.png" title="{{grupo.titulo}}"> {{grupo.titulo}},
+    		{% else %} 
+    				{%if grupo.id == 2%} <img src="{{ MEDIA_URL }}/img/box2.png" title="{{grupo.titulo}}"> {{grupo.titulo}},
+    				{% else %}
+    						{% if grupo.id == 3 %} <img src="{{ MEDIA_URL }}/img/box3.png" title="{{grupo.titulo}}"> {{grupo.titulo}},
+    						{% else %}
+    								<img src="{{ MEDIA_URL }}/img/boxp.png" title="{{grupo.titulo}}"> {{grupo.titulo}},
+    						{% endif %}
+					{% endif %}
+			{% endif %}   
+			{% endfor %} 		
+			 <img src="{{ MEDIA_URL }}/img/boxc.png" title="{{grupo.titulo}}"> Cancelado.
+			
+    
+    
+    </div>
+	{% endif %}
+
+
+
+{% endblock %}

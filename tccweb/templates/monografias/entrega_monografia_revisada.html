@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Monografia Revisada{% endblock %}
+
+{% block section %}Monografia Revisada {% endblock %}
+
+{% block content %}
+
+<form enctype="multipart/form-data" method="post"  >
+		{% csrf_token %}
+		
+		<p>{{form.monografia}}</p>		
+		
+		
+		
+	
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+</form>
+{% endblock %}

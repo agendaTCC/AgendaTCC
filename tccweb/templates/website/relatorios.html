@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Relatórios{% endblock %}
+
+{% block section %}Relatórios{% endblock %}
+
+{% block content %}
+
+<div>
+  <ul>
+  	<li> <a href="{% url 'pendencias_projeto' %}">Pendências</a></li>
+  </ul>
+  <ul>
+  	<li> <a href="{% url 'relatorio_entrega' %}">Entrega</a></li>
+  </ul>
+  <ul>
+  	<li> <a href="{% url 'bancas_relatorio' %}">Bancas</a></li>
+  </ul>
+</div>
+{% endblock %}

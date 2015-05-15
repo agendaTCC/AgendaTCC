@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Pendências de Avaliação{% endblock %}
+
+{% block section %}Pendências de Avaliação{% endblock %}
+
+{% block content %}
+
+    {% for grupo in grupos %}
+ 
+     {% for disciplina in grupo.disciplinas %}
+     {{disciplina.alunos.count}}
+     		{% if disciplina.alunos|length == 0%}
+     			{{forloop|continue}}
+			{% endif %}
+			<A NAME="{{disciplina.disciplina.titulo}}"></A>
+			<h3>{{disciplina.disciplina.titulo}}</h3>
+     		<table>
+     		<tr><td rowspan="2">Aluno</td><td colspan="6" align="CENTER">Avaliações</td></tr>
+     		<tr><td>Banca1</td><td>Banca2</td><td>Nota</td><td>Frequencia</td></tr>
+     				{% for aluno in disciplina.alunos %}
+     				
+     				<tr>
+     					<td>{{aluno.aluno.get_profile.display_name.title}}</td>
+     					<td align="CENTER">
+     					{% if aluno.banca1 == None %}
+     					 <img src="{{ STATIC_URL }}img/nao.png" /> / <a href="{% url formularios_avisar_pendencia disciplina.disciplina.id 'avaliacao' aluno.banca.banca1.id aluno.aluno.id %}" >e-mail</a>
+     					{% else %}
+     					<a href="{% url avaliacao_monografia_html aluno.banca1.id %}">Visualizar</a>
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.banca2 == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" /> / <a href="{% url formularios_avisar_pendencia disciplina.disciplina.id 'avaliacao' aluno.banca.banca2.id aluno.aluno.id %}" >e-mail</a>
+     					{% else %}
+     					<a href="{% url avaliacao_monografia_html aluno.banca2.id %}">Visualizar</a>
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.nota == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					{{aluno.nota.nota_final}}
+     					{% endif %}
+     					</td>
+     					<td align="CENTER">
+     					{% if aluno.nota == None %}
+     					<img src="{{ STATIC_URL }}img/nao.png" />
+     					{% else %}
+     					{{aluno.nota.frequencia}}
+     					{% endif %}
+     					</td>
+     		     </tr>
+     				{% endfor %}
+				<tr><td><a href="{% url avisar_pendencia_avaliacao_varios disciplina.disciplina.id %}" >Todos</a></td></tr>
+     		</table>
+     	{% endfor %}
+    {% endfor %}
+	
+<input type="button" value=" Voltar " onclick="history.go(-1)">	
+{% endblock %}

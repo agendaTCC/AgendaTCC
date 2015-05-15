@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Disciplinas Passadas{% endblock %}
+
+{% block section %}Disciplinas Passadas{% endblock %}
+
+{% block content %}
+<div class="content">
+  {% for disciplina in disciplinas %}	
+    <div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      <div ><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+      <div>
+        {% with total=disciplina.professores.count %}
+          <span class="negrito">Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:</span> {% if total == 0 %}Sem Professor{% endif %}
+        {% endwith %}
+        {% for professor in disciplina.professores.all %}
+          <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+      <div style="padding-bottom:5px">
+        {% with total=disciplina.monitores.count %}
+          <span>Monitor{{ total|pluralize:"es" }}:</span> {% if total == 0 %}Sem monitor{% endif %}
+        {% endwith %}
+        {% for monitor in disciplina.monitores.all %}
+          <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<div class="sidebar"> 
+  <div class="sidebar-box">
+  		<p><a href="{% url disciplinas_listar %}"><h2 style="padding-bottom: 0;">Disciplinas do Semestre</h2></a></p>
+  	    <div style="position:relative; padding-top:5px; padding-bottom: 10px;"><a href="{% url disciplinas_listar_atual_proximo %}">Ver todas disciplinas</a></div>
+  	
+  </div>
+
+  </div>
+{% endblock %}

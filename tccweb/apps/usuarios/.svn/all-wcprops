@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/TCCWeb/!svn/ver/61/trunks/apps/usuarios
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/TCCWeb/!svn/ver/152/trunks/apps/usuarios/urls.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/2/trunks/apps/usuarios/tests.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/TCCWeb/!svn/ver/2/trunks/apps/usuarios/__init__.py
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/2/trunks/apps/usuarios/admin.py
+END
+forms.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/TCCWeb/!svn/ver/133/trunks/apps/usuarios/forms.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/TCCWeb/!svn/ver/154/trunks/apps/usuarios/views.py
+END
+signals.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/TCCWeb/!svn/ver/154/trunks/apps/usuarios/signals.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/TCCWeb/!svn/ver/154/trunks/apps/usuarios/models.py
+END

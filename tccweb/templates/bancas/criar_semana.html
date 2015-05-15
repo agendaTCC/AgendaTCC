@@ -1,0 +1,16 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Gerencia - Banca -  Criar Sala{% endblock %}
+
+{% block section %}Gerencia - Banca -  Criar Sala{% endblock %}
+
+{% block content %}
+<div>
+<table>
+ <tr><td colspan="2">Grupo de Disciplina</td></tr>
+ {% for grupo in grupos %}
+ <tr><td>{{grupo.grupo}}</td><td><a href="{% url agendamento grupo.grupo.id %}">Agendar</a></td> </tr> 
+ {% endfor %}
+</table>
+</div>
+{% endblock %}

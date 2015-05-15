@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro{% endblock %}
+
+{% block section %}Cadastro{% endblock %}
+
+{% block content %}
+<div  class="content">
+  <form method="post" action="{% url 'usuarios_cadastro' %}">
+    {% csrf_token %}
+    <table>
+    {{form}}
+</table>
+	 
+	    
+    <input type="submit" value="Cadastrar" />
+	
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+</div>
+
+
+
+{% endblock %}

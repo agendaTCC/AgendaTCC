@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}{{questionario.titulo}}{% endblock %}
+
+{% block section %}{{questionario.titulo}}{% endblock %}
+
+{% block content %}
+{% addtoblock "css" %}
+<style type="text/css">
+	input[readonly = readonly]{
+		display:none;
+	}
+
+</style>
+{% endaddtoblock %}
+<div>
+<p style="text-align:center">{{questionario.descricao}}</p>
+<br><br>
+  <form method="post"  >
+  <table>
+
+		{% csrf_token %}
+		{% for item in form %}
+			<tr><td>{{item.label|safe}}</td><td>{{item}}</td></tr>
+		{% endfor %}
+		
+		<br>
+</table> 
+      <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)">
+    
+</form>
+
+</div>
+{% endblock %}

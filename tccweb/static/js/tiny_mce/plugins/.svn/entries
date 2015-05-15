@@ -1,0 +1,294 @@
+10
+
+dir
+0
+http://svn.jetty.com.br/TCCWeb/trunks/media/js/tiny_mce/plugins
+http://svn.jetty.com.br/TCCWeb
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+3a197d91-738c-427b-8cad-36b4071c23f9
+
+advhr
+dir
+
+
+
+add
+
+advimage
+dir
+
+
+
+add
+
+advlink
+dir
+
+
+
+add
+
+advlist
+dir
+
+
+
+add
+
+autolink
+dir
+
+
+
+add
+
+autoresize
+dir
+
+
+
+add
+
+autosave
+dir
+
+
+
+add
+
+bbcode
+dir
+
+
+
+add
+
+contextmenu
+dir
+
+
+
+add
+
+directionality
+dir
+
+
+
+add
+
+emotions
+dir
+
+
+
+add
+
+example
+dir
+
+
+
+add
+
+example_dependency
+dir
+
+
+
+add
+
+fullpage
+dir
+
+
+
+add
+
+fullscreen
+dir
+
+
+
+add
+
+iespell
+dir
+
+
+
+add
+
+inlinepopups
+dir
+
+
+
+add
+
+insertdatetime
+dir
+
+
+
+add
+
+layer
+dir
+
+
+
+add
+
+legacyoutput
+dir
+
+
+
+add
+
+lists
+dir
+
+
+
+add
+
+media
+dir
+
+
+
+add
+
+nonbreaking
+dir
+
+
+
+add
+
+noneditable
+dir
+
+
+
+add
+
+pagebreak
+dir
+
+
+
+add
+
+paste
+dir
+
+
+
+add
+
+preview
+dir
+
+
+
+add
+
+print
+dir
+
+
+
+add
+
+save
+dir
+
+
+
+add
+
+searchreplace
+dir
+
+
+
+add
+
+spellchecker
+dir
+
+
+
+add
+
+style
+dir
+
+
+
+add
+
+tabfocus
+dir
+
+
+
+add
+
+table
+dir
+
+
+
+add
+
+template
+dir
+
+
+
+add
+
+visualchars
+dir
+
+
+
+add
+
+wordcount
+dir
+
+
+
+add
+
+xhtmlxtras
+dir
+
+
+
+add
+

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load website_extras %}
+{% block title %}Inscrição{% endblock %}
+
+{% block section %}Inscrição{% endblock %}
+
+{% block content %}
+<div>
+
+  {% for disciplina in disciplinas %}
+  	 
+    	<div style="position:relative; padding-top:10px;">
+     	 <h3><a href="#">{{ disciplina.titulo }}</a></h3>
+      	<div>
+       	 {% with total=disciplina.professores.count %}
+        	  	<span class="negrito">Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:</span> {% if total == 0 %}Sem Professor{% endif %}
+        	 {% endwith %}
+        	 {% for professor in disciplina.professores.all %}
+          	<a href="#">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+        	 {% endfor %}
+      	</div>
+      	<div >
+        		{% with total=disciplina.monitores.count %}
+          		<span>Monitor{{ total|pluralize:"es" }}:</span> {% if total == 0 %}Sem monitor{% endif %}
+        		{% endwith %}
+        		{% for monitor in disciplina.monitores.all %}
+        		  <a href="#">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+       		 {% endfor %}
+     		 </div>
+    	</div>
+    	<div style="position:relative; padding-bottom: 25px"><p class="botao"><a href="{% url 'novo_projeto_de_graduacao' request.user.id disciplina.id %}"> Inscreva-se</a></p></div>
+    	
+    
+  {% endfor %}
+
+  
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+﻿{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}Empresas{% endblock %}
+
+{% block section %}Empresas{% endblock %}
+
+{% block content %}
+{% addtoblock "js" %}
+<script type="text/javascript">
+$(document).ready(function() 
+    { 
+        $("#TabelaEmpresa").tablesorter( {sortList: [[0,0], [1,0]]} ); 
+    } 
+); 
+</script>
+
+{% endaddtoblock %}
+<div>
+<table id="TabelaEmpresa" class="tablesorter">
+<thead> 
+<tr> 
+    <th><strong>Empresa</strong></th> 
+    <th><strong>Cidade</strong></th> 
+</tr> 
+</thead> 
+<tbody> 
+  {% for empresa in empresas %}
+ <tr><td> <a href="{% url 'empresa_detalhe' empresa.id %}" >{{empresa}}</a></td><td>{{empresa.cidade}}</td></tr>
+  {% endfor %}
+</tbody> 
+</table>
+</div>
+{% endblock %}

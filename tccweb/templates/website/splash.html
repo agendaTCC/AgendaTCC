@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block title %}Bem-vindo{% endblock %}
+
+{% block section %}Bem-vindo!{% endblock %}
+
+{% block content %}
+{%if exibir_imagens%}
+<div class="slider">
+	
+	{%for img in imagens%}
+      {% if img.exibir%}
+      <div>
+      	{% if img.texto != '' %}<div class="caption">{{img.texto|safe}}</div>{% endif %}
+        <img src="{{ MEDIA_URL }}{{img.entrada}}" alt=""/>
+      </div>
+      {% endif %}
+   {% endfor %}
+</div>
+{% endif %}
+
+<div>
+ {% if exibir_noticias %}
+ {% if exibir_texto %}
+ <div class="content">
+  {{texto|safe }}
+  </div>
+  {% endif %}
+ <div class="sidebar">
+  	<div class="sidebar-box">
+    <h1>Notícias</h1>
+    <ul class="latest-posts">
+    {% for noticia in noticias %}
+    {% if noticias.criada_em.year == hoje.year %}
+    {% if semestre == 1 and noticias.criada_em.month < 6 or semestre == 2 and noticias.criada_em.month >= 6 %}
+      <li><span class="date">
+      	 <em class="day">{{ noticia.criada_em|date:"d" }}</em>
+       	 <em class="month">{{ noticia.criada_em|date:"M" }}</em></span>
+      	 <a href="#">{{ noticia.titulo }}:<br /> {{ noticia.conteudo|textile|truncatewords:12 }}</a>
+		{% endif %}
+		{% endif %}		  
+	  {% endfor %}    
+    </ul>
+    <div><a href="#">Ver todas notícias</a></div>
+  </div>
+  </div>
+ {% else %}
+ {% if exibir_texto %}
+ <div> {{texto|safe }}</div>
+ {% endif %}
+ {% endif %}
+</div>
+{% endblock %}

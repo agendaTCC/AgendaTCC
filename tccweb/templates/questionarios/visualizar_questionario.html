@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+{% block title %}{{questionario.titulo}}{% endblock %}
+
+{% block section %}{{questionario.titulo}}{% endblock %}
+
+{% block content %}
+<div>
+	<p style="text-align:center">{{questionario.descricao}}</p>
+	<br><br>
+  <table>
+		
+			{% for resposta in respostas %}
+				<tr>
+					<td WIDTH="50%">{{resposta.pergunta.numero}}-) {{resposta.pergunta.pergunta|safe}}</td>
+					<td WIDTH="50%">{{resposta.resposta}}</td>
+				</tr>
+			{% endfor%}
+
+		
+		<tr>
+		<td></td>
+		<td ><a href="#"><img of print> Imprimir em PDF</td>
+		</tr>
+	
+</table> 
+     <input type="button" value=" Voltar " onclick="history.go(-1)">
+
+
+</div>
+{% endblock %}

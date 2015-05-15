@@ -1,0 +1,27 @@
+from django.conf.urls.defaults import patterns, url
+
+
+urlpatterns = patterns('',
+    url(r'^bancas/$', 'bancas.views.banca_listar', name='bancas_index'),
+    url(r'^bancas/relatorio/$', 'bancas.views.banca_relatorio', name='bancas_relatorio'),
+    url(r'^bancas/relatorio/csv/(?P<departamento_id>\w+)/$', 'bancas.views.banca_relatorio_csv', name='bancas_relatorio_csv'),
+    # url(r'^bancas/grupo/(?P<id>\w+)/$', 'bancas.views.banca_listar_grupo', name='banca_listar_grupo'),
+    # url(r'^bancas/detalhe/(?P<banca_id>\w+)/$', 'bancas.views.banca_detalhe', 
+    #     name='bancas_banca_detalhe'),
+    url(r'^bancas/reserva/(?P<banca_id>\w+)/$', 'bancas.views.banca_reserva', 
+        name='bancas_banca_reserva'),
+    url(r'^bancas/reserva/docente/(?P<banca_id>\w+)/$', 'bancas.views.banca_reserva_docente', 
+        name='bancas_banca_escolher'),
+    url(r'^bancas/docente/liberar/(?P<banca_id>\w+)/$', 'bancas.views.banca_liberar_professor', 
+        name='bancas_docente_liberar'),
+    url(r'^bancas/alunos/liberar/(?P<banca_id>\w+)/$', 'bancas.views.banca_liberar_aluno', 
+        name='bancas_aluno_liberar'),
+    # url(r'^agendamento/(?P<grupo_id>\w+)$', 'bancas.views.agendamento', name='agendamento'),
+    # url(r'^bancas/(?P<user_id>\w+)/$', 'bancas.views.banca_listar_usuario', name='banca_listar_usuario'),
+    # url(r'^bancas/editar/(?P<banca_id>\w+)/$', 'bancas.views.editar_banca_monitor', name='banca_editar_banca_monitor'),
+    # url(r'^liberar/bancas/(?P<grupo_id>\w+)/$', 'bancas.views.liberar_bancas_nao_utilizadas', name='banca_liberar_nao_utilizadas'),
+    # url(r'^liberar/banca/(?P<id>\w+)/$', 'bancas.views.liberar_banca', name='banca_liberar'),
+    # url(r'^bancas/gerenciar/bancas/$', 'bancas.views.gerenciar_bancas', name='banca_gerenciar_bancas'),
+    # url(r'^bancas/visao/parcial/(?P<disciplina_id>\w+)/$', 'bancas.views.visao_parcial', name='banca_visao_parcial'),
+    # url(r'^gerencia/bancas/criar_semana/$', 'bancas.views.criar_semana', name='criar_semana'),
+)

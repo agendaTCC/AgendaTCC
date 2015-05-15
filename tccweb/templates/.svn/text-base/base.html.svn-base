@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>ICMC | {% block title %}{% endblock %}</title>
+  <meta name="description" content="Sistema de gerenciamento de conclusao de curso do ICMC-USP">
+  <meta name="author" content="Andre Paolino" >
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
+  <link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
+
+  <link href='http://fonts.googleapis.com/css?family=Lato|Arimo' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css?v=1">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/960.css?v=1">
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/tccweb.css?v=1">
+  
+  <script src="{{ MEDIA_URL }}js/libs/modernizr-1.7.min.js"></script>
+
+  {% block links %}{% endblock %}
+
+</head>
+
+<body>
+
+
+  <header class="clearfix">
+    <div id="master-header">
+      <div class="container_12 clearfix">
+        <div id="logo" class="grid_6"><a href="{% url website_index %}">tccweb</a></div>
+        
+        <div id="signin" class="grid_6">
+          {% if user.is_authenticated %}
+            Bem Vindo {{ user.get_profile.display_name }} - <a href="{% url usuarios_perfil user.id %}">Meu Perfil</a> - <a href="{% url usuarios_logout %}">Sair</a>
+          {% else %}
+		  <a href="{% url usuarios_cadastro %}">Registre-se</a>
+            <a href="{% url usuarios_login %}">Entrar</a>
+          {% endif %}
+        </div>
+      </div> <!-- end container -->
+    </div> <!-- end master-header -->
+  </header>
+  
+  <div id="main" role="main">
+    
+    <div id="section" class="container_12 clearfix">
+      <div class="grid_12">
+        <div id="breadcrumbs">
+          {% block breadcrumbs %}
+          <nav>
+            <a href="{% url website_index %}">Início</a>
+          </nav>
+          {% endblock %}
+        </div>
+        <h1>{% block section %}{% endblock %}</h1>
+      </div>
+    </div>
+    
+    <div id="main-content" class="container_12 clearfix">
+      <div id="content" class="container_12 clearfix">
+{% if user.is_authenticated %}
+	<div class="menu">
+	<ul id="menu">
+	<li><a href="{% url website_index %}">Inicio</a></li>
+	<li><a href="{% url usuarios_perfil user.id %}">Meu Perfil</a></li>
+		
+		{% if perms.usuarios.aluno_de_graduacao %}
+	<li><a href="{% url formularios_index %}">Formulários</a></li>
+	{%endif%}
+	<li><a href="{% url eventos_index %}">Eventos</a></li>
+	<li><a href="{% url formularios_index %}">Questionários</a></li>
+	<li><a href="{% url atividades_index %}">Atividades</a></li>
+	<li><a href="{% url bancas_index %}">Bancas</a></li>
+	
+	
+	{%if user.is_staff == 1 %}
+	<li><a href="/admin">Administração</a></li>
+	{%endif%}
+	</ul>
+	</div>
+	{%endif%}
+	
+	<div class="container_12 clearfix">
+        {% if messages %}
+          <div id="messages" class="grid_6 push_3 clearfix">
+            {% for message in messages %}
+              <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+          </div> <!-- end messages -->
+          {%else%}&nbsp;
+        {% endif %}
+      </div>
+        {% block content %}{% endblock %}
+      </div>
+      
+    </div> <!-- end main-content -->
+    
+    
+  </div> <!-- end main -->
+  
+  
+  <footer>
+    <div id="links" class="container_12 clearfix">
+      <div class="grid_12">
+        <a href="{% url website_termos %}">Termos de uso</a> - <a href="{% url website_sobre %}">Sobre</a><!-- - <a href="http://www.icmc.usp.br/">ICMC</a>-->
+      </div>
+    </div>
+  </footer>
+  
+  
+
+
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script> -->
+  <script>window.jQuery || document.write('<script src="{{ MEDIA_URL }}js/libs/jquery-1.5.1.min.js">\x3C/script>')</script>
+
+
+  <!-- scripts concatenated and minified via ant build script-->
+  <script src="{{ MEDIA_URL }}js/plugins.js"></script>
+  <script src="{{ MEDIA_URL }}js/script.js"></script>
+  <!-- end scripts-->
+
+
+  <!--[if lt IE 7 ]>
+    <script src="{{ MEDIA_URL }}js/libs/dd_belatedpng.js"></script>
+    <script>DD_belatedPNG.fix('img, .png_bg'); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
+  <![endif]-->
+
+
+</body>
+</html>

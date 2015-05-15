@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block links %}
+
+    <!--
+	<link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css' />
+	-->
+
+    <link rel='stylesheet' type='text/css' href='{{ MEDIA_URL }}css/smoothness/jquery-ui-1.8.11.custom.css' />
+
+
+	<link rel='stylesheet' type='text/css' href='{{ MEDIA_URL }}css/jquery.weekcalendar.css' />
+
+
+	   <!--
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js'></script>
+    -->
+    <script type='text/javascript' src='{{ MEDIA_URL }}js/libs/jquery-ui-1.8.11.custom.min.js'></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/libs/date.js"></script>
+	<script type='text/javascript' src='{{ MEDIA_URL }}js/jquery.weekcalendar.js'></script>
+<script type='text/javascript'>
+
+ 
+	var year = new Date().getFullYear();
+	var month = new Date().getMonth();
+	var day = new Date().getDate();
+	
+// Mostra calendario Para Alunos de graduação,  alunos podem cadastrar suas bancas apartir desse calendario
+
+	var eventData_alunos = {
+		events : [
+{% for banca in bancas%}
+		   {"id":{{banca.id}},
+		    "start": new Date({{banca.data.year}}, {{banca.data.month}}-1, {{banca.data.day}},{{ banca.hora_inicial.hour }},{{ banca.hora_inicial.minute }} ), 
+		    "end": new Date({{banca.data.year}}, {{banca.data.month}}-1 , {{banca.data.day}}, {{ banca.hora_final.hour }}, {{ banca.hora_final.minute }}),
+		    "title":"{%if banca.reservada %}<a href='{% url bancas_banca_detalhe banca.id %}'>Detalhes</a><br />{%else%}{%if perms.usuarios.aluno_de_graduacao%}{% if liberar %}<a href='{% url bancas_banca_reserva banca.id user.id %}'>reservar</a><br />{% endif %}{% endif %}{% endif %}Sala: {{banca.sala.nome}}<br />{%if banca.reservada %}Titulo:{{banca.projeto.titulo}}<br/ >Aluno: {{banca.aluno.get_profile.display_name}}{%endif%}",
+		    "color":"{{banca.grupo.id}}",
+		    },                             
+{% endfor%}
+		   
+		]
+	};
+
+// Mostra calendário para Professores, professores podem acessar conteúdo das bancas, ou se inscreverem como banca1 ou banca2 
+
+	var eventData_professores = {
+		events : [
+{% for banca in bancas%}
+{% if banca.reservada %}
+		   {"id":{{banca.id}},
+		    "start": new Date({{banca.data.year}}, {{banca.data.month}}-1, {{banca.data.day}},{{ banca.hora_inicial.hour }},{{ banca.hora_inicial.minute }} ), 
+		    "end": new Date({{banca.data.year}}, {{banca.data.month}}-1 , {{banca.data.day}}, {{ banca.hora_final.hour }}, {{ banca.hora_final.minute }}),
+		    "title":"<a href='{% url bancas_banca_detalhe banca.id %}'>Detalhes</a><br />{%if user.get_profile in banca.disciplina.professores.all%}* {%endif%}Sala: {{banca.sala.nome}}<br />Titulo:{{banca.projeto.titulo}}<br/ >Aluno: {{banca.aluno.get_profile.display_name}}<br />{% if perms.usuarios.docente or perms.usuarios.aluno_de_doutorado or perms.usuarios.aluno_de_mestrado %}{%if banca.banca1 == None or banca.banca2 == None%}<a href='{% url bancas_banca_escolher banca.id %}'>Escolher</a>{%endif%}{%endif%}",
+		    "color":"{{banca.grupo.id}}",
+		    }, 
+{% endif %}                            
+{% endfor%}
+		   
+		]
+	};
+
+
+	   
+
+
+$(document).ready(function() {
+
+		var $calendar = $('#calendar').weekCalendar({
+				date : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}}),
+				minDate : new Date({{primeiro.year}},{{primeiro.month}}-1,{{primeiro.day}}),
+				maxDate : new Date({{ultimo.year}},{{ultimo.month}}-1,{{ultimo.day}}),
+			height: function($calendar){
+				if(new Date().getDate() > new Date(2011,12,1)){
+			   $calendar.find(".ui-widget-header").css({"background": "#dadada url({{ MEDIA_URL }}css/smoothness/images/ui-bg_glass_75_dadada_1x400.png) 50% 50%"});
+				}
+				return $(window).height() - 255 - $("h1").outerHeight(true);
+			},
+			
+			eventRender : function(calEvent, $event) {  	
+         	if(calEvent.color == "1"){
+         			
+         			$event.find(".wc-time").css("backgroundColor","#3CB371");
+         			$event.css("color","#000");
+						$event.css("backgroundColor","#98FB98"); 
+						}
+			},
+			eventClick : function(calEvent, $event) {
+				
+			},
+			
+			data: function(start, end, callback) {
+				var dataSource = $("#data_source").val();
+				if(dataSource === "1") {
+					callback(eventData_alunos);
+				} else if(dataSource === "2") {
+					callback(eventData_professores);
+				} else {
+					callback(eventData_professores);
+				}
+            }
+            
+            
+		});
+
+		$("#data_source").change(function() {
+			$calendar.weekCalendar("refresh");
+			updateMessage();
+			
+		});
+
+		
+		
+	});
+
+</script>
+ 	
+{% endblock %}
+{% load markup %}
+{% block title %}Calendario{% endblock %}
+
+{% block section %}Calendario{% endblock %}
+
+{% block content %}
+
+	{% if bancas.count == 0 %}
+		<div><p>Não existem Salas disponíveis ou os horários ainda não foram definidos, Aguardem</p></div>
+		
+	{%else%}
+	
+		
+			<div id="calendar_selection" >
+					<select id="data_source">
+						<option value="1">Todos os Horários</option>
+						<option value="2">Horários Reservados</option>	
+					</select>
+			</div>
+		
+	
+		<div id='calendar'>
+			<div class="sidebar">
+				<div class="sidebar-box" style="position:relative; top:5px; right:10px;">
+					<form class="searchform" action="/busca" method="get">
+         			 <input type="text" value="Enter para Procurar" onfocus="this.value=''" onblur="this.value='Enter para Procurar'"document.submit();{{ form.q }}  
+     			 	</form>
+    		</div>
+    		</div>
+    </div>
+    {% if perms.usuarios.docente %}
+    <div><p>* Professor é docente da disciplina</p></div>
+    {% endif %}
+	{% endif %}
+
+
+
+{% endblock %}

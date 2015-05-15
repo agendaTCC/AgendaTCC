@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Bancas{% endblock %}
+
+{% block section %}Bancas{% endblock %}
+
+{% block content %}
+
+
+<div>
+{% for banca in bancas %}
+								
+								{% if banca.projeto = projeto %}
+  						 		<td>{{banca.data|date:"d/m/Y"}}</td>
+  						 		<td>Das {{banca.hora_inicial}}, até {{banca.hora_final}}</td>
+  						 		<td>{{banca.sala.nome}}</td>
+  						 		{{ forloop|break }}
+  						 		{% endif %}
+  						 		{% if forloop.last and banca.projeto != projeto %}
+  						 		<td colspan="3">Aluno não escolheu um Horário </td>
+  						 		{% endif %}
+  						 	
+  						 		{% endfor %}
+</div>
+{% endblock %}

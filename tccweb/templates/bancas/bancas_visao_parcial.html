@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Bancas{% endblock %}
+
+{% block section %}Bancas{% endblock %}
+
+{% block content %}
+
+
+<div>
+<table>
+<tr><td><strong>Aluno</strong></td><td><strong>Dia</strong></td><td><strong>Horario</strong></td><td><strong>Sala</strong></td></tr>
+{% for projeto in projetos %}
+								<tr>
+{% for banca in bancas %}
+		{% if banca.projeto = projeto %}
+			   {% if not banca.cancelada %}
+				   <td>{{banca.aluno.get_profile.display_name}}</td>
+  		                   <td>{{banca.data|date:"d/m/Y"}}</td>
+  				   <td>Das {{banca.hora_inicial}}, até {{banca.hora_final}}</td>
+  				   <td>{{banca.sala.nome}}</td>
+  			   {% else %}
+  				   <td colspan="3">Apresentação Cancelada</td>
+  			   {% endif %}
+  			   {{ forloop|break }}
+  	       {% endif %}
+  	       {% if forloop.last and banca.projeto != projeto %}
+			  <td>{{projeto.user.get_profile.display_name}}</td>
+  	                  <td colspan="3">Aluno não escolheu um Horário </td>
+               {% endif %}
+{% endfor %}  	
+	{% if forloop.last and bancas.count == 0 %}
+		<td colspan="4">Não existem Bancas criadas para essa Disciplina</td>
+	{% endif %}
+</tr>
+{% endfor %}
+ </table>
+</div>
+{% endblock %}

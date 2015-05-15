@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/TCCWeb/!svn/ver/2/trunks/apps/bancas
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/TCCWeb/!svn/ver/166/trunks/apps/bancas/urls.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/TCCWeb/!svn/ver/2/trunks/apps/bancas/tests.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/TCCWeb/!svn/ver/135/trunks/apps/bancas/__init__.py
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/165/trunks/apps/bancas/admin.py
+END
+forms.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/156/trunks/apps/bancas/forms.py
+END
+views.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/TCCWeb/!svn/ver/167/trunks/apps/bancas/views.py
+END
+signals.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/TCCWeb/!svn/ver/163/trunks/apps/bancas/signals.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/TCCWeb/!svn/ver/162/trunks/apps/bancas/models.py
+END
+search_indexes.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/TCCWeb/!svn/ver/164/trunks/apps/bancas/search_indexes.py
+END

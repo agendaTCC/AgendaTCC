@@ -1,0 +1,42 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Receber Monografia de {{aluno.get_profile.display_name}}{% endblock %}
+
+{% block section %}Receber Monografia de {{aluno.get_profile.display_name}}{% endblock %}
+{% block links %}
+{% load adminmedia %}
+<link type="text/css" href="{{ MEDIA_URL }}css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link type="text/css" href="{{ MEDIA_URL }}css/DatePicker.css" rel="stylesheet" />
+<link type="text/css"href="{{ MEDIA_URL }}css/jquery.datepick.css" rel="stylesheet" /> 
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.formset.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.datepick.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.datepick-pt-BR.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $('#formset tbody tr').formset({
+      prefix: '{{ formset.prefix }}'
+    });
+  })
+</script>
+
+{%endblock%}
+{% block content %}
+<div>
+  <form method="post"  >
+  <table>
+
+
+		{% csrf_token %}
+		{{ form }}
+		
+		
+     <td colspan="2"> <input type="submit" value="Enviar"/> 
+      <input type="button" value=" Voltar " onclick="history.go(-1)"></td>
+ </table>    
+</form>
+
+</div>
+<script type="text/javascript">
+$("input").datepick({dateFormat: 'dd/mm/yyyy'});
+</script>
+{% endblock %}

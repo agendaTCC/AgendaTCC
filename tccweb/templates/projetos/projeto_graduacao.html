@@ -1,0 +1,256 @@
+﻿{% extends "base.html" %}
+{% load markup website_extras sekizai_tags%}
+
+{% block title %}
+	{% if not projeto %}
+		Novo Projeto de Graduação
+	{% else %}
+		Projeto de Graduação de {{ aluno.nome_completo }}
+	{% endif %}{% endblock %}
+
+{% block section %}
+	{% if not projeto %}
+		Novo Projeto de Graduação
+	{% else %}
+		Projeto de Graduação de {{ aluno.nome_completo }}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+{% addtoblock "css" %}
+<link rel='stylesheet' type='text/css' href='{{ STATIC_URL }}css/chosen.min.css' />
+{% endaddtoblock %}
+{% addtoblock "js" %}
+ <script src="{{ STATIC_URL }}js/chosen.jquery.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+
+	$("#id_orientador").chosen()
+	$("#id_supervisor").chosen()
+
+	$("#dialogSalvar").dialog({
+      modal: true,
+            bgiframe: true,
+            width: 500,
+            height: 220,
+      autoOpen: false
+      });
+	$("#dialogRascunho").dialog({
+      modal: true,
+            bgiframe: true,
+            width: 500,
+            height: 200,
+      autoOpen: false
+      });
+	
+    $("input#confirmacao_submit").click(function(e) {
+        e.preventDefault();
+		  var nome = $(this).attr("name");
+         
+        $("#dialogSalvar").dialog('option', 'buttons', {
+                "Sim" : function() {
+                    $("form#confirmacao_form").submit();
+         },
+                "Não" : function() {
+                    $(this).dialog("close");
+                    }
+                });
+
+        $("#dialogSalvar").dialog("open");
+
+    });
+    $("input#confirmacao_rascunho").click(function(e) {
+        e.preventDefault();
+		  var nome = $(this).attr("name");
+        $("form#confirmacao_form").append($('<input type="hidden" name="rascunho">'))
+        $("#dialogRascunho").dialog('option', 'buttons', {
+                "Sim" : function() {
+                    $("form#confirmacao_form").submit();
+         },
+                "Não" : function() {
+                    $(this).dialog("close");
+                    }
+                });
+
+        $("#dialogRascunho").dialog("open");
+
+    });
+});
+</script>
+
+{% endaddtoblock %}
+<div>
+<style type="text/css">
+
+p {font-family:'courier';}
+
+#id_titulo {
+    width: 650px;
+}
+ul li{
+	background: none;
+}
+</style>
+<table>
+	<tr valign=top>
+		<td width=17%>
+			<P>Nome:</P>
+		</td>
+		<td colspan="5">
+			<P>{{ aluno.nome_completo|default_if_none:" "}}
+			</P>
+		</td>
+		<tr valign=top>
+		<td width=17% >
+			<P>Curso:</P>
+		</td>
+		<td colspan=5 width=83%>
+			<P>{{aluno.curso|default_if_none:" "}}</P>
+		</td>
+		</tr>
+		<td width=17%>
+			<P>Numero USP:</P>
+		</td>
+		<td width=17% >
+			<P>{{aluno.numero_usp|default_if_none:" "}}
+			</P>
+		</td>
+		<td colspan="4"></td>
+	</tr>
+	
+<tr valign=top>
+		<td width=17%>
+			<P>e-mail:</P>
+		</td>
+		<td colspan=2 width=33%>
+			<P>{{ aluno.email|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Telefone:</P>
+		</td>
+		<td>
+			<P>{{ aluno.tel|default_if_none:" "}}
+			</P>
+		</td>
+		<td></td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Endereço:</P>
+		</td>
+		<td colspan=3 width=50%>
+			<P>{{aluno.endereco|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Numero:</P>
+		</td>
+		<td width=17%>
+			<P>{{aluno.numero|default_if_none:" "}}
+			</P>
+		</td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Complemento:</P>
+		</td>
+		<td width=17%>
+			<P>{{ aluno.cmp|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Bairro:</P>
+		</td>
+		<td width=17%>
+			<P>{{ aluno.bairro|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>CEP</P>
+		</td>
+		<td width=17% >
+			<P>{{aluno.cep|default_if_none:" "}}
+			</P>
+		</td>
+	</tr>
+	<tr valign=top>
+		<td width=17%>
+			<P>Cidade:</P>
+		</td>
+		<td width=17%>
+			<P>{{ aluno.cidade|default_if_none:" "}}
+			</P>
+		</td>
+		<td width=17%>
+			<P>Estado:</P>
+		</td>
+		<td>
+			<P>{{ aluno.uf|default_if_none:" "}}
+			</P>
+		</td>
+		<td></td><td></td>
+</tr>
+</table>
+<form method="post" id = "confirmacao_form" >
+	<table>
+		{% csrf_token %}
+		
+		{% if projeto and not projeto.rascunho and request.user not in projeto.disciplina.professores.all and request.user not in projeto.disciplina.monitores.all%}
+			<tr>
+				{% if projeto.orientador %}
+					<td>Orientador:</td><td><p>{{ projeto.orientador.nome_completo }}</p></td>
+				{% else %}
+					<td>Supervisor:</td><td><p>{{ projeto.supervisor.nome_completo }}</p></td>
+				{% endif %}
+			</tr>
+		{% endif %}
+		{{ form }}
+		{% if projeto and not projeto.rascunho and request.user not in projeto.disciplina.professores.all and request.user not in projeto.disciplina.monitores.all%}
+			<tr>
+				<td>Descrição:</td><td><p>{{ projeto.descricao }}</p></td>
+			</tr>
+			<tr>
+				<td>Atividades a serem Desempenhadas:</td><td><p>{{ projeto.atividades }}</p></td>
+			</tr>
+			<tr>
+				<td>Cronograma:</td><td><p>{{ projeto.cronograma }}</p></td>
+			</tr>
+		{% endif %}	  
+		<tr> 
+			<td colspan="2">
+				{% if request.user.id == aluno.id %}     {# Se usuario é quem edita o Projeto #}
+					
+					
+					{% if not projeto or projeto.rascunho %}	
+						<input type="submit" id="confirmacao_rascunho" name="rascunho" value="Salvar como Rascunho"/> 
+						<input type="submit" id = "confirmacao_submit"  name="salvar" value="Submeter para aprovação"/> 
+					{% else %}
+					<input type="submit" id = "salvar_confirmacao_submit"  name="salvar" value="Salvar"/> 
+					{% endif %}
+				{% else %}
+					{% if request.user in disciplina.professores.all or request.user in disciplina.monitores.all %}
+						{# Salvar so é possivel se for professor ou monitor da disciplina #}
+						<input type="submit" id = "confirmacao_submit" name="salvar" value="Salvar"/> 
+					{% endif %}
+				{% endif %}
+				<input type="button" value="Sair sem Salvar" onclick="history.go(-1)">
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+
+<div id="dialogSalvar" title="Submição para aprovação" style="display:none;">
+	<p>Seu projeto será submetido para aprovação do seu Orientador/Supervisor!</p>
+	<p>Projetos Submetidos para aprovação <strong>não poderão ser editados!</strong></p>
+ 	<p>Você tem certeza que deseja continuar?</p>
+</div>
+<div id="dialogRascunho" title="Salvando Como Rascunho" style="display:none;">
+  <p>Seu projeto será salvo como rascunho e <strong>Não será submetido para aprovação.</strong> </p> 
+  <p>O rascunho pode ser editado quantas vezes for necessario!</p>
+  <p>Você tem certeza que deseja continuar?</p>
+
+</div>
+</div>
+{% endblock %}

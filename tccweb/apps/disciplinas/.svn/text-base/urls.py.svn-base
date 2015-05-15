@@ -1,0 +1,10 @@
+from django.conf.urls.defaults import patterns, url
+
+
+urlpatterns = patterns('',
+    url(r'^disciplinas/$', 'disciplinas.views.disciplina_listar', 
+        name='disciplinas_index'),
+    url(r'^disciplina/(?P<disciplina_id>\w+)/$', 
+        'disciplinas.views.disciplina_detalhe', 
+        name='disciplinas_disciplina_detalhe'),
+)

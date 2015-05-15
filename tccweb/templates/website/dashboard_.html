@@ -1,0 +1,628 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Painel{% endblock %}
+
+{% block section %}Painel{% endblock %}
+
+
+{% block content %}
+
+<div>
+
+  <div class="sidebar">
+  
+   <!-- Avisos -->
+  
+  
+ 
+  <!-- Avisos Professor -->
+		 {% if perms.usuarios.docente %}
+<div class="sidebar-box">	
+		{% if avisos_docente %}
+		 <h2><strong>Avisos</strong></h2>
+			{% if banca2_aviso %}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas terá inicio em {{banca2_delta}}</strong></p>
+				</div>
+			{% endif %}
+			{% if banca2_delta == 0 %}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas teve inicio hoje, clique <a href="{% url bancas_index %}" >aqui</a> para visualizar</strong></p>
+				</div>
+		{% endif %}
+			{% if projetos_orientados.count != 0 %}			
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Você tem alunos orientados, veja a lista <a href="{% url usuarios_listar_alunos user.id %}">aqui</a>.</strong></p>
+				</div>
+			{% endif %}
+		{% endif %}
+</div>
+		{% endif %}  
+  
+  <!-- Avisos Monitor -->
+  {% if perms.usuarios.monitor or perms.usuarios.pae %}
+<div class="sidebar-box">
+  {% if avisos_monitor %}
+   <h2><strong>Avisos</strong></h2>
+  {% endif %}
+  {% endif %}
+  <!-- Avisos Mestrando -->
+  {% if perms.usuarios.alunos_de_mestrado %}
+  {% if avisos_mestrado_doutorado %}
+   <h2><strong>Avisos</strong></h2>
+  		{% if banca2_aviso %}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas terá inicio em {{banca2_delta}}</strong></p>
+				</div>
+		{% endif %}
+		{% if banca2_delta == 0 %}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas teve inicio hoje, clique <a href="{% url bancas_index %}" >aqui</a> para visualizar</strong></p>
+				</div>
+		{% endif %}
+		
+  {% endif %}
+</div>	
+  {% endif %}
+  <!-- Avisos Doutorando -->
+   {% if perms.usuarios.alunos_de_doutorado %}
+<div class="sidebar-box">
+   {% if avisos_mestrado_doutorado %}
+   	{% if banca2_aviso%}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas terá inicio em {{banca2_delta}}</strong></p>
+				</div>
+		{% endif %}
+		{% if banca2_delta == 0 %}
+				<div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+					<p><strong>Período de Escolha de bancas teve inicio hoje, clique <a href="{% url bancas_index %}" >aqui</a> para visualizar</strong></p>
+				</div>
+		{% endif %}
+  {% endif %}
+</div>
+  {% endif %}
+  <!-- Avisos Alunos -->
+  {% if perms.usuarios.aluno_de_graduacao %}
+<div class="sidebar-box">
+  {% if avisos_aluno %}
+   <h2><strong>Avisos</strong></h2>
+  {% endif %}
+ </div>
+  {% endif %}
+ 
+  
+  	<div class="sidebar-box">
+    <h1>Notícias</h1>
+    <ul class="latest-posts">
+    {% for noticia in noticias %}
+    {% if noticia.criada_em.year == hoje.year %}
+    {% if semestre == 1 and noticia.criada_em.month < 6 or semestre == 2 and noticia.criada_em.month >= 6 %}
+      <li><span class="date">
+      	 <em class="day">{{ noticia.criada_em|date:"d" }}</em>
+       	 <em class="month">{{ noticia.criada_em|date:"M" }}</em></span>
+      	 <a href="{% url noticias_noticia_detalhe noticia.id %}">{{ noticia.titulo }}:<br /> {{ noticia.conteudo|textile|truncatewords:12 }}</a>
+		{% endif %}
+		{% endif %}	  
+	  {% endfor %}    
+    </ul>
+    
+    <div style="padding-top: 10px;"><a href="{% url noticias_index %}">Ver todas notícias</a>
+	 {% if perms.usuarios.monitor or perms.usuario.pae or perms.usuarios.docente or perms.usuarios.funcionario%}
+	  - <a href="{% url  noticias_noticia_criar %}" >Nova</a>    
+	  {% endif %}
+    
+    </div>
+  </div>
+ </div>
+  </div>
+<div class="content">
+{% if perms.usuarios.surpervisor %}
+<!-- Supervisores -->
+{% if projetos_estagiarios != None %}
+<table>
+	<tr><td width="40%">Aluno</td><td>Projeto</td><td>Questionário de Desempenho</td><td>Horas Cumpridas</td><td>Monografia Original</td><td>Monografia Revisada</td></tr>
+	{% for projeto in projetos_estagiarios %}
+	
+	<tr>
+		<td><a href="{% url usuarios_perfil projeto.0.user.id %}">{{projeto.0.user.get_profile.display_name}}</a></td>
+		<td>
+			{% if projeto.0.rascunho %}
+			<p>Rascunho / <a href="{% url formularios_formulario_graduacao_detalhe projeto.0.id %}" > visualizar</a></p>
+			{% else %}
+			{% if projeto.0.validacao_supervisor_orientador == 'p' %}
+			<p>Salvo / <a href="{% url usuario_aprovar_formgrad_supervisor_orientador projeto.0.user.id projeto.0.disciplina.id %}" >Aprovar</a></p>
+			{% else %}
+			{%if projeto.0.validacao_supervisor_orientador == 'n' %}<img src="{{ MEDIA_URL }}/img/nao.png" title="Não Aprovado"> / <a href="{% url formularios_formulario_graduacao_detalhe projeto.0.id %}" ><img src="{{ MEDIA_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+			{%if projeto.0.validacao_supervisor_orientador == 's' %}<img src="{{ MEDIA_URL }}/img/sim.png" title="Aprovado">/ <a href="{% url formularios_formulario_graduacao_detalhe projeto.0.id %}" ><img src="{{ MEDIA_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+			{% endif %}
+			{% endif %} 
+		</td>
+		
+		<td>
+		{% if periodo_avaliacoes %}
+		<a href="{% url formularios_questionariodesempenho user.id projeto.0.user.id %}" >Preencher</a>
+		{% else %}
+		<p>Não Disponivel</p>
+		{% endif %}
+		</td>
+		<td>
+		{% if periodo_avaliacoes %}
+		{% if projeto.1 != None %}
+		{{projeto.1.horas}} / <a href="{% url formularios_horas_cumpridas_supervisor user.id projeto.0.user.id %}">editar</a>
+		{% else %}
+		<a href="{% url formularios_horas_cumpridas_supervisor user.id projeto.0.user.id %}">Adicionar</a>
+		{% endif %}
+		{% else %}
+		<p>Não Disponivel</p>
+		{% endif %}		
+		</td>
+		{% if monografias_originais.count == 0  %}
+		<td align="center" title="A Monografia Original ainda não foi entregue" >	
+		<img src="{{ MEDIA_URL }}img/nao.png" />
+		</td>
+		{% else %}
+		
+		{% for monografia in monografias_originais %}
+			{% if monografia.alunos == projeto.0.user and monografia.disciplina == projeto.0.disciplina%}
+			<td align="center">
+			<p><img src="{{ MEDIA_URL }}img/sim.png" /> - <a href="{% url download_monografia_original monografia.id %}" ><img title="Baixe a Monografia Original" src="{{ MEDIA_URL }}/img/document.png" /></a></p>		
+			</td>
+			{{forloop|break}}
+			{% endif %}
+			{% if forloop.last and monografia.alunos != projeto.0.user or forloop.last and monografia.alunos == projeto.0.user and monografia.disciplina != projeto.0.disciplina %}
+			<td align="center" title="A Monografia Original ainda não foi entregue" >	
+			<img src="{{ MEDIA_URL }}img/nao.png" />
+			</td>
+			{% endif %}
+		{% endfor %}
+		
+		{% endif %}
+		
+			
+		{% if monografias_revisadas.count == 0  %}
+		<td align="center" title="A Monografia Revisada ainda não foi entregue" >	
+		<img src="{{ MEDIA_URL }}img/nao.png" />
+		</td>
+		{% else %}
+		
+		{% for monografia in monografias_revisadas %}
+			{% if monografia.alunos == projeto.0.user and monografia.disciplina == projeto.0.disciplina%}
+			<td align="center"> 
+			<p><img src="{{ MEDIA_URL }}img/sim.png" /> - <a href="{% url download_monografia_revisada monografia.id %}" ><img title="Baixe a Monografia Revisada" src="{{ MEDIA_URL }}/img/document.png" /></a></p>		
+			</td>
+			{{forloop|break}}
+			{% endif %}
+			{% if forloop.last and monografia.alunos != projeto.0.user or forloop.last and monografia.alunos == projeto.0.user and monografia.disciplina != projeto.0.disciplina %}
+			<td align="center" title="A Monografia Revisada ainda não foi entregue" >	
+			<img src="{{ MEDIA_URL }}img/nao.png" /> 
+			</td>
+			{% endif %}
+		{% endfor %}
+		
+		{% endif %}
+		
+	</tr>
+	{% endfor %}
+</table>
+{% endif %}
+{% endif %}
+</div> 
+  {% if perms.usuarios.aluno_de_graduacao and not user.is_superuser %}
+  		{% if periodo_matricula != None %}
+  			<div class="content">
+  				<h1><a href="{% url matricula %}">Inscrição</a></h1>
+  				<p>Ainda não Fez sua Inscrição? </p>
+  				<div style="position:relative; padding: 15px;"><p class="botao"><a href="{% url matricula %}">Inscreva-se aqui</a>	</p></div>
+  			</div>
+  		{% endif %}
+  {% endif %}
+  <div class="content">
+  {% if not perms.usuarios.aluno_de_mestrado or user.is_superuser %}
+  {% if not perms.usuarios.aluno_de_doutorado or user.is_superuser %}
+  {% if  not perms.usuarios.surpervisor or user.is_superuser%}
+  {% if not perms.usuarios.funcionario or user.is_superuser %}
+  
+  
+    <h1 style="padding-bottom: 0;"><a href="{% url disciplinas_listar %}">Disciplinas do Semestre</a></h1>
+    <div style="position:relative; padding-top:5px; padding-bottom: 10px;"><a href="{% url disciplinas_listar_atual_proximo %}">Ver todas disciplinas</a></div>
+   <!-- Aluno -->
+   <div>
+    {% if perms.usuarios.aluno_de_graduacao %}
+    {% for projeto in projeto_usuario %}
+    	{% if user.get_profile not in projeto.disciplina.alunos.all %} <!-- se não matriculado -->
+    		
+    		<div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+        	<div><a href="{% url disciplinas_disciplina_detalhe projeto.disciplina.id %}">{{ projeto.disciplina.titulo }}</a></div>
+        	<div>
+          {% with total=projeto.disciplina.professores.count %}
+            Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          {% endwith %}
+          {% for professor in projeto.disciplina.professores.all %}
+            <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div>
+          {% with total=projeto.disciplina.monitores.count %}
+            Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          {% endwith %}
+          {% for monitor in projeto.disciplina.monitores.all %}
+            <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div>
+        		<table>
+        			<tr><td rowspan="2"><strong>Matricula:</strong></td><td align="center"><strong>Estado:</strong></td><td align="center"><strong>Projeto:</strong></td></tr>
+        			<tr><td align="">Pendente</td><td>{% if projeto.rascunho %}Rascunho{% else %}Salvo{% endif %} /{% if not max_titulo_areas   %} <a href="{% url usuario_editformgrad user.id projeto.disciplina.id%}" >Editar</a>{% else %} {%endif %} </td></tr>
+        		</table>
+        </div>
+      </div>
+      
+    	{% endif %}
+    {% endfor %}
+    {% for disciplina in disciplinas_aluno %}
+      <div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+        <div class="titulo"><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        <div>
+          {% with total=disciplina.professores.count %}
+            Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          {% endwith %}
+          {% for professor in disciplina.professores.all %}
+            <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div>
+          {% with total=disciplina.monitores.count %}
+            Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          {% endwith %}
+          {% for monitor in disciplina.monitores.all %}
+            <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+		{% for projeto in projeto_usuario %}
+		{% if disciplina == projeto.disciplina %}      
+      <div>
+        		<table>
+        			<tr><td rowspan="2"><strong>Matricula:</strong></td><td colspan="2" align="center"><strong>Estado:</strong></td><td colspan="3" align="center"><strong>Projeto:</strong></td></tr>
+        			<tr><td colspan="2"  align="">Matriculado</td><td colspan="3">{% if projeto.rascunho %}Rascunho{% else %}Salvo{% endif %} /{% if not max_titulo_areas   %} <a href="{% url usuario_editformgrad user.id disciplina.id%}" >Editar</a> {% else %} <a href = "{% url formularios_formulario_graduacao_detalhe projeto.id %}">Visualizar</a>{% endif %} </td></tr>			   
+				   {% if periodo_escolha_alunos.0 > hoje %}
+				   	<tr><td><strong>Apresentação:</strong></td><td colspan="3">Período de escolha de horários e datas para apresentação ainda não começou.</td></tr>  
+				   {% endif %}			   
+				   {% if periodo_escolha_alunos.0 <= hoje %}
+				   		{% for banca in bancas_aluno %}
+				   		
+				   			{% if banca.disciplina == disciplina %}
+				   				<tr ONMOUSEOVER="ddrivetip('tip-aluno-apresentacao')" ONMOUSEOUT="hideddrivetip()"><td rowspan="2"> <strong>Apresentação:</strong></td> <td><strong>Sala:</strong></td><td><strong>Data:</strong></td><td><strong>Horario:</strong></td></tr>  
+				   				<tr ONMOUSEOVER="ddrivetip('tip-aluno-apresentacao')" ONMOUSEOUT="hideddrivetip()"><td>{{banca.sala.nome}}</td><td>{{banca.data|date:"d/m/Y"}}</td><td>inicio: {{banca.hora_inicial}} fim: {{banca.hora_final}}</td></tr>
+									<div class="hidden" id="tip-aluno-apresentacao"><strong>Apresentação</strong> <br />
+									<p>Titulo: {{banca.projeto.titulo}}</p>
+									<p>Banca1: {{banca.banca1.get_profile.display_name}}</p>
+									<p>Banca2: {{banca.banca2.get_profile.display_name}}</p>
+									</div>
+								{% endif %}			   
+				   		{% endfor %}
+				   		{% if bancas_aluno.count == 0 %}
+				   	<tr><td><strong>Apresentação:</strong></td><td colspan="3"><a href="{% url bancas_index %}">Escolha um horario para sua Apresentação</a></td></tr>  
+				   		{% endif %}
+				   	
+				   {% endif %}
+				  <tr><td rowspan="2" ><strong>Monografias:</strong></td><td colspan="2"><strong>Original:</strong></td><td colspan="3"><strong>Revisada:</strong></td></tr>
+				  <tr><td colspan="2" ><a href="{% url entrega_monografia_original user.id disciplina.id%}" >Entregar</a></td><td colspan="3">{% if periodo_avaliacoes %}<a href="{% url entrega_monografia_revisada user.id disciplina.id %}" >Entregar</a>{% endif %}</td></tr>
+				  <tr><td rowspan="2"><strong>Questionários:</strong></td><td colspan="2"><strong>Estágio:</strong></td><td colspan="3"><strong>Graduação:</strong></td></tr>    
+				  <tr><td colspan="2"><a href="{% url formularios_questionarioestagio user.id disciplina.id%}" >Responder</a></td><td colspan="3"><a href="{% url formularios_avaliacaocurso user.id %}" >Responder</a></td></tr>   		
+        		  <tr><td rowspan="2"><strong>Declarações</strong></td> <td colspan="5"><strong>Declaração de Horas:</strong></td></tr>
+        		  <tr><td colspan="5">{% if projeto.supervisor != None %}<a href="{% url declaracao_horas_cumpridas_supervisor projeto.supervisor.usuario.id projeto.user.id 1%}" >Imprimir</a>{% endif %}
+        		  							 {% if projeto.orientador != None %}<a href="{% url declaracao_horas_cumpridas_orientador projeto.orientador.id projeto.user.id%}" >Imprimir</a>{% endif %}</td> </tr>
+        		</table>
+        </div>
+        {% endif %}
+      {% endfor %}      
+      </div>
+      
+    {% endfor %}
+    {% endif %}
+    </div>
+   <!--  Docente -->
+    {% if perms.usuarios.docente %}
+   {% if bancas_docente.count != 0 or bancas_convidado.count != 0 %}
+   <div>
+   <div><h3>Bancas</h3></div>
+   <div>
+   <table>
+   
+	<tr><td rowspan="2" width="40%">Aluno</td><td width="40%" colspan="4">Apresentação</td><td rowspan="2" width="20%">Avaliação</td></tr>
+	<tr><td>Titulo</td><td>Data</td><td>Horário</td><td>Sala</td></tr>
+	{% for banca in bancas_docente %}
+		<tr>
+		<td><a href='{% url bancas_banca_detalhe banca.id %}'>{{banca.aluno.get_profile.display_name}}</a></td>
+		<td>{{banca.projeto.titulo}}</td>
+		<td>{{banca.data|date:"d/m/Y"}}</td>
+  		<td>Das {{banca.hora_inicial}}, até {{banca.hora_final}}</td>
+  		<td>{{banca.sala.nome}}</td>
+  		<td><a href="{% url formularios_avaliacaomonografiageral user.id banca.projeto.user.id %}">Monografia/Apresentação</a></td>
+  		</tr>
+	{% endfor %}
+	{% for banca in bancas_convidado %}
+		<tr>
+		<td>{{banca.aluno.get_profile.display_name}}</td>
+		<td>{{banca.projeto.titulo}}</td>
+		<td>{{banca.data|date:"d/m/Y"}}</td>
+  		<td>Das {{banca.hora_inicial}}, até {{bancas.hora_final}}</td>
+  		<td>{{banca.sala}}</td>
+  		<td><a href="{% url formularios_avaliacaomonografiageral user.id banca.projeto.user.id %}">Avaliar Monografia/Apresentação</a></td>
+  		</tr>
+	{% endfor %}
+	</table>
+   </div>
+   </div>
+	<div  style="position:relative; padding-top:10px;"><h3>Disciplinas do Grupo {{grupo_professor}}</h3></div>
+   <div class="botao" style="position:relative; padding-top:6px; padding-bottom:6px;">
+    	<strong><a style="width:150px;" href="{% url grupos_disciplinas_listar_grupos %}" >Gerenciar Monitores</a></strong>  
+    	<strong><a href="{% url datas_datas_limite grupo_professor.id%}" >Datas</a></strong>  
+    	<strong><a style="width:180px;" href="#">Relatório de Apresentações</a></strong>
+</div>
+<div class="botao" style="position:relative; padding-top:6px; padding-bottom:6px;">
+	<strong><a style="width:180px !important;" href="{% url gerenciar_monografias %}" >Gerenciar Monografias</a></strong>
+    	<a style="width:200px !important;" href="{% url banca_gerenciar_bancas %}" >Gerenciar Apresentações</a> 
+    	
+    	</div>
+   {% endif %}
+   
+  	<div>
+   
+    {% if disciplinas_professor.count != 0 %}
+    <div  style="position:relative; padding-top:10px;" ><h3>Minhas Disciplinas</h3></div>
+    {% for disciplina in disciplinas_professor %}
+    {%if user.get_profile in disciplina.professores.all%}
+      <div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      
+        <div><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        <div>
+          {% with total=disciplina.professores.count %}
+            Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          {% endwith %}
+          {% for professor in disciplina.professores.all %}
+            <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div>
+          {% with total=disciplina.monitores.count %}
+            Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          {% endwith %}
+          {% for monitor in disciplina.monitores.all %}
+            <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div style="position:relative; padding-top:5px; padding-bottom:5px" class="botao">
+			<a href="{% url formularios_pendencias disciplina.id %}" ><strong>Pendências</strong></a>  <a href="{% url relatorio_disciplina disciplina.id %}" ><strong>Relatório</strong></a>  <a href="{% url gerenciar_avaliacoes disciplina.id %}" ><strong>Avaliação</strong></a>  <strong><a style="width:200px;" href="{% url resumo_avaliacoes disciplina.id%}" >Resumo de Avaliações</a></strong>    
+      
+        </div>
+        	<div style="position:relative; padding-top:5px; padding-bottom:5px" class="botao">
+			 <a style="width:200px !important;" href="{% url banca_visao_parcial disciplina.id %}" >Listar Apresentações</a>        	
+        	</div>
+      </div>
+      
+      {% endif %}
+    {% endfor %}
+   
+	{% for disciplina in disciplinas_professor %}
+    {%if user.get_profile not in disciplina.professores.all%}
+      <div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      
+        <div><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        <div>
+          {% with total=disciplina.professores.count %}
+            Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          {% endwith %}
+          {% for professor in disciplina.professores.all %}
+            <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div>
+          {% with total=disciplina.monitores.count %}
+            Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          {% endwith %}
+          {% for monitor in disciplina.monitores.all %}
+            <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}    
+    	
+    {% endif %}
+    
+    </div>
+    {% endif %}
+   
+  
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  <!-- Monitor -->
+   
+    {% if perms.usuarios.monitor or perms.usuarios.pae%}
+   <div style="position:relative; padding-top:10px; border-top: 1px dashed #454545;"> 
+    {% for item in grupo_monitor %}
+    <h2>Grupo {{item.grupo}}</h2>
+    <div class="botao" style="position:relative; padding-top:5px; padding-bottom:5px; border-bottom: 1px dashed #454545;"> <a href="{% url agendamento item.grupo.id%}" >Agendamento</a>  <a style="width:200px !important;" href="{% url banca_gerenciar_bancas %}" >Gerenciar Apresentações</a>  <a href="{% url datas_datas_limite item.grupo.id %}" >Datas</a> </div>
+    
+    {% for disciplina in disciplinas_semestre %}
+     {% if disciplina.titulo in item.grupo.disciplinas.all %}
+      <div style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">    
+
+        <div ><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        <div class="botao" style="position:relative; padding-top:5px; padding-bottom:5px;"><a href="{% url formularios_pendencias disciplina.id %}" >Pendências</a>   <a href="{% url relatorio_disciplina disciplina.id %}" >Relatório</a></div>
+        <div>
+          {% with total=disciplina.professores.count %}
+            Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          {% endwith %}
+          {% for professor in disciplina.professores.all %}
+            <a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        <div >
+          {% with total=disciplina.monitores.count %}
+            Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          {% endwith %}
+          {% for monitor in disciplina.monitores.all %}
+            <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+	 {% endif %}    
+    {% endfor %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+	<!-- Funcionario -->	
+	{% if perms.usuarios.funcionario or perms.usuarios.secretario %}
+	<div class="content">
+		{% for grupo in grupos %}
+			<div style="padding-top: 10px">
+				<h2>Grupo {{grupo.titulo}}</h2>
+			</div>
+			<div class="botao" style="position:relative; padding-top:5px; padding-bottom:5px;">
+				<a style="width:180px !important;" href="{% url gerenciar_monografias %}" >Gerenciar Monografias</a>   <a style="width:150px !important;" href="{% url gerenciar_disciplinas %}" >Gerenciar Disciplinas</a>   <a style="width:180px !important;" href="#" >Relatório de Apresentações</a> 
+			</div>	
+			<div class="botao" style="position:relative; padding-top:5px; padding-bottom:5px;">
+				<a style="width:180px !important;" href="{% url declaracao_orientacao 2 grupo.id%}" >Declarações de Orientação</a>   <a style="width:180px !important;" href="{% url print_avaliacao_monografia 2 grupo.id %}" >Avaliações de Apresentação</a>   <a style="width:180px !important;" href="{% url declaracao_participacao_banca 2 grupo.id grupo.id %}" >Participação em Banca</a> 
+			</div>	
+			{% for disciplina in disciplinas_semestre %}
+				{% if disciplina.titulo in grupo.disciplinas.all %}
+      		<div  style="position:relative; padding-top:10px; border-bottom: 1px dashed #454545;">
+      
+        			<div><a href="{% url disciplinas_disciplina_detalhe disciplina.id %}">{{ disciplina.titulo }}</a></div>
+        			<div>
+          			{% with total=disciplina.professores.count %}
+            			Professor{{ total|pluralize:"es" }} responsáve{{ total|pluralize:"l,is" }}:  {% if total == 0 %}Sem Professor{% endif %}
+          			{% endwith %}
+          			{% for professor in disciplina.professores.all %}
+            			<a href="{% url usuarios_perfil professor.user.id %}">{{ professor }}</a>{% if not forloop.last %}, {% endif %}
+          			{% endfor %}
+        			</div>
+        			<div>
+         			 {% with total=disciplina.monitores.count %}
+           				 Monitor{{ total|pluralize:"es" }}: {% if total == 0 %}Sem monitor{% endif %}
+          			 {% endwith %}
+          			 {% for monitor in disciplina.monitores.all %}
+           				 <a href="{% url usuarios_perfil monitor.user.id %}">{{ monitor }}</a>{% if not forloop.last %}, {% endif %}
+          			 {% endfor %}
+        			</div>
+					<div>
+  						 <table>
+  						 	<tr><td width="40%" rowspan="2"><strong>Alunos:</strong></td><td rowspan="2"><strong>Projeto:</strong></td><td colspan="3"><strong>Apresentação:</strong></td><td rowspan="2"><strong>Documentos:</strong></td></tr>
+  						 	<tr><td>Data</td><td>Horario:</td><td>Sala</td></tr>
+  						 	{% for projeto in projetos %}{% if projeto.disciplina == disciplina %}
+  						   	{% if not projeto.rascunho %} 
+  						   	
+  						 		<tr>
+								<td>{{projeto.user.get_profile.display_name}}</td> 		
+  						 		<td>
+  						 		{% if projeto.validacao_supervisor_orientador == 's' %}
+									{% if not perms.usuarios.secretario %}	{%if projeto.validacao_graduacao == 'p' %}<a href="{% url usuario_aprovar_formgrad_graduacao projeto.user.id projeto.disciplina.id %}">Validar</a>{% endif %}{% endif %}
+										{%if projeto.validacao_graduacao == 'n' %}<img src="{{ MEDIA_URL }}/img/nao.png" title="Não Aprovado"> / <a href="{% url formularios_formulario_graduacao_detalhe projeto.id %}" ><img src="{{ MEDIA_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+										{%if projeto.validacao_graduacao == 's' %}<img src="{{ MEDIA_URL }}/img/sim.png" title="Aprovado"> / <a href="{% url formularios_formulario_graduacao_detalhe projeto.id %}" ><img src="{{ MEDIA_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+								{% else %}{% endif %}
+								</td>
+								{% for banca in bancas %}
+								
+								{% if banca.projeto = projeto %}
+								{% if not banca.cancelada %}
+  						 		<td>{{banca.data|date:"d/m/Y"}}</td>
+  						 		<td>Das {{banca.hora_inicial}}, até {{banca.hora_final}}</td>
+  						 		<td>{{banca.sala.nome}}</td>
+  						 		{% else %}
+  						 		<td colspan="3">Apresentação Cancelada</td>
+  						 		{% endif %}
+  						 		{{ forloop|break }}
+  						 		{% endif %}
+  						 		{% if forloop.last and banca.projeto != projeto %}
+  						 		<td colspan="3">Aluno não escolheu um Horário </td>
+  						 		{% endif %}
+  						 	
+  						 		{% endfor %}
+								{% if bancas.count == 0 %}
+								<td colspan="3">Não existem Horários de Apresentação Disponíveis</td>  						 		
+  						 		{% endif %}
+  						 		<td>
+  						 		{% if projeto.orientador != None and projeto.supervisor == None %}
+  						 			<a href="{% url declaracao_orientacao 0 projeto.id%}" ><img src="{{ MEDIA_URL }}/img/document.png" title="Imprimir Declaração de Orientação"></a>
+	  						 	{% endif %}
+  						 		<a href="{% url print_avaliacao_monografia 0 projeto.id %}" ><img src="{{ MEDIA_URL }}/img/document.png" title="Imprimir Avaliação da Apresentação"></a>
+  						 		{% for banca in bancas %}
+								{% if banca.projeto = projeto %}
+								{% if banca.banca1 != None %}
+  						 		<a href="{% url declaracao_participacao_banca 0 banca.id banca.banca1.id %}" ><img src="{{ MEDIA_URL }}/img/document.png" title="Imprimir Declaração de Participação para a Banca1"> </a>
+  						 		{% endif %}
+  						 		{% if banca.banca2 != None %}
+  						 		<a href="{% url declaracao_participacao_banca 0 banca.id banca.banca2.id%}" ><img src="{{ MEDIA_URL }}/img/document.png" title="Imprimir Declaração de Participação para a Banca2"></a>
+  						 		{% endif %}
+  						 		{% endif %}
+  						 		{% endfor %}
+  						 		</td>				 		
+  						 		</tr>
+  						 		{% endif %}  
+  						 	{% endif %}{% endfor %}
+  						 </table>	
+  					</div>
+  					<div class="botao" style="position:relative; padding-top:5px; padding-bottom:5px;">
+						<a style="width:180px !important;" href="{% url declaracao_orientacao 1 disciplina.id%}" >Declarações de Orientação</a>   <a style="width:180px !important;" href="{% url print_avaliacao_monografia 1 disciplina.id %}" >Avaliações de Apresentação</a>   <a style="width:180px !important;" href="{% url declaracao_participacao_banca 1 disciplina.id disciplina.id%}" >Participação em Banca</a> 
+					</div>
+      		</div>
+  				{% endif %}
+    		{% endfor %}
+	{% endfor %}
+	<div>
+	
+	</div>
+  </div>
+  {% endif %}
+  
+  
+<!-- Mestrando e Doutorando -->  
+{% if perms.usuarios.aluno_de_mestrado or perms.usuarios.aluno_de_doutorado %}
+ {% if bancas_convidado.count != 0 %}
+<div class="content">
+   <div><h3>Bancas</h3></div>
+   <div>
+   <table>
+   
+	<tr><td rowspan="2" width="40%">Aluno</td><td width="40%" colspan="4">Apresentação</td><td width="20%" rowspan="2">Avaliação</td></tr>
+	<tr><td>Titulo</td><td>Data</td><td>Horario</td><td>Sala</td></tr>
+	{% for banca in bancas_convidado %}
+		<tr>
+		<td><a href='{% url bancas_banca_detalhe banca.id %}'>{{banca.aluno.get_profile.display_name}}</a></td>
+		<td>{{banca.projeto.titulo}}</td>
+		<td>{{banca.data|date:"d/m/Y"}}</td>
+  		<td>Das {{banca.hora_inicial}}, até {{banca.hora_final}}</td>
+  		<td>{{banca.sala.nome}}</td>
+  		<td><a href="{% url formularios_avaliacaomonografiageral user.id banca.projeto.user.id %}">Avaliar Monografia/Apresentação</a></td>
+  		</tr>
+	{% endfor %}
+	</table>
+   </div>
+   </div>
+   {% endif %}
+  	{% endif %}
+  
+ 
+  
+ {%if  perms.usuarios.aluno_de_graduacao%}
+ {%if notas_finais.count != 0%}
+  <div class="content">
+  <h1>Notas Finais</h1>
+   
+	 {%for nota in notas_finais %}
+	 {% if nota.aluno != None and nota.disciplina != None  %}
+	  <p>Nota Final: {{nota.nota_final}}, Frequência = {{nota.frequencia}}</p>
+	 {%endif%}
+	 {%endfor%}
+	</div>
+	{%endif%}
+	{%endif%}
+  
+</div>
+{% endblock %}

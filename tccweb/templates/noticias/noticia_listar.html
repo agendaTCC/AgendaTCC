@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block title %}Notícias{% endblock %}
+
+{% block section %}Notícias{% if perms.usuarios.monitor or perms.usuario.pae or perms.usuarios.docente or perms.usuarios.funcionario%} - <a href="{% url noticias_noticia_criar%}" >Nova</a>{% endif %}{% endblock %}
+
+{% block content %}
+<div>
+  
+    <ul class="latest-posts">
+    {% for noticia in noticias %}
+      <li>
+        <span class="date">
+        <em class="day">{{ noticia.criada_em|date:"d" }}</em>
+        <em class="month">{{ noticia.criada_em|date:"M" }}</em></span>
+        <p><a href="{% url 'detalhe_noticia' noticia.id %}">{{ noticia.titulo }}:</a></p>
+        <p>{{ noticia.conteudo|truncatewords:160 }}<p>
+        <p ><a href="{% url 'detalhe_noticia' noticia.id %}">Ler mais</a></p>
+      </li> 
+     {% endfor %}
+    </ul>
+  
+</div>
+
+{% endblock %}

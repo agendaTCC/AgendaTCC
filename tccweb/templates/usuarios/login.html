@@ -1,0 +1,41 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block section %}Login{% endblock %}
+
+{% block content %}
+<style type="text/css" style="display: none;">
+
+.login-box{
+    width: 374px;
+    min-width: 200px;
+    min-height: 130px;
+    margin: auto;
+    padding: 10px;
+    background: #fff;
+    position:relative;
+    border: 1px Solid Gray;
+    border-radius: 10px;
+}
+</style>
+<div class="login-box">
+<form class="clearfix" method="post">
+					 {% csrf_token %}
+					<h1>Entrar</h1>
+					<!-- <label class="grey" for="log">{{ form.username.label_tag }}</label>
+					<input class="field" {{ form.username }} 
+					<label class="grey" for="pwd">{{ form.password.label_tag }}</label>
+					<input class="field" {{ form.password }} -->
+					<label class="grey" for="log" >CPF</label><br />
+					<input class="field" type="text" name="cpf" value="" id="cpf" /><br />
+					<label class="grey" for="pwd" >Senha</label><br />
+					<input class="field" type="password" name="password" value="" id="password" /><br />
+				    			
+        			<div class="clear"></div>
+					<input type="submit" name="submit" value="Entrar" class="bt_login" />
+					<a class="{% url 'password_reset' %}" href="#">Esqueceu a senha?</a>
+				</form>
+</div>
+
+{% endblock %}

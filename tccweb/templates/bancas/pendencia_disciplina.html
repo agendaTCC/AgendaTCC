@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}Pendências{% endblock %}
+
+{% block section %}Pendências{% endblock %}
+
+{% block content %}
+
+
+{% for grupo in grupos %}
+{% for disciplina in disciplinas %}
+<h3>{{disciplina.disciplina.titulo}}</h3>
+	<table>
+	<tr><td colspan="2">Pendências</td></tr>
+	<tr><td>Matricula</td><td>{% if disciplina.pendencia_matricula != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td>Apresentação</td><td>{% if disciplina.pendencia_apresentacao != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td>Bancas</td><td>{% if disciplina.pendencia_banca != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td>Monografias</td><td>{% if disciplina.pendencia_monografia != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td>Supervisor/Orientador</td><td>{% if disciplina.pendencia_so != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	<tr><td>Avaliacao</td><td>{% if disciplina.pendencia_avaliacao != 0 %} <a href="#" >link</a>{% else %} Não existem Pendências{% endif %}</td></tr>
+	</table>
+{% endfor %}{% endfor %}	 
+	 
+
+
+{% endblock %}

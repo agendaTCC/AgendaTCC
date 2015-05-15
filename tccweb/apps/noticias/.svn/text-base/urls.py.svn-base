@@ -1,0 +1,9 @@
+from django.conf.urls.defaults import patterns, url
+
+
+urlpatterns = patterns('',
+    url(r'^noticias/$', 'noticias.views.noticia_listar', 
+        name='noticias_index'),
+    url(r'^noticia/(?P<noticia_id>\w+)/$', 'noticias.views.noticia_detalhe', 
+        name='noticias_noticia_detalhe'),
+)

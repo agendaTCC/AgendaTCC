@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load website_extras %}
+{% block title %}Alunos Orientados{% endblock %}
+
+{% block section %}Alunos Orientados{% endblock %}
+
+{% block content %}
+		{% if projetos == None %}
+			<p>Você ainda não orienta nenhum aluno cadastrado no sistema!</p>
+		{% else %}
+<table>
+	<tr><td width="40%">Aluno</td><td width="16%">Projeto</td><td>Questionário de Desempenho</td><td>Horas Cumpridas</td><td>Monografia Original</td><td>Monografia Revisada</td></tr>
+	{% for projeto in projetos %}
+	
+	<tr>
+		<td><a href="#">{{projeto.0.user.get_profile.display_name}}</a></td>
+		<td><p>
+			{% if projeto.0.rascunho %}
+			Rascunho
+			{% else %}
+			{% if projeto.0.validacao_supervisor_orientador == 'p' %}
+			<p>Salvo / <a href="{% url usuario_aprovar_formgrad_supervisor_orientador projeto.0.user.id projeto.0.disciplina.id %}" >Aprovar</a></p>
+			{% else %}
+			{%if projeto.0.validacao_supervisor_orientador == 'n' %}<img src="{{ STATIC_URL }}/img/nao.png" title="Não Aprovado"> / <a href="{% url formularios_formulario_graduacao_detalhe projeto.0.id %}" ><img src="{{ STATIC_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+			{%if projeto.0.validacao_supervisor_orientador == 's' %}<img src="{{ STATIC_URL }}/img/sim.png" title="Aprovado">/ <a href="{% url formularios_formulario_graduacao_detalhe projeto.0.id %}" ><img src="{{ STATIC_URL }}/img/visualizar.png" title="Visualizar"></a>{% endif %}
+			{% endif %}
+			{% endif %} 
+		</td>
+		<td>
+		{% if periodo_avaliacoes %}
+		<a href="{% url formularios_questionariodesempenho user.id projeto.0.user.id %}" >Preencher</a>
+		{% else %}
+		<p>Não Disponivel</p>
+		{% endif %}
+		</td>
+		<td>
+		{% if periodo_avaliacoes %}
+		{% if projeto.1 != None %}
+		{{projeto.1.horas}} / <a href="{% url formularios_horas_cumpridas_orientador user.id projeto.0.user.id %}">editar</a>
+		{% else %}
+		<a href="{% url formularios_horas_cumpridas_orientador user.id projeto.0.user.id %}">Adicionar</a>
+		{% endif %}
+		{% else %}
+		<p>Não Disponivel</p>
+		{% endif %}
+		</td>
+		{% if monografias_originais.count == 0  %}
+		<td align="center" title="A Monografia Original ainda não foi entregue" >	
+		<img src="{{ STATIC_URL }}img/nao.png" />
+		</td>
+		{% else %}
+		
+		{% for monografia in monografias_originais %}
+			{% if monografia.alunos == projeto.0.user and monografia.disciplina == projeto.0.disciplina%}
+			<td align="center">
+				<p><img src="{{ STATIC_URL }}img/sim.png" /> - <a href="{% url download_monografia_original monografia.id %}" ><img title="Baixe a Monografia Original" src="{{ STATIC_URL }}/img/document.png" /></a></p>		
+			</td>			
+			{{ forloop|break }}			
+			{% endif %}
+			{% if forloop.last and  monografia.alunos != projeto.0.user or forloop.last and monografia.alunos == projeto.0.user and monografia.disciplina != projeto.0.disciplina %}
+			<td align="center" title="A Monografia Original ainda não foi entregue" >	
+				<img src="{{ STATIC_URL }}img/nao.png" />
+			</td>
+			{% endif %}
+		{% endfor %}
+		
+		{% endif %}
+		
+			
+		{% if monografias_revisadas.count == 0  %}
+		<td align="center" title="A Monografia Revisada ainda não foi entregue" >	
+		<img src="{{ STATIC_URL }}img/nao.png" />
+		</td>
+		{% else %}
+		
+		{% for monografia in monografias_revisadas %}
+			{% if monografia.alunos == projeto.0.user and monografia.disciplina == projeto.0.disciplina%}
+			<td align="center"> 
+			<p><img src="{{ STATIC_URL }}img/sim.png" /> - <a href="{% url download_monografia_revisada monografia.id %}" ><img title="Baixe a Monografia Original" src="{{ STATIC_URL }}/img/document.png" /></a></p>		
+			</td>			
+			{{ forloop|break }}			
+			{% endif %}
+			{% if forloop.last and  monografia.alunos != projeto.0.user or forloop.last and monografia.alunos == projeto.0.user and monografia.disciplina != projeto.0.disciplina %}
+			<td align="center" title="A Monografia Revisada ainda não foi entregue" >	
+				<img src="{{ STATIC_URL }}img/nao.png" />
+			</td>
+			{% endif %}
+		{% endfor %}
+		
+		{% endif %}
+		
+	</tr>
+	{% endfor %}
+</table>
+		{% endif %}
+
+{% endblock %}

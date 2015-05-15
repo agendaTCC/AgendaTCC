@@ -1,0 +1,203 @@
+10
+
+dir
+0
+http://svn.jetty.com.br/TCCWeb/trunks/media/js/tiny_mce/kcfinder/lang
+http://svn.jetty.com.br/TCCWeb
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+3a197d91-738c-427b-8cad-36b4071c23f9
+
+.htaccess
+file
+
+
+
+add
+
+bg.php
+file
+
+
+
+add
+
+ca.php
+file
+
+
+
+add
+
+cs.php
+file
+
+
+
+add
+
+da.php
+file
+
+
+
+add
+
+de.php
+file
+
+
+
+add
+
+el.php
+file
+
+
+
+add
+
+en.php
+file
+
+
+
+add
+
+es.php
+file
+
+
+
+add
+
+fa.php
+file
+
+
+
+add
+
+fr.php
+file
+
+
+
+add
+
+hu.php
+file
+
+
+
+add
+
+it.php
+file
+
+
+
+add
+
+ja.php
+file
+
+
+
+add
+
+lt.php
+file
+
+
+
+add
+
+nl.php
+file
+
+
+
+add
+
+no.php
+file
+
+
+
+add
+
+pl.php
+file
+
+
+
+add
+
+pt-br.php
+file
+
+
+
+add
+
+pt.php
+file
+
+
+
+add
+
+ru.php
+file
+
+
+
+add
+
+sk.php
+file
+
+
+
+add
+
+tr.php
+file
+
+
+
+add
+
+vi.php
+file
+
+
+
+add
+
+zh-cn.php
+file
+
+
+
+add
+
